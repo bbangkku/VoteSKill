@@ -1,15 +1,12 @@
-import Modal from 'components/modal/Modal';
-import useModal from 'hooks/useModal';
+import Layout from 'components/layout/Layout';
 import * as S from 'pages/Main/Main.Style';
 
 function Main() {
-  const { openModal } = useModal();
   return (
-    <S.MainContainer>
+    <Layout>
       <S.MainLogo></S.MainLogo>
-      <S.KakaoLoginButton onClick={openModal}></S.KakaoLoginButton>
-      <Modal></Modal>
-    </S.MainContainer>
+      <S.KakaoLoginButton></S.KakaoLoginButton>
+    </Layout>
   );
 }
 
