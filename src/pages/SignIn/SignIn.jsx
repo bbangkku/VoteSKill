@@ -15,7 +15,7 @@ function SignIn() {
 
   return (
     <div>
-      <Layout></Layout>
+      <Layout isMain = {false}/>
       <div>
         <S.textarea size="60" placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.textarea>
         <br />
