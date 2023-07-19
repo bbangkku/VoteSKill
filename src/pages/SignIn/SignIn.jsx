@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Layout from "components/layout/Layout";
 import * as S from 'pages/SignIn/SignIn.Style';
 
 function SignIn() {
@@ -14,15 +15,13 @@ function SignIn() {
 
   return (
     <div>
-      <S.MainContainer>
-        <img src="/voteskill_logo.svg"></img>
-      </S.MainContainer>
-
+      <Layout></Layout>
       <div>
         <S.textarea size="60" placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.textarea>
         <br />
         <S.button type="submit">Go To KILL</S.button>
       </div>
+      
     </div>
   );
 }
