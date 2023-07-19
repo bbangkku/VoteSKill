@@ -23,8 +23,8 @@ function SignIn() {
   };
 
   return (
-    <>
-      <Layout></Layout>
+    <div>
+      <Layout isMain={false} />
       <div>
         <S.textarea size="60" placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.textarea>
         <br />
@@ -37,7 +37,7 @@ function SignIn() {
           Go To KILL
         </S.button>
       </div>
-    </>
+    </div>
   );
 }
 

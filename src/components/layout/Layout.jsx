@@ -1,11 +1,13 @@
 import * as S from 'components/layout/Layout.Style';
 
-function Layout() {
+function Layout({ isMain }) {
   return (
-    <>
-      <S.MainLogo></S.MainLogo>
-      <S.Background></S.Background>
-    </>
+    <div>
+      <S.Background>
+        {/* {isMain ? <S.MainLogo></S.MainLogo> : null} */}
+        {isMain && <S.MainLogo />}
+      </S.Background>
+    </div>
   );
 }
 
