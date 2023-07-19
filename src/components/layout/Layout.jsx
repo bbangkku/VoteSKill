@@ -1,5 +1,6 @@
-import * as S from "components/layout/Layout.Style";
+import * as S from 'components/layout/Layout.Style';
 
+<<<<<<< HEAD
 function Layout({isMain}){
     return (
         <div>
@@ -9,7 +10,17 @@ function Layout({isMain}){
             </S.Background>
         </div>
     );
+=======
+function Layout({ isMain }) {
+  return (
+    <div>
+      <S.Background>
+        {/* {isMain ? <S.MainLogo></S.MainLogo> : null} */}
+        {isMain && <S.MainLogo />}
+      </S.Background>
+    </div>
+  );
+>>>>>>> 08db3ae25106f17a4200d353d2076d641ee298c5
 }
-
 
 export default Layout;
