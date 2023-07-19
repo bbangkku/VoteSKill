@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import * as S from 'pages/SignIn/SignIn.Style';
 
 function SignIn() {
-  const [placeholder, setPlaceholder] = useState("닉네임을 입력하세요.");
+  const [placeholder, setPlaceholder] = useState('닉네임을 입력하세요.');
 
   const handleFocus = () => {
-    setPlaceholder("");
+    setPlaceholder('');
   };
 
   const handleBlur = () => {
-    setPlaceholder("닉네임을 입력하세요.");
+    setPlaceholder('닉네임을 입력하세요.');
   };
 
   return (
     <div>
-        <textarea
-          className="Nickname_input"
-          size="60"
-          placeholder={placeholder}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          name="Nickname_input"
-        ></textarea>
+      <S.MainContainer>
+        <img src="/voteskill_logo.svg"></img>
+      </S.MainContainer>
 
-      <button type="submit">회원가입</button>
+      <div>
+        <S.textarea size="60" placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.textarea>
+        <br />
+        <S.button type="submit">Go To KILL</S.button>
+      </div>
     </div>
   );
 }
