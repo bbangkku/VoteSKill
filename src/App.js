@@ -1,13 +1,14 @@
+
 import GlobalStyle from 'styles/globalStyle';
+import Router from 'Router';
 import './App.css';
-import Main from 'pages/Main/Main';
 
 function App() {
   return (
-    <>
+    <div className="App">
       <GlobalStyle/>
-      <Main></Main>
-    </>
+      <Router />
+    </div>
   );
 }
 
