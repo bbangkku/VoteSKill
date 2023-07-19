@@ -24,6 +24,9 @@ export const button = styled.button`
   align-items: center;
   border: 2px solid #bf4f74;
   border-radius: 3px;
+  &.grow {
+    background-color: ${({ theme }) => theme.color.red};
+  }
 `;
 
 export const textarea = styled.input`
