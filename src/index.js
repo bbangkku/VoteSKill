@@ -4,15 +4,13 @@ import './index.css';
 import { theme } from 'styles/theme';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from 'styles/globalStyle';
-import SignIn from 'pages/SignIn/SignIn';
-import Main from 'pages/Main/Main';
+import App from 'App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      {/* <Main /> */}
-      <SignIn />
+      <App />
     </ThemeProvider>
   </React.StrictMode>,
 );
