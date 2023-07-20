@@ -1,6 +1,8 @@
 import Main from 'pages/Main/Main';
 import SignIn from 'pages/SignIn/SignIn';
+import TestPage from 'pages/TestPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 function Router() {
   return (
     <BrowserRouter>
@@ -10,6 +12,8 @@ function Router() {
         <Route path="/lobby" />
         <Route path="/room/:roomId" />
         <Route path="/game/:gameId" />
+
+        <Route path="/test" element={<TestPage />} />
       </Routes>
     </BrowserRouter>
   );
