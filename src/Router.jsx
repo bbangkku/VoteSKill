@@ -6,8 +6,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/SignIn" element={<SignIn />} />
-
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/lobby" />
         <Route path="/room/:roomId" />
         <Route path="/game/:gameId" />

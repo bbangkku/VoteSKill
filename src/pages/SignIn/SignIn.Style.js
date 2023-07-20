@@ -12,7 +12,7 @@ export const MainContainer = styled.main`
   align-items: center;
 `;
 
-export const button = styled.button`
+export const Button = styled.button`
   width: 15rem;
   height: 7vh;
   margin: 0 auto;
@@ -29,7 +29,7 @@ export const button = styled.button`
   }
 `;
 
-export const textarea = styled.input`
+export const Textarea = styled.input`
   width: 40rem;
   height: 6vh;
   margin: 0 auto;

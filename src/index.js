@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import SignIn from 'pages/SignIn/SignIn';
-
+import { theme } from 'styles/theme';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from 'styles/globalStyle';
+import App from 'App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <SignIn />
-  </React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
