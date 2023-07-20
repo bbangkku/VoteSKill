@@ -1,17 +1,5 @@
 import styled from 'styled-components';
 
-export const MainContainer = styled.main`
-  width: 30rem;
-  height: 75vh;
-  margin: 0 auto;
-  color: red;
-  font-size: 3em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Button = styled.button`
   width: 15rem;
   height: 7vh;
