@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import Layout from 'components/layout/Layout';
 import * as S from 'pages/SignIn/SignIn.Style';
 
 function SignIn() {
-  const [placeholder, setPlaceholder, setState] = useState('닉네임을 입력하세요.');
+  const [placeholder, setPlaceholder] = useState('닉네임을 입력하세요.');
   const [isHovering, setIsHovering] = useState(false);
 
   const handleFocus = () => {
@@ -26,16 +26,16 @@ function SignIn() {
     <div>
       <Layout isMain={false} />
       <div>
-        <S.textarea size="60" placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.textarea>
+        <S.Textarea size="60" placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.Textarea>
         <br />
-        <S.button
+        <S.Button
           type="submit"
           className={isHovering ? 'grow' : ''}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
           Go To KILL
-        </S.button>
+        </S.Button>
       </div>
     </div>
   );
