@@ -34,7 +34,7 @@ function SignIn() {
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
-          Go To KILL
+          Go To KILL.
         </S.Button>
       </div>
     </div>
