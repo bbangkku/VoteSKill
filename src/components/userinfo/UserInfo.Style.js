@@ -20,7 +20,7 @@ export const Profile = styled.img`
 export const InputArea = styled.div`
   background: black;
   height: 100%;
-  padding: 20px;
+  padding: 20px 5px 20px 20px;
   margin: 10px;
   font-size: 32px;
   color: white;
@@ -33,8 +33,8 @@ export const Label = styled.label`
 
 export const Input = styled.input`
   display: inline;
-  width: 270px;
-  padding: 9px;
+  width: 250px;
+  padding: 9px 3px 9px 3px;
   margin: 6px;
 `;
 export const NicknameFixIcon = styled.button`
@@ -43,4 +43,14 @@ export const NicknameFixIcon = styled.button`
   background-image: url(${process.env.PUBLIC_URL + '/image/userinfo/nickname_fix_icon.svg'});
   background-size: cover;
   display: inline-block;
+`;
+
+export const RankIcon = styled.label`
+  background-color: #4d82c1;
+  color: #e4c4c4;
+  font-size: 22px;
+  display: inline;
+  margin: 10px;
+  padding: 6px 20px 6px 20px;
+  border-radius: 20px;
 `;
