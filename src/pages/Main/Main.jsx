@@ -1,11 +1,12 @@
 import Layout from 'components/layout/Layout';
 import * as S from 'pages/Main/Main.Style';
 
-function Main({ isMain }) {
+function Main(props, { isMain }) {
   return (
-    <Layout isMain={true}>
+    <div>
+      <Layout isMain={true}></Layout>
       <S.KakaoLoginButton></S.KakaoLoginButton>
-    </Layout>
+    </div>
   );
 }
 

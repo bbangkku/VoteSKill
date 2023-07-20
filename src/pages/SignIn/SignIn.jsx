@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import Layout from 'components/layout/Layout';
 import * as S from 'pages/SignIn/SignIn.Style';
 import * as L from 'components/layout/Layout.Style';
 
 function SignIn() {
-  const [placeholder, setPlaceholder, setState] = useState('닉네임을 입력하세요.');
+  const [placeholder, setPlaceholder] = useState('닉네임을 입력하세요.');
   const [isHovering, setIsHovering] = useState(false);
 
   const handleFocus = () => {
@@ -27,18 +27,17 @@ function SignIn() {
     <div>
       <Layout isMain={false} />
       <div>
+        <S.Textarea size="60" placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.Textarea>
         {<L.MainLogo src={process.env.PUBLIC_URL + '/image/voteskill_logo.png'} alt="voteskill" />}
-
-        <S.textarea size="60" placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.textarea>
         <br />
-        <S.button
+        <S.Button
           type="submit"
           className={isHovering ? 'grow' : ''}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
-          Go To KILL
-        </S.button>
+          Go To KILL.
+        </S.Button>
       </div>
     </div>
   );

@@ -8,12 +8,12 @@ export const Background = styled.div`
   background-position: 50% 100%;
   background-size: 100%;
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const MainLogo = styled.img`
-  width: 350px;
+  position: absolute;
+  width: 500px;
+  height: 210px;
+  top: 18%;
+  left: 35%;
 `;
