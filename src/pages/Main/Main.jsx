@@ -1,10 +1,9 @@
 import Layout from 'components/layout/Layout';
 import * as S from 'pages/Main/Main.Style';
 
-function Main() {
+function Main({ isMain }) {
   return (
-    <Layout>
-      <S.MainLogo></S.MainLogo>
+    <Layout isMain={true}>
       <S.KakaoLoginButton></S.KakaoLoginButton>
     </Layout>
   );
