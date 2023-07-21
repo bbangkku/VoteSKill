@@ -3,10 +3,9 @@ import Layout from 'components/layout/Layout';
 
 function TestPage() {
   return (
-    <>
-      <Layout></Layout>
+    <Layout>
       <Header />
-    </>
+    </Layout>
   );
 }
 
