@@ -3,6 +3,7 @@ const color = {
   lightgray: '#d9d9d9',
   darkgray: '#242424',
   red: '#970000',
+  brown: '#625656',
 };
 
 const night = {
