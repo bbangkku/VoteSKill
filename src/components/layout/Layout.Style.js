@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
 export const Background = styled.div`
-  background-color: goldenrod;
-  background-color: #3d0000;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
+  background-image: linear-gradient(
     to top,
     ${(props) => (props.isNight ? props.theme.night.start : props.theme.day.start)},
     ${(props) => (props.isNight ? props.theme.night.end : props.theme.day.end)} 80%
