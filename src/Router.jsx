@@ -1,7 +1,9 @@
 import Main from 'pages/Main/Main';
 import SignIn from 'pages/SignIn/SignIn';
+import TestPage from 'pages/TestPage';
 import Waiting from 'pages/WaitingRoom/Waiting';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 function Router() {
   return (
     <BrowserRouter>
@@ -13,6 +15,8 @@ function Router() {
         <Route path="/room" element={<Waiting />} />
 
         <Route path="/game/:gameId" />
+
+        <Route path="/test" element={<TestPage />} />
       </Routes>
     </BrowserRouter>
   );

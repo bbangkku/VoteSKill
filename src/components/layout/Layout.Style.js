@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 
 export const Background = styled.div`
-  background-image: url(${process.env.PUBLIC_URL + '/image/city_background.svg'});
   width: 100vw;
   height: 100vh;
-  background-repeat: no-repeat;
-  background-position: 50% 100%;
-  background-size: 100%;
+  background-image: linear-gradient(
+    to top,
+    ${(props) => (props.isNight ? props.theme.night.start : props.theme.day.start)},
+    ${(props) => (props.isNight ? props.theme.night.end : props.theme.day.end)} 80%
+  );
+`;
+
+export const BackgroundImage = styled.img`
+  width: 100vw;
   position: fixed;
+  bottom: 0;
 `;
 
 export const MainLogo = styled.img`
@@ -16,4 +22,5 @@ export const MainLogo = styled.img`
   height: 210px;
   top: 18%;
   left: 35%;
+  filter: drop-shadow(1px 2px 10px #000);
 `;

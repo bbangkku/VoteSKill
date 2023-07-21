@@ -6,6 +6,16 @@ const color = {
   brown: '#625656',
 };
 
+const night = {
+  start: '#870000',
+  end: '#190a05',
+};
+
+const day = {
+  start: '#870000',
+  end: '#f2c94c',
+};
+
 const borderRadius = {
   s: '10px',
   m: '20px',
@@ -14,4 +24,6 @@ const borderRadius = {
 export const theme = {
   color,
   borderRadius,
+  night,
+  day,
 };
