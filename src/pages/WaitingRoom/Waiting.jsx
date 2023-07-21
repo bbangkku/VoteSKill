@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as S from 'pages/WaitingRoom/Waiting.Style';
 
 function Waiting() {
-  const Items = [1, 2, 3, 4, 5, 6, 7, 8];
+  const Items = ['병국', '석준', '정인', '채영', '종명', '종호', '아무개', '유유'];
 
   return (
     <S.Total>
@@ -10,21 +10,21 @@ function Waiting() {
         {Items.map((item) => (
           <S.Container
             key={item}
-            style={{ margin: '5px', backgroundColor: 'white', border: '10px solid black', borderRadius: '30px' }}
+            style={{ margin: '10px', backgroundColor: 'white', border: '10px solid black', borderRadius: '30px' }}
           >
-            {item}
             <br />
-            <S.StyledButton>강퇴</S.StyledButton>
+            {item}
+            <S.OutButton>강퇴</S.OutButton>
           </S.Container>
         ))}
       </S.Square>
 
       <S.Chat>
         <S.SendContainer></S.SendContainer>
-        <S.Enter>
+        <S.BottomBar>
           <S.InputBar></S.InputBar>
-          <S.LargeButton>입력</S.LargeButton>
-        </S.Enter>
+          <S.SendButton>입력</S.SendButton>
+        </S.BottomBar>
       </S.Chat>
     </S.Total>
   );
