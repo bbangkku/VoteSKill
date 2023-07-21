@@ -1,3 +1,4 @@
+import Lobby from 'pages/Lobby/Lobby';
 import Main from 'pages/Main/Main';
 import SignIn from 'pages/SignIn/SignIn';
 import TestPage from 'pages/TestPage';
@@ -10,7 +11,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/lobby" />
+        <Route path="/lobby" element={<Lobby />} />
         {/* <Route path="/room/:roomId" element={<Waiting />} /> */}
         <Route path="/room" element={<Waiting />} />
 
