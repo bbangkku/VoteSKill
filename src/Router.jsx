@@ -1,3 +1,4 @@
+import KakaoLogin from 'pages/KakaoLogin/KakaoLogin';
 import Lobby from 'pages/Lobby/Lobby';
 import Main from 'pages/Main/Main';
 import SignIn from 'pages/SignIn/SignIn';
@@ -18,6 +19,7 @@ function Router() {
         <Route path="/game/:gameId" />
 
         <Route path="/test" element={<TestPage />} />
+        <Route path="/kakao/callback" element={<KakaoLogin />} />
       </Routes>
     </BrowserRouter>
   );
