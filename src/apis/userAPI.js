@@ -7,6 +7,13 @@ const userAPI = {
 
   logout: () => axiosInstance.post('/out'),
 
+  kakaoLogin: (code) =>
+    axiosInstance.get('/oauth/kakao', {
+      params: {
+        code: code,
+      },
+    }),
+
   checkId: (username) =>
     axiosInstance.get('/users/check', {
       params: {
