@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Layout from 'components/layout/Layout';
 import * as S from 'pages/SignIn/SignIn.Style';
-import * as L from 'components/layout/Layout.Style';
 
 function SignIn() {
   const [placeholder, setPlaceholder] = useState('닉네임을 입력하세요.');
@@ -22,24 +21,28 @@ function SignIn() {
   const handleMouseOut = () => {
     setIsHovering(false);
   };
+  const handleClick = () => {
+    window.location.href = 'lobby';
+  };
 
   return (
-    <div>
-      <Layout isMain={false} />
-      <div>
-        <S.Textarea size="60" placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.Textarea>
-        {<L.MainLogo src={process.env.PUBLIC_URL + '/image/voteskill_logo.png'} alt="voteskill" />}
-        <br />
-        <S.Button
-          type="submit"
-          className={isHovering ? 'grow' : ''}
-          onMouseOver={handleMouseOver}
-          onMouseOut={handleMouseOut}
-        >
-          Go To KILL.
-        </S.Button>
-      </div>
-    </div>
+    <>
+      <Layout isMain={true}>
+        <S.SignInDiv>
+          <S.Textarea placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.Textarea>
+          <br />
+          <S.Button
+            type="submit"
+            className={isHovering ? 'grow' : ''}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+            onClick={handleClick}
+          >
+            Go To KILL.
+          </S.Button>
+        </S.SignInDiv>
+      </Layout>
+    </>
   );
 }
 
