@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { theme } from '../../styles/theme';
 
 export const ModalBackground = styled.div`
   height: 100vh;
@@ -16,7 +17,7 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalBody = styled.div`
-  background-color: white;
+  background-color: ${theme.color.gray};
   min-width: 700px;
   max-width: 800px;
   min-height: 400px;
