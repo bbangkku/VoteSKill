@@ -19,6 +19,7 @@ const day = {
 const borderRadius = {
   s: '10px',
   m: '20px',
+  l: '25%',
 };
 
 export const theme = {
