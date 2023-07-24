@@ -4,6 +4,7 @@ import Main from 'pages/Main/Main';
 import SignIn from 'pages/SignIn/SignIn';
 import TestPage from 'pages/TestPage';
 import Waiting from 'pages/WaitingRoom/Waiting';
+import CamScreen from 'pages/GameRoom/CamScreen';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function Router() {
@@ -16,7 +17,7 @@ function Router() {
         {/* <Route path="/room/:roomId" element={<Waiting />} /> */}
         <Route path="/room" element={<Waiting />} />
 
-        <Route path="/game/:gameId" />
+        <Route path="/game/:gameId" element={<CamScreen />} />
 
         <Route path="/test" element={<TestPage />} />
         <Route path="/kakao/callback" element={<KakaoLogin />} />
