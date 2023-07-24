@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import * as S from 'pages/Lobby/Lobby.Style';
+import useModal from 'hooks/useModal';
+import MakeRoomModal from 'components/makeroommodal/MakeRoomModal';
+import Modal from 'components/modal/Modal';
 
 function MakeRoom() {
+  const { openModal } = useModal();
+
   return (
     <S.Bottom>
-      <S.MakeRoomButton>방만들기 </S.MakeRoomButton>
+      <S.MakeRoomButton onClick={openModal}>방만들기 </S.MakeRoomButton>
+      <Modal>
+        <MakeRoomModal />
+      </Modal>
     </S.Bottom>
   );
 }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import * as S from 'pages/WaitingRoom/Waiting.Style';
+import * as S from 'pages/Waiting/Waiting.Style';
 
 function IdList() {
   const Items = ['병국', '석준', '정인', '채영', '종명', '종호', '아무개', '유유'];
-
+  const onClickDrop = () => {};
   return (
     <S.Square>
       {Items.map((item) => (
@@ -19,7 +19,7 @@ function IdList() {
         >
           <br />
           {item}
-          <S.OutButton>강퇴</S.OutButton>
+          <S.OutButton onClick={onClickDrop}>강퇴</S.OutButton>
         </S.Container>
       ))}
     </S.Square>

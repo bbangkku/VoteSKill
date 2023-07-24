@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as S from 'pages/WaitingRoom/Waiting.Style';
+import * as S from 'pages/Waiting/Waiting.Style';
 
 function Chat() {
   return (
