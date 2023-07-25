@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as S from 'pages/Lobby/Lobby.Style';
 import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
-import RoomList from './RoomList';
+import RoomList from '../RoomList/RoomList';
 function SearchRoom() {
   const [placeholder, setPlaceholder] = useState('방 제목을 입력해주세요.');
   const [isHovering, setIsHovering] = useState(false);
