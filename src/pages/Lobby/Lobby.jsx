@@ -5,6 +5,7 @@ import MakeRoom from './MakeRoom/MakeRoom';
 import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
 import RoomList from './RoomList/RoomList';
+import SearchMakeRoom from './SearchMakeRoom/SearchMakeRoom';
 
 function Lobby() {
   return (
@@ -12,8 +13,9 @@ function Lobby() {
       <Header />
       <S.Container>
         <S.Center>
-          <SearchRoom />
-          <RoomList />
+          {/* <SearchRoom />
+          <RoomList /> */}
+          <SearchMakeRoom />
         </S.Center>
         <MakeRoom />
       </S.Container>
