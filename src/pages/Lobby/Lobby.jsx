@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import * as S from 'pages/Lobby/Lobby.Style';
-import SearchRoom from './SearchRoom';
-import MakeRoom from './MakeRoom';
+import SearchRoom from './SearchRoom/SearchRoom';
+import MakeRoom from './MakeRoom/MakeRoom';
 import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
-import RoomList from './RoomList';
+import RoomList from './RoomList/RoomList';
 
 function Lobby() {
   return (

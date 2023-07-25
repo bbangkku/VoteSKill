@@ -19,7 +19,7 @@ function Router() {
         <Route path="/game/:gameId" element={<GameRoom />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/kakao/callback" element={<KakaoLogin />} />
-        <Route path="/room" element={<WaitingRoom />} />
+        <Route path="/waitingroom" element={<WaitingRoom />} />
       </Routes>
     </BrowserRouter>
   );
