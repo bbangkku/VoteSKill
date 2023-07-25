@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as S from 'pages/Lobby/Lobby.Style';
+// import { Scrollbars } from 'react-custom-scrollbars';
 
 function RoomList() {
   const Items = ['맢맢맢', '봇츠킬', '이겨내', '행복하게', '즐겜', '정인'];

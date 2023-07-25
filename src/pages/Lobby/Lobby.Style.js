@@ -1,9 +1,15 @@
 import styled from 'styled-components';
+// 구글 폰트 스타일 시트 URL 생성
+const fontUrl = 'https://fonts.googleapis.com/css2?family=Dokdo&family=Gasoek+One&display=swap';
 
+// 새로운 <link> 태그 생성
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = fontUrl;
 export const Container = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: grey;
+  /* background-color: grey; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -11,7 +17,7 @@ export const Container = styled.div`
 `;
 
 export const Bottom = styled.div`
-  background-color: yellow;
+  /* background-color: yellow; */
   bottom: 0%;
   height: 15%;
   width: 100%;
@@ -19,12 +25,15 @@ export const Bottom = styled.div`
   text-align: center;
 `;
 export const MakeRoomButton = styled.button`
-  background-color: red;
-  font-size: 30px;
+  background-image: linear-gradient(to bottom, red, pink);
+  font-size: 35px;
+  font-family: 'Dokdo', cursive;
+  border: 4px solid red;
+  border-radius: 7px;
 `;
 
 export const Center = styled.div`
-  background-color: blue;
+  /* background-color: blue; */
   position: relative;
   width: 100%;
   height: 100%;
@@ -77,6 +86,11 @@ export const RoomSquare = styled.div`
   padding: 40px;
   /* background-color: yellow; */
   border: 30px solid gold;
+
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 `;
 
 export const RoomContainer = styled.div`

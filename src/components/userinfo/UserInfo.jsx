@@ -84,8 +84,6 @@ function WinRate() {
   useEffect(() => {
     // 백엔드로 부터 승, 패 받아오기
     setRate({ win: 70, lose: 30, rate: Math.round((70 / (70 + 30)) * 100) });
-    console.log(rate.rate);
-    console.log(rank);
   }, []);
 
   useEffect(() => {

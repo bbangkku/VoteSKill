@@ -3,8 +3,8 @@ import Lobby from 'pages/Lobby/Lobby';
 import Main from 'pages/Main/Main';
 import SignIn from 'pages/SignIn/SignIn';
 import TestPage from 'pages/TestPage';
-import WaitingRoom from 'pages/WaitingRoom/WaitingRoom';
-import CamScreen from 'pages/GameRoom/CamScreen';
+import Waiting from 'pages/Waiting/Waiting';
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function Router() {
