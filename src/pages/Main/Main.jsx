@@ -22,7 +22,7 @@ function Main() {
   const navigateToLobby = () => {
     if (isSign) {
       setSign(true);
-      navigate('/lobby');
+      navigate('/game/:1');
     } else {
       navigate('/signin');
     }
