@@ -1,7 +1,8 @@
 import Header from 'components/header/Header';
 import Layout from 'components/layout/Layout';
 import useDayChange from 'hooks/useDayChange';
-import * as S from 'pages/GameRoom/CamScreen.Style';
+import * as S from 'pages/GameRoom/GameRoom.Style';
+import CamScreen from './CamScreen';
 // 낮이면 -> background change
 // 밤이면  -> theme : night
 function GameRoom() {
@@ -20,16 +21,10 @@ function GameRoom() {
       <Header />
       <S.ScreenWrapper>
         <S.ScreenGroup>
-          <S.Screen></S.Screen>
-          <S.Screen></S.Screen>
-          <S.Screen></S.Screen>
-          <S.Screen></S.Screen>
+          <CamScreen></CamScreen>
         </S.ScreenGroup>
         <S.ScreenGroup>
-          <S.Screen></S.Screen>
-          <S.Screen></S.Screen>
-          <S.Screen></S.Screen>
-          <S.Screen></S.Screen>
+          <CamScreen></CamScreen>
         </S.ScreenGroup>
       </S.ScreenWrapper>
     </Layout>
