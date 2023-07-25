@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as S from 'pages/Lobby/Lobby.Style';
+import * as S from 'pages/Lobby/MakeRoom/MakeRoom.Style';
 import useModal from 'hooks/useModal';
 import MakeRoomModal from 'components/makeroommodal/MakeRoomModal';
 import Modal from 'components/modal/Modal';

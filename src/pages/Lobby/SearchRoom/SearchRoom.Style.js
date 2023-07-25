@@ -6,40 +6,6 @@ const fontUrl = 'https://fonts.googleapis.com/css2?family=Dokdo&family=Gasoek+On
 const link = document.createElement('link');
 link.rel = 'stylesheet';
 link.href = fontUrl;
-export const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-  /* background-color: grey; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const Bottom = styled.div`
-  /* background-color: yellow; */
-  bottom: 0%;
-  height: 15%;
-  width: 100%;
-  position: absolute;
-  text-align: center;
-`;
-export const MakeRoomButton = styled.button`
-  background-image: linear-gradient(to bottom, red, pink);
-  font-size: 35px;
-  font-family: 'Dokdo', cursive;
-  border: 4px solid red;
-  border-radius: 7px;
-`;
-
-export const Center = styled.div`
-  /* background-color: blue; */
-  position: relative;
-  width: 100%;
-  height: 100%;
-  /* margin: 100px; */
-  text-align: center;
-`;
 
 export const InputRoomName = styled.input`
   width: 30rem;
@@ -50,11 +16,11 @@ export const InputRoomName = styled.input`
   background: greenyellow;
   border: none;
   border-radius: 5px;
+  opacity: 0.4; /* 80% 불투명도 */
 `;
 export const Button = styled.button`
   width: 15rem;
   height: 5vh;
-  /* margin: 0 auto; */
   color: tomato;
   font-size: 1.1em;
   justify-content: center;
@@ -73,36 +39,4 @@ export const LevelCheckDiv = styled.div`
   justify-content: space-between;
   margin-left: 40%;
   margin-right: 40%;
-`;
-
-export const RoomSquare = styled.div`
-  height: 60vh;
-  display: grid;
-  /* place-items: center; */
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 40px;
-  row-gap: 40px;
-  padding: 40px;
-  /* background-color: yellow; */
-  border: 30px solid gold;
-
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    width: 0;
-  }
-`;
-
-export const RoomContainer = styled.div`
-  font-size: 15px;
-  font-weight: bold;
-  font-family: 'Shrikhand';
-  background-color: red;
-  text-align: left;
-`;
-
-export const People = styled.div``;
-
-export const Logo = styled.img`
-  height: 10px;
 `;
