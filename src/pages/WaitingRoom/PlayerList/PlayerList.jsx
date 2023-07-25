@@ -1,14 +1,9 @@
-<<<<<<<< HEAD:src/pages/Waiting/IdList.jsx
-import React, { useState } from 'react';
-import * as S from 'pages/Waiting/Waiting.Style';
-========
 import React from 'react';
 import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
->>>>>>>> dev:src/pages/Waiting/PlayerList/PlayerList.jsx
 
 function PlayerList() {
   const Items = ['병국', '석준', '정인', '채영', '종명', '종호', '아무개', '유유'];
-  const onClickDrop = () => {};
+
   return (
     <S.Square>
       {Items.map((item) => (
@@ -24,7 +19,7 @@ function PlayerList() {
         >
           <br />
           {item}
-          <S.OutButton onClick={onClickDrop}>강퇴</S.OutButton>
+          <S.OutButton>강퇴</S.OutButton>
         </S.Container>
       ))}
     </S.Square>
