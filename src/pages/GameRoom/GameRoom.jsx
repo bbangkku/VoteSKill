@@ -22,8 +22,14 @@ function GameRoom() {
       <S.ScreenWrapper>
         <S.ScreenGroup>
           <CamScreen></CamScreen>
+          <CamScreen></CamScreen>
+          <CamScreen></CamScreen>
+          <CamScreen></CamScreen>
         </S.ScreenGroup>
         <S.ScreenGroup>
+          <CamScreen></CamScreen>
+          <CamScreen></CamScreen>
+          <CamScreen></CamScreen>
           <CamScreen></CamScreen>
         </S.ScreenGroup>
       </S.ScreenWrapper>
