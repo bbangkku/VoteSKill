@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 export const Square = styled.div`
   width: 50%;
-  height: 100vh;
+  /* height: 100vh;  */
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr;

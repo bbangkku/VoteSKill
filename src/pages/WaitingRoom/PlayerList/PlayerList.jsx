@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 
 function PlayerList() {
-  const Items = ['병국', '석준', '정인', '채영', '종명', '종호', '아무개', '유유'];
+  const Items = ['병국', '석준', '정인', '채영', '종명', '종호'];
 
   return (
     <S.Square>
