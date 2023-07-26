@@ -14,6 +14,8 @@ export const Square = styled.div`
 export const Container = styled.div`
   font-size: 20px;
   font-weight: bold;
+  text-align: center;
+  justify-content: center;
 `;
 
 export const OutButton = styled.button`
