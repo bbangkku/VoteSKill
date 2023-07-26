@@ -8,6 +8,7 @@ import RoomList from './RoomList/RoomList';
 import SearchMakeRoom from './SearchMakeRoom/SearchMakeRoom';
 
 function Lobby() {
+  //todo : 백엔드에 방 목록 get 요청
   return (
     <Layout>
       <Header />
