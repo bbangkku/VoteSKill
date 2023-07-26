@@ -18,20 +18,22 @@ export const SignInDiv = styled.div`
   /* margin-top: 50%; */
 `;
 
-export const Textarea = styled.input`
+export const NickName = styled.input`
   width: 40rem;
   height: 6vh;
   margin: auto;
   font-size: 2em;
   text-align: center;
-  color: ${(props) => props.$inputColor || 'red'};
-  background: papayawhip;
+  background: rgba(255, 255, 255, 0.8);
+  background-image: radial-gradient(at 50% 50%, hsla(17, 62%, 65%, 1) 0px, transparent 50%);
+  /* radial-gradient(at 9% 32%, hsla(222, 75%, 60%, 1) 0px, transparent 50%); */
   border: none;
   border-radius: 3px;
   position: absolute;
   top: 70%;
   left: 38%;
   font-family: 'Dokdo', cursive;
+  box-shadow: 2px 2px 8px 1px red;
 `;
 export const Container = styled.div`
   font-size: 20px;
@@ -41,17 +43,19 @@ export const Container = styled.div`
 `;
 
 export const Button = styled.button`
-  width: 15rem;
+  width: 16rem;
   height: 7vh;
   margin: 0 auto;
   color: tomato;
-  font-size: 1.8em;
+  font-size: 2em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 2px solid #bf4f74;
-  border-radius: 3px;
+  border-radius: 15px;
+  box-shadow: 7px 6px 6px 6px red;
+
   &.grow {
     background-color: ${({ theme }) => theme.color.red};
   }
