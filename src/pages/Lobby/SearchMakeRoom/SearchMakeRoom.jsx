@@ -4,7 +4,7 @@ import { constSelector } from 'recoil';
 
 // 필터링 한 목록을 전달할거임.
 function SearchMakeRoom() {
-  const [placeholder, setPlaceholder] = useState('방 제목을 입력해주세요.');
+  const [placeholder, setPlaceholder] = useState('');
   const [isHovering, setIsHovering] = useState(false);
 
   const handleFocus = () => {
@@ -12,7 +12,7 @@ function SearchMakeRoom() {
   };
 
   const handleBlur = () => {
-    setPlaceholder('방 제목을 입력해주세요.');
+    setPlaceholder('');
   };
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -54,12 +54,24 @@ function SearchMakeRoom() {
   return (
     <>
       <div>
-        <S.InputRoomName
+        <S.SearchBarWrapper>
+          <S.SearchInput
+            type="search"
+            name="search"
+            autoComplete="off"
+            required
+            placeholder={placeholder}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={saveRoomName}
+          />
+        </S.SearchBarWrapper>
+        {/* <S.InputRoomName
           placeholder={placeholder}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={saveRoomName}
-        ></S.InputRoomName>
+        ></S.InputRoomName> */}
       </div>
       <S.LevelCheckDiv>
         <input type="checkbox" name="gameing" />

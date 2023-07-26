@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 // 구글 폰트 스타일 시트 URL 생성
-const fontUrl = 'https://fonts.googleapis.com/css2?family=Dokdo&family=Gasoek+One&display=swap';
-
+const fontUrl = 'https://fonts.googleapis.com/css2?family=Dokdo&family=Gasoek+One&family=REM&display=swap';
 // 새로운 <link> 태그 생성
 const link = document.createElement('link');
 link.rel = 'stylesheet';
@@ -68,4 +67,34 @@ export const LevelCheckDiv = styled.div`
   justify-content: space-between;
   margin-left: 40%;
   margin-right: 40%;
+`;
+//
+//
+//
+//
+//
+
+export const SearchBarWrapper = styled.form`
+  display: flex;
+  justify-content: center;
+  input {
+    transition: all 0.3s ease-out;
+  }
+  input:focus,
+  input:valid {
+    width: 20%;
+    background: grey;
+    box-shadow: 0 0 0 0.1em yellow inset;
+    outline: transparent;
+  }
+`;
+
+export const SearchInput = styled.input`
+  width: 3em;
+  height: 3em;
+  border-radius: 1.5em;
+  box-shadow: 0 0 0 20em pink inset;
+  transform: scale(1);
+  text-align: center;
+  font-family: 'REM', sans-serif;
 `;
