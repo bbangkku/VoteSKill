@@ -34,6 +34,7 @@ function SearchMakeRoom() {
 
   const handleItemClick = (item) => {
     // 방에 입장
+    //todo : 백엔드에 해당 방 정보 요청, 해당 방대기실로 이동
     setSelectRoom(item);
     console.log(item);
   };

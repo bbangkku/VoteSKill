@@ -46,10 +46,56 @@ export const InputBar = styled.input`
   text-align: center;
   border: 1px solid black;
   font-family: 'Gasoek One', sans-serif;
+  width: 300px;
+  height: 45px;
+  border-radius: 10px;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--font-color);
+  padding: 5px 10px;
+  outline: none;
 `;
-
 export const RoomDiv = styled.div`
   font-size: 20px;
   color: #a164a1;
   font-family: 'Gasoek One', sans-serif;
+`;
+
+export const CheckBox1 = styled.input`
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  appearance: none;
+  background-color: #bbb;
+  transition: all 0.3s;
+
+  ::before {
+    content: '';
+    position: absolute;
+    border: solid #fff;
+    display: block;
+    width: 0.3em;
+    height: 0.6em;
+    border-width: 0 0.2em 0.2em 0;
+    z-index: 1;
+    opacity: 0;
+    right: calc(50% - 0.3em);
+    top: calc(50% - 0.6em);
+    transform: rotate(0deg);
+    transition: all 0.3s;
+    transform-origin: center center;
+  }
+
+  :checked {
+    animation: a 0.3s ease-in forwards;
+    background-color: rgb(120, 190, 120);
+  }
+
+  :checked::before {
+    opacity: 1;
+    transform: rotate(405deg);
+  }
 `;
