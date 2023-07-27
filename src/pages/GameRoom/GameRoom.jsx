@@ -21,16 +21,26 @@ function GameRoom() {
       <Header />
       <S.ScreenWrapper>
         <S.ScreenGroup>
-          <CamScreen></CamScreen>
-          <CamScreen></CamScreen>
-          <CamScreen></CamScreen>
-          <CamScreen></CamScreen>
+          <S.PreVideoArea>
+            <CamScreen />
+          </S.PreVideoArea>
+          <S.PreVideoArea>
+            <CamScreen />
+          </S.PreVideoArea>
+          <S.PreVideoArea>
+            <CamScreen />
+          </S.PreVideoArea>
         </S.ScreenGroup>
         <S.ScreenGroup>
-          <CamScreen></CamScreen>
-          <CamScreen></CamScreen>
-          <CamScreen></CamScreen>
-          <CamScreen></CamScreen>
+          <S.PreVideoArea>
+            <CamScreen />
+          </S.PreVideoArea>
+          <S.PreVideoArea>
+            <CamScreen />
+          </S.PreVideoArea>
+          <S.PreVideoArea>
+            <CamScreen />
+          </S.PreVideoArea>
         </S.ScreenGroup>
       </S.ScreenWrapper>
     </Layout>

@@ -7,11 +7,19 @@ export const CamScreen = styled.div`
   height: 250px;
   left: 10%;
   border-radius: ${theme.borderRadius.l};
-  border: 5px solid ${theme.day.start};
+  border: 5px solid black;
 `;
 
 export const CustomScreen = styled.video`
   width: 300px;
   height: 250px;
+  border: 5px solid black;
   border-radius: ${theme.borderRadius.s};
+`;
+
+export const JoinInput = styled.input`
+  border-radius: 20px;
+  border: 3px solid black;
+  padding: 5px;
+  font-size: large;
 `;
