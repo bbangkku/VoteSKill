@@ -1,5 +1,5 @@
-import { styled } from 'styled-components';
-import { theme } from '../../styles/theme';
+import styled from 'styled-components';
+import { theme } from 'styles/theme';
 
 export const ModalBackground = styled.div`
   height: 100vh;
@@ -17,7 +17,6 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalBody = styled.div`
-  background-color: ${theme.color.gray};
   // 낮 알림 모달
   background: linear-gradient(to top, ${theme.day.start}, ${theme.day.end} 80%);
   text-align: center;
@@ -35,4 +34,13 @@ export const ModalExitButton = styled.div`
   height: 40px;
   display: flex;
   justify-content: end;
+`;
+
+export const DayImage = styled.img`
+  width: 300px;
+  height: 300px;
+`;
+
+export const DayText = styled.p`
+  font-size: xx-large;
 `;

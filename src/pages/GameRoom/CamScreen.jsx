@@ -4,7 +4,7 @@ import axios from 'axios';
 import { CustomScreen, JoinInput } from './CamScreen.Style';
 
 function CamScreen() {
-  const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000';
+  const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://demos.openvidu.io/';
   //const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
   const [OV, setOV] = useState();
@@ -131,7 +131,7 @@ function CamScreen() {
                 <input className="form-control" type="text" id="sessionId" value={initUserData.mySessionId} required />
               </p> */}
               <p className="text-center">
-                <JoinInput className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
+                <JoinInput className="btn btn-lg btn-success" name="commit" type="submit" value="참가하기" />
               </p>
             </form>
           </div>
