@@ -18,6 +18,8 @@ export const ModalBackground = styled.div`
 
 export const ModalBody = styled.div`
   background-color: ${theme.color.gray};
+  // 낮 알림 모달
+  //background: linear-gradient(to top, ${theme.day.start}, ${theme.day.end} 80%);
   text-align: center;
 
   min-width: 700px;

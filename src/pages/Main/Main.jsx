@@ -27,17 +27,18 @@ function Main() {
     if (isSign) {
       setSign(true);
       //navigate('/game/:1');
+      navigate('/lobby');
     } else {
       navigate('/signin');
     }
   };
-  // onClick={navigateToLobby}
+  // onClick={openModal}
   return (
     <Layout isMain={true}>
-      <S.KakaoLoginButton onClick={openModal}></S.KakaoLoginButton>
-      <Modal>
+      <S.KakaoLoginButton onClick={navigateToLobby}></S.KakaoLoginButton>
+      {/* <Modal>
         <Day />
-      </Modal>
+      </Modal> */}
     </Layout>
   );
 }
