@@ -1,3 +1,4 @@
+import WaitingRoom from 'pages/WaitingRoom/WaitingRoom';
 import styled from 'styled-components';
 // 구글 폰트 스타일 시트 URL 생성
 const fontUrl = 'https://fonts.googleapis.com/css2?family=Dokdo&family=Gasoek+One&family=REM&display=swap';
@@ -93,8 +94,41 @@ export const SearchInput = styled.input`
   width: 3em;
   height: 3em;
   border-radius: 1.5em;
-  box-shadow: 0 0 0 20em pink inset;
+  box-shadow: 0 0 0 20em #f2ee9d inset;
   transform: scale(1);
   text-align: center;
   font-family: 'REM', sans-serif;
+`;
+
+// 체크박스 커스텀
+export const CheckBoxWrapper = styled.div`
+  display: inline-block;
+  vertical-align: middle;
+`;
+
+export const CheckBoxInput = styled.input`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+
+  &:checked + label {
+    background-color: purple;
+    color: white;
+  }
+`;
+
+export const CheckboxLabel = styled.label`
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5rem;
+  background-color: white;
+  font-size: 2rem;
+  color: #383838;
+  font-family: 'Dokdo', sans-serif;
 `;

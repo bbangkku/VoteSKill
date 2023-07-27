@@ -54,7 +54,7 @@ export const Button = styled.button`
   align-items: center;
   border: 2px solid #bf4f74;
   border-radius: 15px;
-  box-shadow: 7px 6px 6px 6px red;
+  box-shadow: 3px 2px 2px 2px red;
 
   &.grow {
     background-color: ${({ theme }) => theme.color.red};

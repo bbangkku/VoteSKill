@@ -7,6 +7,28 @@ function SearchMakeRoom() {
   const [placeholder, setPlaceholder] = useState('');
   const [isHovering, setIsHovering] = useState(false);
 
+  // 체크박스 상태관리
+  const checkLists = ['게임중', '초보', '중수', '고수'];
+  const [isChecked, setIsChecked] = useState(false);
+  const [checkedItems, setCheckedItems] = useState(new Set());
+  const checkItemHandler = (id, isChecked) => {
+    if (isChecked) {
+      checkedItems.add(id);
+      console.log(checkedItems);
+      setCheckedItems(checkedItems);
+    } else if (!isChecked) {
+      checkedItems.delete(id);
+      console.log(checkedItems);
+
+      setCheckedItems(checkedItems);
+    }
+  };
+  const checkHandled = ({ target }) => {
+    setIsChecked(!isChecked);
+    checkItemHandler(target.id, target.checked);
+  };
+  //////////////////////////////////
+
   const handleFocus = () => {
     setPlaceholder('');
   };
@@ -20,7 +42,6 @@ function SearchMakeRoom() {
   const handleMouseOut = () => {
     setIsHovering(false);
   };
-
   // 방 목록, 사람 수 받아와야 함
   const roomLists = ['맢맢맢 ', '봇츠킬 ', '이겨내 ', '행복하게 ', '즐겜 ', '정인 ', '예에 ', '스크롤되나? ', '된다 '];
   const personCount = ['1', '2', '3', '4', '5', '1', '3', '6', '1'];
@@ -50,7 +71,6 @@ function SearchMakeRoom() {
     setRoomName(event.target.value);
     filterRooms(event.target.value); // 입력된 방 이름으로 방 목록을 필터링
   };
-
   return (
     <>
       <div>
@@ -73,16 +93,14 @@ function SearchMakeRoom() {
           onChange={saveRoomName}
         ></S.InputRoomName> */}
       </div>
-      <S.LevelCheckDiv>
-        <input type="checkbox" name="gameing" />
-        <span style={{ color: '#00C3FF	' }}>게임중</span>
-        <input type="checkbox" name="min" />
-        <span style={{ color: '#00C3FF' }}>초보</span>
-        <input type="checkbox" name="mid" />
-        <span style={{ color: '#00C3FF' }}>중수</span>
-        <input type="checkbox" name="max" />
-        <span style={{ color: '#00C3FF' }}>고수</span>
-      </S.LevelCheckDiv>
+      {checkLists.map((item, index) => (
+        <S.CheckBoxWrapper key={(item, index)}>
+          <S.CheckBoxInput type="checkbox" id={item} name="level" onChange={(e) => checkHandled(e)} />
+          <S.CheckboxLabel htmlFor={item}>{item}</S.CheckboxLabel>
+        </S.CheckBoxWrapper>
+      ))}
+
+      <br />
       <br />
 
       <S.RoomSquare>
