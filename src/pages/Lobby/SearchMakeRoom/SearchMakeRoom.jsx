@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import * as S from 'pages/Lobby/SearchMakeRoom/SearchMakeRoom.Style';
-import { constSelector } from 'recoil';
+import { constSelector, useSetRecoilState, useRecoilValue } from 'recoil';
+import { roomAll, personCountAll, roomLevelAll, passwordRoomAll } from 'recoil/atoms/lobbyState';
 
 // 필터링 한 목록을 전달할거임.
+
 function SearchMakeRoom() {
+  // 방 검색 input
   const [placeholder, setPlaceholder] = useState('');
   const [isHovering, setIsHovering] = useState(false);
 
@@ -46,33 +49,12 @@ function SearchMakeRoom() {
   const handleMouseOut = () => {
     setIsHovering(false);
   };
-  // 방 목록, 사람 수 받아와야 함
-  const roomLists = [
-    '마피아 ',
-    '봇츠킬 ',
-    '이겨내 ',
-    '행복하게 ',
-    '즐겜 ',
-    '정인 ',
-    '예에 ',
-    '스크롤되나? ',
-    '된다 ',
-    '진짜',
-  ];
-  const personCount = ['1', '2', '3', '4', '5', '1', '3', '6', '1', '1'];
-  const roomLevel = [
-    '초보',
-    '중수',
-    '고수',
-    ['초보', '중수'],
-    ['초보', '중수', '고수'],
-    ['초보', '고수'],
-    ['중수', '고수'],
-    '중수',
-    '고수',
-    '초보',
-  ];
-  const passwordRoom = [true, false, true, false, true, true, false, false];
+
+  // Recoil 사용
+  const roomLists = useRecoilValue(roomAll);
+  const personCount = useRecoilValue(personCountAll);
+  const roomLevel = useRecoilValue(roomLevelAll);
+  const passwordRoom = useRecoilValue(passwordRoomAll);
 
   // 방에 입장할 때
   const [selectRoom, setSelectRoom] = useState(null);
@@ -110,20 +92,22 @@ function SearchMakeRoom() {
 
   return (
     <>
+      {/* 방제목 InputBar */}
       <div>
         <S.SearchBarWrapper>
           <S.SearchInput
             type="search"
             name="search"
-            autoComplete="off"
+            autoComplete="off" //자동완성
             required
-            placeholder={placeholder}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={saveRoomName}
           />
         </S.SearchBarWrapper>
       </div>
+
+      {/* Level 체크박스 */}
       {checkLists.map((item, index) => (
         <S.CheckBoxWrapper key={index}>
           <S.CheckBoxInput type="checkbox" id={index} name="level" onChange={(e) => checkHandled(e)} />
@@ -132,10 +116,10 @@ function SearchMakeRoom() {
           </S.CheckboxLabel>
         </S.CheckBoxWrapper>
       ))}
-
       <br />
       <br />
 
+      {/* 방 목록 및 인원수, 잠금상태 */}
       <S.RoomSquare>
         {filteredRooms.map((item, idx) => (
           <S.RoomContainer
@@ -162,23 +146,3 @@ function SearchMakeRoom() {
 }
 
 export default SearchMakeRoom;
-
-//  못한코드..
-// const Items = ['게임중', '초보', '중수', '고수'];
-// <S.LevelCheckDiv>
-//   {Items.map((item) => (
-//     <React.Fragment key={item}>
-//       <input type="checkbox" />
-//       {item}
-//     </React.Fragment>
-//   ))}
-// </S.LevelCheckDiv>
-
-// <S.Button
-//   type="submit"
-//   className={isHovering ? 'grow' : ''}
-//   onMouseOver={handleMouseOver}
-//   onMouseOut={handleMouseOut}
-// >
-//   방 검색
-// </S.Button>
