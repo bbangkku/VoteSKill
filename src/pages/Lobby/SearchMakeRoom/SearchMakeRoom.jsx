@@ -11,6 +11,7 @@ function SearchMakeRoom() {
   const checkLists = ['게임중', '초보', '중수', '고수'];
   const [isChecked, setIsChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState(new Set());
+  const [wantLevel, setWantLevel] = useState([]);
   const checkItemHandler = (id, isChecked) => {
     if (isChecked) {
       checkedItems.add(id);
@@ -26,6 +27,9 @@ function SearchMakeRoom() {
   const checkHandled = ({ target }) => {
     setIsChecked(!isChecked);
     checkItemHandler(target.id, target.checked);
+  };
+  const checkLevel = ({ target }) => {
+    console.log(target.id, 'asdasdas');
   };
   //////////////////////////////////
 
@@ -43,8 +47,31 @@ function SearchMakeRoom() {
     setIsHovering(false);
   };
   // 방 목록, 사람 수 받아와야 함
-  const roomLists = ['맢맢맢 ', '봇츠킬 ', '이겨내 ', '행복하게 ', '즐겜 ', '정인 ', '예에 ', '스크롤되나? ', '된다 '];
-  const personCount = ['1', '2', '3', '4', '5', '1', '3', '6', '1'];
+  const roomLists = [
+    '마피아 ',
+    '봇츠킬 ',
+    '이겨내 ',
+    '행복하게 ',
+    '즐겜 ',
+    '정인 ',
+    '예에 ',
+    '스크롤되나? ',
+    '된다 ',
+    '진짜',
+  ];
+  const personCount = ['1', '2', '3', '4', '5', '1', '3', '6', '1', '1'];
+  const roomLevel = [
+    '초보',
+    '중수',
+    '고수',
+    ['초보', '중수'],
+    ['초보', '중수', '고수'],
+    ['초보', '고수'],
+    ['중수', '고수'],
+    '중수',
+    '고수',
+    '초보',
+  ];
   const passwordRoom = [true, false, true, false, true, true, false, false];
 
   // 방에 입장할 때
@@ -61,7 +88,7 @@ function SearchMakeRoom() {
   };
 
   // 방 제목
-  const [roomName, setRoomName] = React.useState('');
+  const [roomName, setRoomName] = React.useState(roomLists);
 
   const filterRooms = (roomName) => {
     const filteredRooms = roomLists.filter((roomList) => roomList.includes(roomName));
@@ -71,6 +98,16 @@ function SearchMakeRoom() {
     setRoomName(event.target.value);
     filterRooms(event.target.value); // 입력된 방 이름으로 방 목록을 필터링
   };
+
+  const addRoom = (item) => {
+    console.log(`${item} 생성완료 ! `);
+    const newRoom = roomName.filter((data) => {
+      console.log(data);
+      return data !== item;
+    });
+    setRoomName(newRoom);
+  };
+
   return (
     <>
       <div>
@@ -86,17 +123,13 @@ function SearchMakeRoom() {
             onChange={saveRoomName}
           />
         </S.SearchBarWrapper>
-        {/* <S.InputRoomName
-          placeholder={placeholder}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={saveRoomName}
-        ></S.InputRoomName> */}
       </div>
       {checkLists.map((item, index) => (
-        <S.CheckBoxWrapper key={(item, index)}>
-          <S.CheckBoxInput type="checkbox" id={item} name="level" onChange={(e) => checkHandled(e)} />
-          <S.CheckboxLabel htmlFor={item}>{item}</S.CheckboxLabel>
+        <S.CheckBoxWrapper key={index}>
+          <S.CheckBoxInput type="checkbox" id={index} name="level" onChange={(e) => checkHandled(e)} />
+          <S.CheckboxLabel htmlFor={index} onClick={(e) => checkLevel(e)}>
+            {item}
+          </S.CheckboxLabel>
         </S.CheckBoxWrapper>
       ))}
 
@@ -110,9 +143,11 @@ function SearchMakeRoom() {
             onClick={() => handleItemClick(item)}
             style={{
               backgroundImage: 'linear-gradient(to top, red, yellow)',
-              border: '10px solid black',
+              border: '7px solid black',
               borderRadius: '30px',
               textAlign: 'center',
+              fontFamily: 'Dokdo',
+              fontSize: '25px',
             }}
           >
             {item}

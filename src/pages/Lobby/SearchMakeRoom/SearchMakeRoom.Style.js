@@ -8,17 +8,16 @@ link.rel = 'stylesheet';
 link.href = fontUrl;
 
 export const RoomSquare = styled.div`
-  height: 60vh;
+  height: 55vh;
   display: grid;
   /* place-items: center; */
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 150px;
-  row-gap: 30px;
-  padding: 40px;
-  /* background-color: yellow; */
-  border: 10px solid #a0d1f7;
 
+  column-gap: 130px;
+  row-gap: 20px;
+  padding: 40px;
+  border: 10px solid #7e1717;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0;
@@ -97,7 +96,8 @@ export const SearchInput = styled.input`
   box-shadow: 0 0 0 20em #f2ee9d inset;
   transform: scale(1);
   text-align: center;
-  font-family: 'REM', sans-serif;
+  font-family: 'Dokdo', sans-serif;
+  font-size: 20px;
 `;
 
 // 체크박스 커스텀

@@ -8,7 +8,7 @@ link.rel = 'stylesheet';
 link.href = fontUrl;
 // 새로운 <link> 태그 생성
 
-export const UserInfoBackground = styled(ModalBody)`
+export const RoomMakeBackground = styled(ModalBody)`
   background-color: ${theme.color.darkgray};
   width: 100%;
   height: 100%;

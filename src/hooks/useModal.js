@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { modalState } from 'recoil/atoms/modalState';
 
 const useModal = () => {
+  console.log('asdasdasds');
   const [modalToggleState, setModalToggleState] = useRecoilState(modalState);
 
   const openModal = useCallback(() => {
