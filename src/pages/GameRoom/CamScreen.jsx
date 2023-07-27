@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
-import { CustomScreen } from './CamScreen.Style';
+import { CustomScreen, JoinInput } from './CamScreen.Style';
 
 function CamScreen() {
-  const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://demos.openvidu.io/';
-  const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+  const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000';
+  //const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
   const [OV, setOV] = useState();
   const [initUserData, setInitUserData] = useState({
-    mySessionId: 'JungInLee0130',
-    myUserName: 'amongus',
+    mySessionId: 'OPENVIDUAPP',
+    myUserName: 'OPENVIDUAPP',
   });
   const [session, setSession] = useState();
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
@@ -22,39 +22,30 @@ function CamScreen() {
       APPLICATION_SERVER_URL + 'api/sessions',
       { customSessionId: sessionId },
       {
+        //Authorization: `Basic ${btoa(`OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`)}`,
         headers: { 'Content-Type': 'application/json' },
       },
     );
-    console.log(response);
     return response.data; // The sessionId
   };
 
   const createToken = async (sessionId) => {
     try {
-      console.log('createToken : ' + sessionId);
       const response = await axios.post(
         APPLICATION_SERVER_URL + `api/sessions/${sessionId}/connections`,
         {},
         {
+          //Authorization: `Basic ${btoa(`OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`)}`,
           headers: { 'Content-Type': 'application/json' },
         },
       );
-      console.log('createToken : ', response.data);
       return response.data; // The token
     } catch (error) {
-      console.error('Error creating token:', error);
       return null;
     }
   };
 
-  // const getToken = async (sessionId: string) => {
-  //   return createSession(sessionId).then((sessionId: any) =>
-  //     createToken(sessionId)
-  //   );
-  // };
-
   const getToken = async () => {
-    console.log('getToken before : ' + initUserData.mySessionId);
     const sessionId = await createSession(initUserData.mySessionId);
     console.log('getToken : ' + sessionId);
     return createToken(sessionId);
@@ -129,18 +120,18 @@ function CamScreen() {
       {session === undefined ? (
         <div id="join">
           <div id="join-dialog" className="jumbotron vertical-center">
-            <h1> Join a video session </h1>
+            {/* <h1> Join a video session </h1> */}
             <form className="form-group" onSubmit={joinSession}>
-              <p>
+              {/* <p>
                 <label>Participant: </label>
                 <input className="form-control" type="text" id="userName" value={initUserData.myUserName} required />
               </p>
               <p>
                 <label> Session: </label>
                 <input className="form-control" type="text" id="sessionId" value={initUserData.mySessionId} required />
-              </p>
+              </p> */}
               <p className="text-center">
-                <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
+                <JoinInput className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
               </p>
             </form>
           </div>
