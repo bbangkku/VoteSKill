@@ -14,8 +14,6 @@ function Lobby() {
       <Header />
       <S.Container>
         <S.Center>
-          {/* <SearchRoom />
-          <RoomList /> */}
           <SearchMakeRoom />
         </S.Center>
         <MakeRoom />

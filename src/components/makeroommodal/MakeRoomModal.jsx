@@ -5,43 +5,49 @@ import axios from 'axios';
 function MakeRoomModal() {
   return (
     <div>
-      <S.UserInfoBackground>
+      <S.RoomMakeBackground>
         <SelectRoomName></SelectRoomName>
-      </S.UserInfoBackground>
+      </S.RoomMakeBackground>
     </div>
   );
 }
 
-// Parent
 function SelectRoomName() {
+  // axios 방 생성
   const API = axios.create({
     baseURL: 'http://localhost:3000',
   });
 
-  const [roomName, setRoomName] = React.useState('');
-  const [roomPassword, setRoomPassword] = React.useState('');
-  // const [levels, setLevels] = React.useState('');
+  // 방 제목 입력
+  const [roomNameInput, setRoomNameInput] = React.useState('');
+
+  // 방 비번 입력
+  const [roomPasswordInput, setRoomPasswordInput] = React.useState('');
+
+  // 방 레벨 입력
+  const [levels, setLevels] = React.useState(new Set());
+
   const [boxChecked, setboxChecked] = React.useState(false);
   const handleCheckboxChange = () => {
     setboxChecked(!boxChecked);
   };
   const roomNameInfo = (event) => {
-    setRoomName(event.target.value);
+    setRoomNameInput(event.target.value);
     console.log(event.target.value);
   };
   const roomPassInfo = (event) => {
-    setRoomPassword(event.target.value);
+    setRoomPasswordInput(event.target.value);
   };
   const saveRoomInfo = (event) => {
-    setRoomName(event.target.value);
-    setRoomPassword(event.target.value);
+    setRoomNameInput(event.target.value);
+    setRoomPasswordInput(event.target.value);
   };
   const onClick = (item) => {
     // console.log(roomName);
     // console.log(roomPassword);
     const requestData = {
-      roomname: roomName,
-      roompassword: roomPassword,
+      roomname: roomNameInput,
+      roompassword: roomPasswordInput,
       // levels: roomLevels,
     };
     window.location.href = 'waitingroom';

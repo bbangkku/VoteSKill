@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import * as S from 'pages/Lobby/SearchMakeRoom/SearchMakeRoom.Style';
-import { constSelector } from 'recoil';
+import { constSelector, useSetRecoilState, useRecoilValue } from 'recoil';
+import { roomAll, personCountAll, roomLevelAll, passwordRoomAll } from 'recoil/atoms/lobbyState';
 
 // 필터링 한 목록을 전달할거임.
+
 function SearchMakeRoom() {
+  // 방 검색 input
   const [placeholder, setPlaceholder] = useState('');
   const [isHovering, setIsHovering] = useState(false);
 
@@ -11,6 +14,7 @@ function SearchMakeRoom() {
   const checkLists = ['게임중', '초보', '중수', '고수'];
   const [isChecked, setIsChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState(new Set());
+  const [wantLevel, setWantLevel] = useState([]);
   const checkItemHandler = (id, isChecked) => {
     if (isChecked) {
       checkedItems.add(id);
@@ -27,6 +31,9 @@ function SearchMakeRoom() {
     setIsChecked(!isChecked);
     checkItemHandler(target.id, target.checked);
   };
+  const checkLevel = ({ target }) => {
+    console.log(target.id, 'asdasdas');
+  };
   //////////////////////////////////
 
   const handleFocus = () => {
@@ -42,10 +49,12 @@ function SearchMakeRoom() {
   const handleMouseOut = () => {
     setIsHovering(false);
   };
-  // 방 목록, 사람 수 받아와야 함
-  const roomLists = ['맢맢맢 ', '봇츠킬 ', '이겨내 ', '행복하게 ', '즐겜 ', '정인 ', '예에 ', '스크롤되나? ', '된다 '];
-  const personCount = ['1', '2', '3', '4', '5', '1', '3', '6', '1'];
-  const passwordRoom = [true, false, true, false, true, true, false, false];
+
+  // Recoil 사용
+  const roomLists = useRecoilValue(roomAll);
+  const personCount = useRecoilValue(personCountAll);
+  const roomLevel = useRecoilValue(roomLevelAll);
+  const passwordRoom = useRecoilValue(passwordRoomAll);
 
   // 방에 입장할 때
   const [selectRoom, setSelectRoom] = useState(null);
@@ -61,7 +70,7 @@ function SearchMakeRoom() {
   };
 
   // 방 제목
-  const [roomName, setRoomName] = React.useState('');
+  const [roomName, setRoomName] = React.useState(roomLists);
 
   const filterRooms = (roomName) => {
     const filteredRooms = roomLists.filter((roomList) => roomList.includes(roomName));
@@ -71,38 +80,46 @@ function SearchMakeRoom() {
     setRoomName(event.target.value);
     filterRooms(event.target.value); // 입력된 방 이름으로 방 목록을 필터링
   };
+
+  const addRoom = (item) => {
+    console.log(`${item} 생성완료 ! `);
+    const newRoom = roomName.filter((data) => {
+      console.log(data);
+      return data !== item;
+    });
+    setRoomName(newRoom);
+  };
+
   return (
     <>
+      {/* 방제목 InputBar */}
       <div>
         <S.SearchBarWrapper>
           <S.SearchInput
             type="search"
             name="search"
-            autoComplete="off"
+            autoComplete="off" //자동완성
             required
-            placeholder={placeholder}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={saveRoomName}
           />
         </S.SearchBarWrapper>
-        {/* <S.InputRoomName
-          placeholder={placeholder}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={saveRoomName}
-        ></S.InputRoomName> */}
       </div>
+
+      {/* Level 체크박스 */}
       {checkLists.map((item, index) => (
-        <S.CheckBoxWrapper key={(item, index)}>
-          <S.CheckBoxInput type="checkbox" id={item} name="level" onChange={(e) => checkHandled(e)} />
-          <S.CheckboxLabel htmlFor={item}>{item}</S.CheckboxLabel>
+        <S.CheckBoxWrapper key={index}>
+          <S.CheckBoxInput type="checkbox" id={index} name="level" onChange={(e) => checkHandled(e)} />
+          <S.CheckboxLabel htmlFor={index} onClick={(e) => checkLevel(e)}>
+            {item}
+          </S.CheckboxLabel>
         </S.CheckBoxWrapper>
       ))}
-
       <br />
       <br />
 
+      {/* 방 목록 및 인원수, 잠금상태 */}
       <S.RoomSquare>
         {filteredRooms.map((item, idx) => (
           <S.RoomContainer
@@ -110,9 +127,11 @@ function SearchMakeRoom() {
             onClick={() => handleItemClick(item)}
             style={{
               backgroundImage: 'linear-gradient(to top, red, yellow)',
-              border: '10px solid black',
+              border: '7px solid black',
               borderRadius: '30px',
               textAlign: 'center',
+              fontFamily: 'Dokdo',
+              fontSize: '25px',
             }}
           >
             {item}
@@ -127,23 +146,3 @@ function SearchMakeRoom() {
 }
 
 export default SearchMakeRoom;
-
-//  못한코드..
-// const Items = ['게임중', '초보', '중수', '고수'];
-// <S.LevelCheckDiv>
-//   {Items.map((item) => (
-//     <React.Fragment key={item}>
-//       <input type="checkbox" />
-//       {item}
-//     </React.Fragment>
-//   ))}
-// </S.LevelCheckDiv>
-
-// <S.Button
-//   type="submit"
-//   className={isHovering ? 'grow' : ''}
-//   onMouseOver={handleMouseOver}
-//   onMouseOut={handleMouseOut}
-// >
-//   방 검색
-// </S.Button>
