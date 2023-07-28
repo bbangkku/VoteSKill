@@ -5,6 +5,7 @@ import * as S from 'pages/Main/Main.Style';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Day from 'components/game/Day';
+import Vote from 'components/vote/Vote';
 
 function Main() {
   const [isSign, setSign] = useState(false);
@@ -27,18 +28,18 @@ function Main() {
     if (isSign) {
       setSign(true);
       //navigate('/game/:1');
-      navigate('/lobby');
+      //navigate('/lobby');
     } else {
       navigate('/signin');
     }
   };
-  // onClick={openModal}
+  // onClick={openModal} onClick={navigateToLobby}
   return (
     <Layout isMain={true}>
-      <S.KakaoLoginButton onClick={navigateToLobby}></S.KakaoLoginButton>
-      {/* <Modal>
-        <Day />
-      </Modal> */}
+      <S.KakaoLoginButton onClick={openModal}></S.KakaoLoginButton>
+      <Modal>
+        <Vote />
+      </Modal>
     </Layout>
   );
 }

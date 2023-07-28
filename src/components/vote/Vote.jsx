@@ -3,7 +3,19 @@ import * as S from 'components/vote/Vote.Style';
 import { FiXCircle } from 'react-icons/fi';
 
 function Vote() {
-  return <S.ModalBody></S.ModalBody>;
+  return (
+    <div>
+      <S.ModalBody>
+        <S.VoteImage src={process.env.PUBLIC_URL + '/image/game/killvote.png'}></S.VoteImage>
+        <S.VoteComment>마피아는 누구일까요?</S.VoteComment>
+        <S.VoteWrapper>
+          <S.VoteCheckBox>
+            
+          </S.VoteCheckBox>
+        </S.VoteWrapper>
+      </S.ModalBody>
+    </div>
+  );
 }
 function Modal({ children }) {
   const { modalToggleState, closeModal } = useModal();
@@ -24,4 +36,4 @@ function Modal({ children }) {
   );
 }
 
-export default Modal;
+export default Vote;
