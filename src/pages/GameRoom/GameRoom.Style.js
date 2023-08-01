@@ -16,3 +16,20 @@ export const PreVideoArea = styled.div`
   padding: 10px;
   text-align: center;
 `;
+
+export const TimeHeader = styled.div`
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+`;
+
+export const TimeIcon = styled.img`
+  width: 30px;
+  height: 30px;
+  display: inline;
+`;
+export const LeftTime = styled.div`
+  display: inline;
+`;
+
+export const DayText = styled.div``;

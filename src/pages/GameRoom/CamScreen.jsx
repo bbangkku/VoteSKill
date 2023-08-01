@@ -71,7 +71,7 @@ function CamScreen() {
             .getUserMedia({
               audioSource: false,
               videoSource: undefined,
-              resolution: '300x250',
+              resolution: '190x190',
               frameRate: 10,
             })
             .then((mediaStream) => {
