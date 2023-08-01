@@ -3,13 +3,12 @@ import { theme } from 'styles/theme';
 
 export const CamScreen = styled.div`
   border-radius: ${theme.borderRadius.l};
-
-  width: 100%;
-  height: 100%;
+  width: 190px;
+  height: 190px;
 `;
 
 export const CustomScreen = styled.video`
-  border-radius: ${theme.borderRadius.s};
+  border-radius: 50%;
 `;
 
 export const JoinInput = styled.input`

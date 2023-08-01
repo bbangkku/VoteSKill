@@ -24,6 +24,11 @@ function GameRoom() {
   return (
     <Layout isMain={false} $isNight={setDay()}>
       <Header />
+      <S.TimeHeader>
+        <S.TimeIcon src={process.env.PUBLIC_URL + '/image/game/timeicon.svg'} />
+        <S.LeftTime> 3:00</S.LeftTime>
+        <S.DayText>번째 낮입니다.</S.DayText>
+      </S.TimeHeader>
       <S.ScreenWrapper>
         {camScreenData.map((item2) => (
           <S.PreVideoArea key={item2.id}>
