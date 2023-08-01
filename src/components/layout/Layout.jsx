@@ -1,11 +1,10 @@
 import * as S from 'components/layout/Layout.Style';
-import useDayChange from 'hooks/useDayChange';
+import useLayoutChange from 'hooks/useLayoutChange';
 
 function Layout({ isMain, children }) {
-  const { isNight } = useDayChange();
-
+  const { layout } = useLayoutChange();
   return (
-    <S.Background $isNight={isNight}>
+    <S.Background $layout={layout}>
       {isMain && <S.MainLogo src={process.env.PUBLIC_URL + '/image/logo.svg'} alt="voteskill" />}
       {children}
     </S.Background>

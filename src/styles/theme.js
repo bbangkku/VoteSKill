@@ -5,6 +5,7 @@ const color = {
   red: '#970000',
   darkred: '#3c070c',
   brown: '#625656',
+  blue: '#6367CE',
 };
 
 const night = {
