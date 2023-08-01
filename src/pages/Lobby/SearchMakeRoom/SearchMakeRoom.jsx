@@ -1,93 +1,76 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from 'pages/Lobby/SearchMakeRoom/SearchMakeRoom.Style';
 import { constSelector, useSetRecoilState, useRecoilValue } from 'recoil';
-import { roomAll, personCountAll, roomLevelAll, passwordRoomAll } from 'recoil/atoms/lobbyState';
-
-// 필터링 한 목록을 전달할거임.
+import { responseData } from 'recoil/atoms/lobbyState';
+import useModal from 'hooks/useModal';
+import Modal from 'components/modal/Modal';
+import PasswordModal from 'components/passwordmodal/PasswordModal';
 
 function SearchMakeRoom() {
-  // 방 검색 input
-  const [placeholder, setPlaceholder] = useState('');
-  const [isHovering, setIsHovering] = useState(false);
+  // 데이터 불러오기
+  const allData = useRecoilValue(responseData);
+  const roomPasswords = allData.map((item) => item.roomPassword);
+  const roomLevels = allData.map((item) => item.roomLevel);
 
   // 체크박스 상태관리
-  const checkLists = ['게임중', '초보', '중수', '고수'];
+  const checkLists = ['초보', '중수', '고수'];
   const [isChecked, setIsChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState(new Set());
-  const [wantLevel, setWantLevel] = useState([]);
   const checkItemHandler = (id, isChecked) => {
+    setCheckedItems(checkedItems);
     if (isChecked) {
-      checkedItems.add(id);
+      checkedItems.add(checkLists[id]);
       console.log(checkedItems);
-      setCheckedItems(checkedItems);
     } else if (!isChecked) {
-      checkedItems.delete(id);
+      checkedItems.delete(checkLists[id]);
       console.log(checkedItems);
-
-      setCheckedItems(checkedItems);
     }
   };
   const checkHandled = ({ target }) => {
     setIsChecked(!isChecked);
     checkItemHandler(target.id, target.checked);
   };
-  const checkLevel = ({ target }) => {
-    console.log(target.id, 'asdasdas');
-  };
-  //////////////////////////////////
 
-  const handleFocus = () => {
-    setPlaceholder('');
-  };
-
-  const handleBlur = () => {
-    setPlaceholder('');
-  };
-  const handleMouseOver = () => {
-    setIsHovering(true);
-  };
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
-
-  // Recoil 사용
-  const roomLists = useRecoilValue(roomAll);
-  const personCount = useRecoilValue(personCountAll);
-  const roomLevel = useRecoilValue(roomLevelAll);
-  const passwordRoom = useRecoilValue(passwordRoomAll);
-
-  // 방에 입장할 때
-  const [selectRoom, setSelectRoom] = useState(null);
-
-  // 필터링된 방 목록
-  const [filteredRooms, setFilteredRooms] = useState(roomLists);
-
+  // 방 필터링하기
+  const [filteredRooms, setFilteredRooms] = useState(allData);
+  const [filteredLevel, setfilteredLevel] = useState(allData);
+  const [passwordInput, setPasswordInput] = useState('');
+  const { openModal } = useModal('PasswordModal');
+  const [roomNumber, setRoomNumber] = useState('');
   const handleItemClick = (item) => {
-    // 방에 입장
-    //todo : 백엔드에 해당 방 정보 요청, 해당 방대기실로 이동
-    setSelectRoom(item);
-    console.log(item);
+    const selectedRoomData = allData.find((value) => value.roomName === item);
+    const selectedRoomId = selectedRoomData.roomId;
+    setRoomNumber(selectedRoomId);
+    if (roomPasswords[selectedRoomId] === '') {
+      // 비밀번호가 없는 경우
+      console.log('룸넘버', selectedRoomId, '비번없음');
+      // window.location.href = `waitingroom/${selectedRoomId}`;
+    } else {
+      // 비밀번호가 있는 경우
+      console.log('룸넘버', selectedRoomId, '비번있음');
+      openModal();
+    }
   };
 
-  // 방 제목
-  const [roomName, setRoomName] = React.useState(roomLists);
-
-  const filterRooms = (roomName) => {
-    const filteredRooms = roomLists.filter((roomList) => roomList.includes(roomName));
+  // 원하는 방 제목 입력했을 때 방 필터링
+  const filterRooms = (inputRoomName) => {
+    // 입력하는 글자 포함하면 필터링 됨
+    const filteredRooms = allData.filter((item) => item.roomName.includes(inputRoomName));
     setFilteredRooms(filteredRooms);
   };
   const saveRoomName = (event) => {
-    setRoomName(event.target.value);
     filterRooms(event.target.value); // 입력된 방 이름으로 방 목록을 필터링
   };
 
-  const addRoom = (item) => {
-    console.log(`${item} 생성완료 ! `);
-    const newRoom = roomName.filter((data) => {
-      console.log(data);
-      return data !== item;
-    });
-    setRoomName(newRoom);
+  // 원하는 레벨 입력했을 때 방 필터링
+
+  const filterLevel = () => {
+    console.log(checkedItems);
+    const filterLevels = roomLevels.filter((item) => item.includes(roomLevels));
+    setfilteredLevel(filterLevels);
+  };
+  const saveRoomLevel = (event) => {
+    filterLevel(event.target.value); // 입력된 방 이름으로 방 목록을 필터링
   };
 
   return (
@@ -96,35 +79,41 @@ function SearchMakeRoom() {
       <div>
         <S.SearchBarWrapper>
           <S.SearchInput
-            type="search"
-            name="search"
+            type="search" // 치고 지우고 싶을 때 x표시
             autoComplete="off" //자동완성
             required
-            onFocus={handleFocus}
-            onBlur={handleBlur}
             onChange={saveRoomName}
           />
         </S.SearchBarWrapper>
+        <div style={{ lineHeight: '30%' }}>
+          <br />
+        </div>
       </div>
 
       {/* Level 체크박스 */}
+
+      {/* <br /> */}
       {checkLists.map((item, index) => (
         <S.CheckBoxWrapper key={index}>
           <S.CheckBoxInput type="checkbox" id={index} name="level" onChange={(e) => checkHandled(e)} />
-          <S.CheckboxLabel htmlFor={index} onClick={(e) => checkLevel(e)}>
+          <S.CheckboxLabel htmlFor={index} onClick={(e) => saveRoomLevel(e)}>
             {item}
           </S.CheckboxLabel>
+          &nbsp;
         </S.CheckBoxWrapper>
       ))}
-      <br />
-      <br />
+      <div style={{ lineHeight: '100%' }}>
+        <br />
+      </div>
 
       {/* 방 목록 및 인원수, 잠금상태 */}
       <S.RoomSquare>
-        {filteredRooms.map((item, idx) => (
+        {filteredRooms.map((item) => (
           <S.RoomContainer
-            key={idx}
-            onClick={() => handleItemClick(item)}
+            key={item.roomId}
+            onClick={() => {
+              handleItemClick(item.roomName);
+            }}
             style={{
               backgroundImage: 'linear-gradient(to top, red, yellow)',
               border: '7px solid black',
@@ -134,13 +123,18 @@ function SearchMakeRoom() {
               fontSize: '25px',
             }}
           >
-            {item}
+            {item.roomName}
             <S.People style={{ textAlign: 'center' }}>
-              {personCount[idx]}/6 {passwordRoom[idx] && <S.Logo src={process.env.PUBLIC_URL + '/lock_logo.png'} />}
+              {item.roomPersonCount}/6 {item.roomPassword && <S.Logo src={process.env.PUBLIC_URL + '/lock_logo.png'} />}
             </S.People>
           </S.RoomContainer>
         ))}
       </S.RoomSquare>
+
+      {/* useState해서 방 index props로 넘겨주는 거 만들기 */}
+      <Modal id="PasswordModal">
+        <PasswordModal roomNumber={roomNumber} />
+      </Modal>
     </>
   );
 }
