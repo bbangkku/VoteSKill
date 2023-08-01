@@ -2,48 +2,59 @@ import Modal from 'components/modal/Modal';
 import * as S from 'components/makeroommodal/MakeRoomModal.Style';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-function MakeRoomModal() {
-  return (
-    <div>
-      <S.RoomMakeBackground>
-        <SelectRoomName></SelectRoomName>
-      </S.RoomMakeBackground>
-    </div>
-  );
-}
-
-function SelectRoomName() {
+function MakeRoomModal({
+  roomNameInput,
+  setRoomNameInput,
+  roomPasswordInput,
+  setRoomPasswordInput,
+  boxChecked,
+  setboxChecked,
+}) {
   // axios 방 생성
+
   const API = axios.create({
     baseURL: 'http://localhost:3000',
   });
 
-  // 방 제목 입력
-  const [roomNameInput, setRoomNameInput] = React.useState('');
-
-  // 방 비번 입력
-  const [roomPasswordInput, setRoomPasswordInput] = React.useState('');
+  const makeRoomPost = () => {
+    const data = {
+      name: roomNameInput,
+      password: roomPasswordInput,
+      // host: ,z
+      people: [],
+    };
+    axios
+      .post('http://localhost:8080/room', data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   // 방 레벨 입력
   const [levels, setLevels] = React.useState(new Set());
 
   // 비번방 체크
   const checkLists = ['암호방'];
-  const [boxChecked, setboxChecked] = React.useState(false);
 
   // 암호방 체크했으면 콜백으로 처리
   const handleCheckboxChange = () => {
     setboxChecked((boxChecked) => {
       const updatedBoxChecked = !boxChecked;
+
       if (!updatedBoxChecked) {
         setRoomPasswordInput('');
+      } else {
+        return updatedBoxChecked;
       }
-      return updatedBoxChecked;
     });
   };
   const roomNameInfo = (event) => {
     setRoomNameInput(event.target.value);
     console.log(event.target.value);
+    console.log(roomNameInput);
   };
   const roomPassInfo = (event) => {
     setRoomPasswordInput(event.target.value);
@@ -86,54 +97,56 @@ function SelectRoomName() {
   };
   return (
     <div>
-      <br />
-      <br />
-      <S.RoomDiv>방 이름</S.RoomDiv>
-      <br />
-      <S.InputBar onChange={roomNameInfo}></S.InputBar>
-      <br />
-      <br />
+      <S.RoomMakeBackground>
+        <br />
+        <br />
+        <S.RoomDiv>방 이름</S.RoomDiv>
+        <br />
+        <S.InputBar onChange={roomNameInfo}></S.InputBar>
+        <br />
+        <br />
 
-      {/* 비밀번호 및 암호 체크 */}
-      <S.RoomDiv>
-        비밀번호
-        <br />
-        <S.CheckboxLabel>암호방</S.CheckboxLabel>
-        <input
-          type="checkbox"
-          checked={boxChecked}
-          onChange={handleCheckboxChange}
-          onClick={(item) => lockClick(item)}
-        />
-        <br />
-        <S.InputBar
-          type="password"
-          id="password"
-          name="password"
-          className="input-pw"
-          onChange={roomPassInfo}
-          disabled={!boxChecked}
-          placeholder="패스워드를 입력하세요"
-        ></S.InputBar>
-      </S.RoomDiv>
+        {/* 비밀번호 및 암호 체크 */}
+        <S.RoomDiv>
+          비밀번호
+          <br />
+          <S.CheckboxLabel>암호방</S.CheckboxLabel>
+          <input
+            type="checkbox"
+            checked={boxChecked}
+            onChange={handleCheckboxChange}
+            onClick={(item) => lockClick(item)}
+          />
+          <br />
+          <S.InputBar
+            type="password"
+            id="password"
+            name="password"
+            className="input-pw"
+            onChange={roomPassInfo}
+            disabled={!boxChecked}
+            placeholder="패스워드를 입력하세요"
+          ></S.InputBar>
+        </S.RoomDiv>
 
-      {/* Level 체크박스 */}
-      <br />
-      <S.LevelCheckDiv>
-        <input type="checkbox" id={1} />
-        <S.CheckText>초보</S.CheckText>
-        <input type="checkbox" id={2} />
-        <S.CheckText>중수</S.CheckText>
-        <input type="checkbox" id={3} />
-        <S.CheckText>고수</S.CheckText>
+        {/* Level 체크박스 */}
+        <br />
+        <S.LevelCheckDiv>
+          <input type="checkbox" id={1} />
+          <S.CheckText>초보</S.CheckText>
+          <input type="checkbox" id={2} />
+          <S.CheckText>중수</S.CheckText>
+          <input type="checkbox" id={3} />
+          <S.CheckText>고수</S.CheckText>
+          <br />
+          <br />
+        </S.LevelCheckDiv>
         <br />
         <br />
-      </S.LevelCheckDiv>
-      <br />
-      <br />
-      <S.MakeRoomButton2 onClick={() => onClick()}>방 생성 </S.MakeRoomButton2>
-      <br />
-      <br />
+        <S.MakeRoomButton2 onClick={() => onClick(makeRoomPost)}>방 생성 </S.MakeRoomButton2>
+        <br />
+        <br />
+      </S.RoomMakeBackground>
     </div>
   );
 }
