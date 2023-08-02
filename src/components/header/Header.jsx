@@ -3,9 +3,11 @@ import * as S from './Header.Style';
 import { HiQuestionMarkCircle, HiOutlineUserCircle } from 'react-icons/hi';
 import UserInfo from 'components/userinfo/UserInfo';
 import Modal from 'components/modal/Modal';
+import JobAssign from 'components/modal/JobAssign';
 
 function Header() {
-  const { openModal } = useModal('UserInfo');
+  //const { openModal } = useModal('UserInfo');
+  const { openModal } = useModal('JobAssign');
 
   // 로고 클릭시 이동
   // const navigate = useNavigate();
