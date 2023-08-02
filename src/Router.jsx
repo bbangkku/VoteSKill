@@ -1,5 +1,4 @@
 import GameRoom from 'pages/GameRoom/GameRoom';
-import GameRoomNight from 'pages/GameRoom/GameRoomNight';
 import KakaoLogin from 'pages/KakaoLogin/KakaoLogin';
 import Lobby from 'pages/Lobby/Lobby';
 import Main from 'pages/Main/Main';
