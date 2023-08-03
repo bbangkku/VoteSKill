@@ -37,7 +37,7 @@ const useOpenVidu = () => {
     });
     mySession.on('signal', (event) => {
       const message = event.data;
-      const nickname = event.from.data;
+      const nickname = JSON.parse(event.from.data).clientData;
       setMessageList((messageList) => [...messageList, { message, nickname }]);
     });
     setOV(newOV);
