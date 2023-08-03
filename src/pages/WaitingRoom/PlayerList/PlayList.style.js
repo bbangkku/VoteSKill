@@ -13,6 +13,9 @@ export const Total = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 200px;
+  margin-bottom: 80px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: ${({ theme }) => theme.borderRadius.s};
 `;
 export const Square = styled.div`
   /* height: 100vh;  */
@@ -20,12 +23,12 @@ export const Square = styled.div`
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr;
   column-gap: 50px;
-  row-gap: 30px;
+  row-gap: 0px;
   padding: 20px;
 `;
 
 export const Container = styled.div`
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
   text-align: center;
   justify-content: center;
@@ -36,7 +39,6 @@ export const ButtonSquare = styled.div`
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr;
   column-gap: 50px;
-  row-gap: 30px;
 
   padding: 20px;
 `;
@@ -68,11 +70,49 @@ export const DropButton = styled.button`
   }
 `;
 // 나가기버튼
-export const OutButton = styled.button``;
+export const OutButton = styled.button`
+  height: 100px;
+  margin-top: 20px;
+  background: white;
+  /* border: 1px solid #ff4742; */
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito, roboto, proxima-nova, 'proxima nova', sans-serif;
+  font-size: 50px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  &:hover,
+  &:active {
+    background: #ff4742;
+    color: #050801;
+    box-shadow:
+      0 0 5px #ff4742,
+      0 0 25px #ff4742,
+      0 0 50px #ff4742,
+      0 0 100px #ff4742;
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+`;
 
 export const StartButton = styled.button`
-  height: 150px;
-  margin-top: 30px;
+  height: 100px;
+  margin-top: 20px;
   background: #ff4742;
   /* border: 1px solid #ff4742; */
   border-radius: 6px;
@@ -82,7 +122,7 @@ export const StartButton = styled.button`
   cursor: pointer;
   display: inline-block;
   font-family: nunito, roboto, proxima-nova, 'proxima nova', sans-serif;
-  font-size: 55px;
+  font-size: 50px;
   font-weight: 800;
   line-height: 16px;
   min-height: 40px;
@@ -163,5 +203,5 @@ export const StartButton = styled.button`
   }
 `; */
 export const Logo = styled.img`
-  height: 200px;
+  height: 20px;
 `;
