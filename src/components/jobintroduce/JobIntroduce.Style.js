@@ -9,7 +9,7 @@ export const JobIntroduceBackground = styled.div`
   overflow: hidden;
   position: relative;
   /* 다른 스타일들을 여기에 작성하세요 */
-  background-color: ${(props) => (props.isRed ? 'red' : props.theme.color.blue)};
+  background-color: ${(props) => (props.isRed ? '#ff4742' : props.theme.color.blue)};
 
   display: flex;
   flex-direction: column;
