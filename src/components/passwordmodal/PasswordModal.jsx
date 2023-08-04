@@ -3,6 +3,7 @@ import * as S from 'components/makeroommodal/MakeRoomModal.Style';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import gameAPI from 'apis/gameAPI';
+
 function PasswordModal({ roomNumber }) {
   return (
     <div>

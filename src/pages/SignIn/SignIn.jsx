@@ -65,6 +65,7 @@ function SignIn() {
           Go To KILL
         </S.Button>
       </S.SignInDiv>
+      <audio src={process.env.PUBLIC_URL + '/music/signin.mp3'} autoPlay loop></audio>
     </Layout>
   );
 }
