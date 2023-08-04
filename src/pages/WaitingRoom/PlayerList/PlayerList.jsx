@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 import useModal from 'hooks/useModal';
+import UserInfo from 'components/userinfo/UserInfo';
 import axios from 'axios';
 function PlayerList() {
   const Items = ['병국', '석준', '정인', '채영', '종명', '종호'];
@@ -13,7 +14,7 @@ function PlayerList() {
   useEffect(() => {
     console.log(userIdx);
   });
-  const { openModal } = useModal();
+  const { openModal: openUserInfo } = useModal('UserInfo');
   const [myName, setmyName] = useState('');
 
   // 강퇴 버튼
@@ -62,21 +63,23 @@ function PlayerList() {
               border: '8px solid black',
               borderRadius: '30px',
               textalign: 'center',
+              opacity: '0.8',
             }}
           >
-            <div style={{ marginTop: '1rem' }} onClick={() => openModal(userIdx[index])}>
-              {item}
+            {/* () => openModal(userIdx[index]) */}
+            <div style={{ marginTop: '0.5rem' }} onClick={openUserInfo}>
+              {item} {item === Master && <S.Logo src={process.env.PUBLIC_URL + '/crown.png'} />}
             </div>
             {currentUsername == Master && item !== Master && (
-              <S.DropButton onClick={() => removeItem(item)}>강퇴</S.DropButton>
+              <S.DropButton style={{ marginBottom: '0.5rem' }} onClick={() => removeItem(item)}>
+                강퇴
+              </S.DropButton>
             )}
           </S.Container>
         ))}
       </S.Square>
       <S.ButtonSquare>
-        <S.OutButton onClick={roomOut}>
-          <S.Logo src={process.env.PUBLIC_URL + '/exit.png'} />
-        </S.OutButton>
+        <S.OutButton onClick={roomOut}>EXIT</S.OutButton>
         <S.StartButton onClick={gameStart}>START</S.StartButton>
       </S.ButtonSquare>
     </S.Total>
