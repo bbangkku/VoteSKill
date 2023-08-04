@@ -11,9 +11,6 @@ function PlayerList() {
   const [userIdx, setUserIdx] = useState(Items);
   const [currentUsername, setcurrentUsername] = useState(Master);
 
-  useEffect(() => {
-    console.log(userIdx);
-  });
   const { openModal: openUserInfo } = useModal('UserInfo');
   const [myName, setmyName] = useState('');
 
@@ -52,28 +49,15 @@ function PlayerList() {
     //   });
   };
   return (
-    <S.Total>
+    <S.PlayerListWrapper>
       <S.Square>
         {userIdx.map((item, index) => (
-          <S.Container
-            key={index + 1}
-            style={{
-              margin: '10px',
-              backgroundColor: 'white',
-              border: '8px solid black',
-              borderRadius: '30px',
-              textalign: 'center',
-              opacity: '0.8',
-            }}
-          >
+          <S.Container key={index + 1}>
             {/* () => openModal(userIdx[index]) */}
-            <div style={{ marginTop: '0.5rem' }} onClick={openUserInfo}>
-              {item} {item === Master && <S.Logo src={process.env.PUBLIC_URL + '/crown.png'} />}
-            </div>
+            <span onClick={openUserInfo}>{item}</span>
+            {item === Master && <S.Logo src={process.env.PUBLIC_URL + '/crown.png'} />}
             {currentUsername == Master && item !== Master && (
-              <S.DropButton style={{ marginBottom: '0.5rem' }} onClick={() => removeItem(item)}>
-                강퇴
-              </S.DropButton>
+              <S.DropButton onClick={() => removeItem(item)}>강퇴</S.DropButton>
             )}
           </S.Container>
         ))}
@@ -82,7 +66,7 @@ function PlayerList() {
         <S.OutButton onClick={roomOut}>EXIT</S.OutButton>
         <S.StartButton onClick={gameStart}>START</S.StartButton>
       </S.ButtonSquare>
-    </S.Total>
+    </S.PlayerListWrapper>
   );
 }
 
