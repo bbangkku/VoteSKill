@@ -19,9 +19,7 @@ function Chatting({ messageList, sendMessage }) {
   };
 
   const handleOnKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      sendChatting();
-    }
+    if (e.key === 'Enter') sendChatting();
   };
 
   const isEmptyMessage = () => inputMessage.message.length === 0;
