@@ -3,7 +3,7 @@ import * as S from 'components/passwordmodal/PasswordModal.Style';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import gameAPI from 'apis/gameAPI';
-import Modal from 'react-modal';
+
 function PasswordModal({ roomNumber }) {
   return (
     <div>
