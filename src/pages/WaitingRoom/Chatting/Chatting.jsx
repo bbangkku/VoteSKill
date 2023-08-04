@@ -13,15 +13,18 @@ function Chatting({ messageList, sendMessage }) {
   };
 
   const sendChatting = () => {
+    if (isEmptyMessage()) return;
     sendMessage(inputMessage);
     setInputMessage({ ...inputMessage, message: '' });
   };
 
   const handleOnKeyPress = (e) => {
     if (e.key === 'Enter') {
-      sendChatting(); // Enter 입력이 되면 클릭 이벤트 실행
+      sendChatting();
     }
   };
+
+  const isEmptyMessage = () => inputMessage.message.length === 0;
 
   return (
     <S.Chat>
