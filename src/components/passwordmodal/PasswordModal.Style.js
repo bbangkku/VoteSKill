@@ -8,10 +8,15 @@ link.rel = 'stylesheet';
 link.href = fontUrl;
 // 새로운 <link> 태그 생성
 
-export const RoomMakeBackground = styled(ModalBody)`
-  background-color: ${theme.color.darkgray};
-  width: 100%;
-  height: 100%;
+export const RoomMakeBackground = styled.div`
+  background-color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  border-radius: ${(props) => props.theme.borderRadius.s};
+  width: 700px;
+  min-height: 300px;
+  overflow: hidden;
+  position: relative;
+  z-index: 100;
 `;
 
 export const MakeRoomButton2 = styled.button`
@@ -112,4 +117,26 @@ export const CheckboxLabel = styled.label`
 
   color: red;
   font-family: 'Gasoek One', sans-serif;
+`;
+
+export const PasswordText = styled.h3`
+  color: pink;
+  margin-top: 70px;
+  font-size: 30px;
+`;
+
+export const SubmitInput = styled.input`
+  background-color: yellow;
+  color: red;
+  width: 200px;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 5px;
+`;
+export const SubmitButton = styled.button`
+  background-color: rgb(120, 190, 120);
+  color: red;
+  width: 50px;
+  margin-top: 40px;
+  border-radius: 10px;
 `;
