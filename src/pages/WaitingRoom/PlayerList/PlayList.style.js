@@ -8,30 +8,30 @@ const gradientAnimation = keyframes`
     left: 100%;
   }
 `;
-export const Total = styled.div`
+export const PlayerListWrapper = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
-  margin-left: 200px;
-  margin-bottom: 80px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: ${({ theme }) => theme.borderRadius.s};
+  justify-content: space-between;
 `;
 export const Square = styled.div`
-  /* height: 100vh;  */
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr;
   column-gap: 50px;
-  row-gap: 0px;
-  padding: 20px;
+  row-gap: 20px;
 `;
 
 export const Container = styled.div`
-  font-size: 30px;
-  font-weight: bold;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: gray;
+  border-radius: 10px;
   text-align: center;
-  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
 `;
 
 export const ButtonSquare = styled.div`
@@ -39,17 +39,13 @@ export const ButtonSquare = styled.div`
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr;
   column-gap: 50px;
-
-  padding: 20px;
 `;
 
 // 강퇴버튼
 export const DropButton = styled.button`
-  box-shadow: inset 0px 1px 0px 0px #f5978e;
   background: linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
   background-color: #ededed;
   border-radius: 6px;
-  border: 1px solid #d02718;
   display: inline-block;
   cursor: pointer;
   color: black;
