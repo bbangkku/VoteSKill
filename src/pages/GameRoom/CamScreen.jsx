@@ -93,6 +93,11 @@ function CamScreen() {
                 newSession.publish(newPublisher);
                 setPublisher(newPublisher);
               });
+            })
+            // 카메라 또는 마이크가 연결되지 않았을 경우, 예외 처리
+            .catch((error) => {
+              alert('카메라 또는 마이크의 연결을 확인해주세요!');
+              console.log(error.code, error.message);
             });
         })
         .catch((error) => {
