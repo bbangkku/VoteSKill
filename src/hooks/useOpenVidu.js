@@ -6,10 +6,10 @@ import { useRecoilState } from 'recoil';
 import * as OVAtom from 'recoil/atoms/openViduState';
 
 const useOpenVidu = () => {
-  const [OV, setOV] = useState(null);
-  const [session, setSession] = useState(null);
-  const [mainStreamManager, setMainStreamManager] = useState(null);
-  const [publisher, setPublisher] = useState(null);
+  const [OV, setOV] = useState(undefined);
+  const [session, setSession] = useState(undefined);
+  const [mainStreamManager, setMainStreamManager] = useState(undefined);
+  const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [device, setDevice] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState([]);
@@ -51,7 +51,7 @@ const useOpenVidu = () => {
       try {
         await session.connect(token, { clientData: userName });
 
-        let publisher = await OV.initPublisherAsync(undefined, publisherSetting);
+        let publisher = await OV.initPublisherAsync(userName, publisherSetting);
 
         session.publish(publisher);
 
