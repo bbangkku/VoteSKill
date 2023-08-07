@@ -6,7 +6,8 @@ import useModal from 'hooks/useModal';
 import Modal from 'components/modal/Modal';
 import PasswordModal from 'components/passwordmodal/PasswordModal';
 import { colors } from '@mui/material';
-
+import axios from 'axios';
+import PlayerList from 'pages/WaitingRoom/PlayerList/PlayerList';
 function SearchMakeRoom() {
   // SearchRoom에서 받은 데이터 불러오기
   // const allData = ({ data }) => {
@@ -23,20 +24,20 @@ function SearchMakeRoom() {
   // 비밀번호 여부
   const hasPassword = (item) => item.password !== '';
 
-  const checkPassword = (item) => {
-    // 백엔드로 패스워드 보내자
-    // axios
-    // .post(`http://localhost:8000/room/${item.name}`, { password: password })
-    //   .then((response) => {
-    //     // 요청이 성공한 경우에 실행되는 부분
-    //     console.log(response.data);
-    //     window.location.href = `room/${item.name}`;
-    //   })
-    // .catch((error) => {
-    //     // 요청이 실패한 경우에 실행되는 부분
-    //     console.error(error);
-    // alert(error)
-    //   });
+  const checkPassword = (item, password) => {
+    axios
+      .post(`http://localhost:8000/room/${item.name}`, { password: password })
+      .then((response) => {
+        // 요청이 성공한 경우에 실행되는 부분
+        console.log(response.data);
+        // people 보내주기
+        window.location.href = `room/${item.name}`;
+      })
+      .catch((error) => {
+        // 요청이 실패한 경우에 실행되는 부분
+        console.error(error);
+        alert(error);
+      });
   };
   const handleItemClick = (item) => {
     const roomPassword = item.password;
