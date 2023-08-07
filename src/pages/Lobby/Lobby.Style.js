@@ -8,7 +8,6 @@ link.rel = 'stylesheet';
 link.href = fontUrl;
 export const Container = styled.div`
   width: 100%;
-  /* background-color: grey; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -16,8 +15,7 @@ export const Container = styled.div`
 `;
 
 export const Center = styled.div`
-  /* background-color: blue; */
-  position: relative;
+  /* position: relative; */
   width: 100%;
   height: 100%;
   /* margin: 100px; */
