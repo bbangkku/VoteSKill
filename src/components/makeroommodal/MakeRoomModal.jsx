@@ -18,10 +18,9 @@ function MakeRoomModal({
 
   const makeRoomPost = () => {
     const data = {
-      name: roomNameInput,
+      customSessionId: roomNameInput,
       password: roomPasswordInput,
-      // host: ,z
-      people: [],
+      admitNumber: 6,
     };
     axios
       .post('http://localhost:8080/room', data)
