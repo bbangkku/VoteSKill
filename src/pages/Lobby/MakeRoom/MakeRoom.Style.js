@@ -8,7 +8,6 @@ link.rel = 'stylesheet';
 link.href = fontUrl;
 
 export const Bottom = styled.div`
-  /* background-color: yellow; */
   bottom: 0%;
   height: 15%;
   width: 100%;
@@ -17,8 +16,9 @@ export const Bottom = styled.div`
 `;
 export const MakeRoomButton = styled.button`
   background-image: linear-gradient(to bottom, red, pink);
+  padding: 5px 10px;
   font-size: 35px;
   font-family: 'Dokdo', cursive;
-  border: 4px solid red;
-  border-radius: 7px;
+  border: 2px solid red;
+  border-radius: 10px;
 `;
