@@ -1,31 +1,21 @@
 import * as S from 'components/makeroommodal/MakeRoomModal.Style';
 import { useState } from 'react';
-import axios from 'axios';
 import { Switch } from '@mui/material';
+import gameAPI from 'apis/gameAPI';
+import useInput from 'hooks/useInput';
 function MakeRoomModal() {
-  const [customSessionId, setCustomSessionId] = useState('');
-  const [password, setPassword] = useState('');
+  const [customSessionId, setCustomSessionId, customSessionIdHandler] = useInput('');
+  const [password, setPassword, passwordHandler] = useInput('');
   const [boxChecked, setboxChecked] = useState(false);
 
-  const API = axios.create({
-    baseURL: 'http://localhost:3000',
-  });
-
-  const makeRoomPost = () => {
-    const data = {
-      name: customSessionId,
-      password: password,
-      // host: ,z
-      people: [],
+  const makeRoomPost = async () => {
+    const requestData = {
+      customSessionId,
+      password,
+      admitNumber: 6,
     };
-    axios
-      .post('http://localhost:8080/room', data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await gameAPI.setRoom(requestData);
+    console.log(response);
   };
 
   const handleBoxChecked = () => {
@@ -37,29 +27,22 @@ function MakeRoomModal() {
     }
   };
 
-  const roomNameInfo = (event) => {
-    setCustomSessionId(event.target.value);
-  };
-
-  const roomPassInfo = (event) => {
-    setPassword(event.target.value);
-  };
-
   return (
     <S.RoomMakeBackground>
       <S.RoomDiv>
         <S.InputLabel>방 이름</S.InputLabel>
-        <S.InputBar type="text" onChange={roomNameInfo} placeholder="방 이름을 입력하세요"></S.InputBar>
+        <S.InputBar type="text" onChange={customSessionIdHandler} placeholder="방 이름을 입력하세요"></S.InputBar>
       </S.RoomDiv>
       <S.RoomDiv>
         <S.InputLabel>
           비밀번호
-          <Switch checked={boxChecked} onChange={handleBoxChecked} color="error" disableRipple="true" />
+          <Switch checked={boxChecked} onChange={handleBoxChecked} color="error" disableRipple={true} />
         </S.InputLabel>
         <S.InputBar
+          value={password}
           disabled={!boxChecked}
           type="password"
-          onChange={roomPassInfo}
+          onChange={passwordHandler}
           placeholder="비밀번호를 입력하세요"
         ></S.InputBar>
       </S.RoomDiv>

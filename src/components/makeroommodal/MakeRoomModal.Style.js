@@ -45,6 +45,7 @@ export const InputBar = styled.input`
   font-weight: 600;
   padding: 5px 10px;
   outline: none;
+  color: ${({ theme }) => theme.color.darkgray};
 `;
 
 export const RoomCreateButton = styled.button`
@@ -54,5 +55,5 @@ export const RoomCreateButton = styled.button`
   border: 2px solid red;
   border-radius: 7px;
   text-align: center;
-  padding: 5px 10px;
+  padding: 5px 20px;
 `;
