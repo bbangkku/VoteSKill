@@ -6,6 +6,7 @@ import Header from 'components/header/Header';
 import SearchMakeRoom from './SearchMakeRoom/SearchMakeRoom';
 import { getRoomList } from 'recoil/atoms/lobbyState'; // 위에서 작성한 getRoomList 함수를 가져옵니다.
 import { QueryClient, QueryClientProvider } from 'react-query';
+import SearchRoom from './SearchRoom/SearchRoom';
 
 const queryClient = new QueryClient();
 
