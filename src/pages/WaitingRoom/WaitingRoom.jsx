@@ -5,17 +5,20 @@ import PlayerList from './PlayerList/PlayerList';
 import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
 import useOpenVidu from 'hooks/useOpenVidu';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 
 function WaitingRoom() {
-  const { session, mainStreamManager, messageList, subscribers, sendMessage, setRoomId, setUserName, joinSession } =
-    useOpenVidu();
   const { sessionId } = useParams();
+  const location = useLocation();
+  const { session, messageList, subscribers, sendMessage, setRoomId, setUserName, joinSession, setPassword } =
+    useOpenVidu();
 
   useEffect(() => {
     const nickname = sessionStorage.getItem('nickname');
+    const password = location.state.password;
     setRoomId(sessionId);
     setUserName(nickname);
+    setPassword(password);
     joinSession();
   }, [sessionId]);
 
