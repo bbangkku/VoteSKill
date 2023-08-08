@@ -1,7 +1,8 @@
 import WaitingRoom from 'pages/WaitingRoom/WaitingRoom';
 import styled from 'styled-components';
 // 구글 폰트 스타일 시트 URL 생성
-const fontUrl = 'https://fonts.googleapis.com/css2?family=Dokdo&family=Gasoek+One&family=REM&display=swap';
+const fontUrl =
+  'https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Dokdo&family=Gasoek+One&family=REM&family=Roboto:wght@300&display=swap';
 // 새로운 <link> 태그 생성
 const link = document.createElement('link');
 link.rel = 'stylesheet';
@@ -27,6 +28,7 @@ export const RoomSquare = styled.div`
 export const RoomContainer = styled.div`
   font-size: 20px;
   font-weight: bold;
+  font-family: 'Bagel Fat One', cursive;
 `;
 
 export const People = styled.div``;

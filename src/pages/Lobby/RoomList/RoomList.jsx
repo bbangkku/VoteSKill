@@ -19,39 +19,32 @@ function RoomList() {
 
   // 방 필터링하기
   const { openModal } = useModal('PasswordModal');
-  const [roomNumber, setRoomNumber] = useState('');
+  const [item, setItem] = useState('');
 
   // 비밀번호 여부
   const hasPassword = (item) => item.password !== '';
 
   const checkPassword = (item, password) => {
     axios
-      .post(`http://localhost:8000/room/${item.name}`, { password: password })
+      .post(`http://localhost:8000/rooms/${item.name}`, { password: password })
       .then((response) => {
-        // 요청이 성공한 경우에 실행되는 부분
         console.log(response.data);
-        // people 보내주기
-        window.location.href = `room/${item.name}`;
+        window.location.href = `rooms/${item.name}`;
       })
       .catch((error) => {
-        // 요청이 실패한 경우에 실행되는 부분
-        console.error(error);
         alert(error);
       });
   };
   const handleItemClick = (item) => {
     const roomPassword = item.password;
-    // const selectedRoomData = allDatax.find((value) => value.name === item);
+    const roomId = item.name;
+    setItem(item);
     // setRoomNumber(selectedRoomId);
     if (roomPassword === '') {
       // 비밀번호가 없는 경우
-      console.log('비번없음');
-      const password = '';
-      checkPassword(item, password);
-      // window.location.href = `waitingroom/${selectedRoomId}`;
+      checkPassword(item, roomPassword);
     } else {
       // 비밀번호가 있는 경우
-      console.log('비번있음');
       openModal();
     }
   };
@@ -85,7 +78,7 @@ function RoomList() {
 
       {/* useState해서 방 index props로 넘겨주는 거 만들기 */}
       <Modal id="PasswordModal">
-        <PasswordModal roomNumber={roomNumber} />
+        <PasswordModal item={item} />
       </Modal>
     </>
   );
