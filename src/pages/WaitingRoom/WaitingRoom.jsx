@@ -24,7 +24,7 @@ function WaitingRoom() {
       <Header />
       {session ? (
         <S.Total>
-          <PlayerList />
+          <PlayerList sessionId={sessionId} />
           <Chatting messageList={messageList} sendMessage={sendMessage} />
         </S.Total>
       ) : null}

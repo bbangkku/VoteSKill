@@ -5,16 +5,15 @@ import * as S from 'pages/GameRoom/GameRoom.Style';
 import CamScreen from './CamScreen';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import JobAssign from 'components/modal/JobAssign';
 
 function GameRoom() {
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
   const { isVote, setVote } = useState(false);
+
   useEffect(() => {
-    // 백엔드 데이터 받아올수도? : 낮, 밤, 시간, 직업
     setDay();
   }, []);
-
-  const camScreenData = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }];
 
   const imageUrl = (layout) => {
     if (layout.Day) {
@@ -23,8 +22,6 @@ function GameRoom() {
       return process.env.PUBLIC_URL + '/image/game/time_icon_white.svg';
     }
   };
-
-  // 낮 -> 투표 -> 밤 -> 능력사용 : 반복
 
   const time = (layout) => {
     if (layout.Day) {
@@ -55,14 +52,12 @@ function GameRoom() {
   return (
     <Layout isMain={false} $layout={layout}>
       <Header />
-
       <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
       <S.ScreenWrapper>
-        {camScreenData.map((item2) => (
-          <S.PreVideoArea key={item2.id}>
-            <CamScreen></CamScreen>
-          </S.PreVideoArea>
-        ))}
+        <S.PreVideoArea>
+          <JobAssign showJobAssign={true} />
+          <CamScreen />
+        </S.PreVideoArea>
       </S.ScreenWrapper>
     </Layout>
   );

@@ -4,7 +4,11 @@ import useModal from 'hooks/useModal';
 import UserInfo from 'components/userinfo/UserInfo';
 import axios from 'axios';
 import SearchMakeRoom from 'pages/Lobby/SearchMakeRoom/SearchMakeRoom';
-function PlayerList() {
+import GameRoom from 'pages/GameRoom/GameRoom';
+import { useNavigate } from 'react-router';
+import JobAssign from 'components/modal/JobAssign';
+
+function PlayerList({ sessionId }) {
   // 유저네임받아와야함
   // const [myName, setmyName] = useState('');
   const Items = ['병국', '석준', '정인', '채영', '종명', '종호'];
@@ -15,6 +19,7 @@ function PlayerList() {
   const [currentUsername, setcurrentUsername] = useState(Master);
 
   const { openModal: openUserInfo } = useModal('UserInfo');
+  const navigate = useNavigate();
 
   // 강퇴 버튼
   const removeItem = (item) => {
@@ -43,6 +48,9 @@ function PlayerList() {
     // }
     // );
   };
+
+ 
+
   // 게임시작 버튼
   const gameStart = () => {
     // axios
@@ -53,6 +61,10 @@ function PlayerList() {
     //   .catch((error) => {
     //     console.log(error);
     //   });
+    // 게임방 이동
+    navigate(`/game/${sessionId}`);
+    // 모달 보임
+    return <JobAssign/>;
   };
   return (
     <S.PlayerListWrapper>
