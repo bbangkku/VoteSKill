@@ -1,27 +1,25 @@
-import axiosInstance from 'apis';
+import { loginInstance } from 'apis';
 
 const userAPI = {
-  signup: (nickname) => axiosInstance.post('/users/sign-up', { nickname }),
-
-  logout: () => axiosInstance.post('/out'),
+  signup: (nickname) => loginInstance.post('/users', { nickname }),
 
   kakaoLogin: (code) =>
-    axiosInstance.get('/oauth/kakao/callback', {
+    loginInstance.get('/oauth', {
       params: {
         code: code,
       },
     }),
 
   checkId: (username) =>
-    axiosInstance.get('/users/check', {
+    loginInstance.get('/users/check', {
       params: {
         username,
       },
     }),
 
-  getUserInfo: (userId) => axiosInstance.get(`/users/${userId}`),
+  getUserInfo: (userId) => loginInstance.get(`/users/${userId}`),
 
-  editUserInfo: (userId) => axiosInstance.put(`/users/${userId}`),
+  editUserInfo: (userId) => loginInstance.put(`/users/${userId}`),
 };
 
 export default userAPI;

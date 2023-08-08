@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router';
 import Layout from 'components/layout/Layout';
 import * as S from 'pages/SignIn/SignIn.Style';
+import { getCookie } from 'utils/cookie';
 import userAPI from 'apis/userAPI';
 
 function SignIn() {
@@ -43,10 +45,12 @@ function SignIn() {
 
   const handleClick = async () => {
     if (validateNickName(nickName)) {
-      const { data } = await userAPI.signup(nickName);
-      if (data.status === 200) {
+      const { data, status } = await userAPI.signup(nickName);
+
+      if (status === 200) {
+        sessionStorage.setItem('nickname', data);
         location.replace('/lobby');
-      } else if (data.status === 400) {
+      } else if (status === 400) {
         alert('중복된 닉네임입니다.');
       }
     }
@@ -65,6 +69,7 @@ function SignIn() {
           Go To KILL
         </S.Button>
       </S.SignInDiv>
+      <audio src={process.env.PUBLIC_URL + '/music/signin.mp3'} autoPlay loop></audio>
     </Layout>
   );
 }

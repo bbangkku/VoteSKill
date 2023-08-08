@@ -1,7 +1,9 @@
-import axiosInstance from 'apis';
+import { axiosInstance } from 'apis';
 
 const gameAPI = {
   setRoom: (roomData) => axiosInstance.post('/rooms', roomData),
+
+  enterRoom: (roomId, password) => axiosInstance.post(`/rooms/${roomId}`, { password }),
 
   getRoomList: (title, grade, state) =>
     axiosInstance.get('/rooms', {
@@ -11,8 +13,6 @@ const gameAPI = {
         state,
       },
     }),
-
-  enterRoom: (roomId) => axiosInstance.post(`/rooms/${roomId}`),
 
   exitRoom: (roomId) => axiosInstance.delete(`/rooms/${roomId}`),
 

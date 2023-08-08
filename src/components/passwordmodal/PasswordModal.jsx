@@ -1,8 +1,9 @@
-import Modal from 'components/modal/Modal';
-import * as S from 'components/makeroommodal/MakeRoomModal.Style';
+// import Modal from 'components/modal/Modal';
+import * as S from 'components/passwordmodal/PasswordModal.Style';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import gameAPI from 'apis/gameAPI';
+
 function PasswordModal({ roomNumber }) {
   return (
     <div>
@@ -45,7 +46,6 @@ function PasswordInput() {
     // }
     const makeRoomPost = () => {
       const data = {};
-
       const res = gameAPI.enterRoom(data);
       console.log(res);
     };
@@ -61,12 +61,10 @@ function PasswordInput() {
   };
   return (
     <div>
-      <h1>비밀번호</h1>
-      <input type="text" style={{ backgroundColor: 'yellow' }} onChange={savePassword} />
+      <S.PasswordText>비밀번호</S.PasswordText>
+      <S.SubmitInput type="password" onChange={savePassword} />
       <br />
-      <button style={{ color: 'red' }} onClick={checkPassword}>
-        제출
-      </button>
+      <S.SubmitButton onClick={checkPassword}>입력</S.SubmitButton>
     </div>
   );
 }
