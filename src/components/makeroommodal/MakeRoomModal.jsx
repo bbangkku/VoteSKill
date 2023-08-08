@@ -19,11 +19,15 @@ function MakeRoomModal() {
       admitNumber: 6,
     };
     const { data } = await gameAPI.setRoom(requestData);
-    enterWaitingRoom(data.room.name);
+    enterWaitingRoom(data.name);
   };
 
   const enterWaitingRoom = async (sessionId) => {
-    navigate(`/waitingroom/${sessionId}`, sessionId);
+    navigate(`/waitingroom/${sessionId}`, {
+      state: {
+        password,
+      },
+    });
   };
 
   const handleBoxChecked = () => {
