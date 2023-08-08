@@ -23,7 +23,7 @@ function MakeRoomModal() {
   };
 
   const enterWaitingRoom = async (sessionId) => {
-    navigate(`/waitingroom/${sessionId}`);
+    navigate(`/waitingroom/${sessionId}`, sessionId);
   };
 
   const handleBoxChecked = () => {
