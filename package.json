@@ -25,6 +25,11 @@
     "react-scripts": "5.0.1",
     "recoil": "^0.7.7",
     "styled-components": "^6.0.4",
+<<<<<<< Updated upstream
+=======
+    "swiper": "^10.1.0",
+    "use-sound": "^4.0.1",
+>>>>>>> Stashed changes
     "web-vitals": "^2.1.4"
   },
   "scripts": {
