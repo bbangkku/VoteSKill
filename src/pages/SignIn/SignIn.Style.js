@@ -46,7 +46,6 @@ export const Button = styled.button`
   align-items: center;
   border-radius: 10px;
   box-shadow: ${({ $grow }) => ($grow ? 'null' : '0px 2px 5px 1px black')};
-  /* background-color: ${({ $grow }) => ($grow ? 'rgba(151, 0, 0, 1)' : 'rgba(151, 0, 0, 0.9)')}; */
   background-color: ${({ theme, $grow }) => ($grow ? theme.color.darkgray : theme.color.red)};
   font-family: 'Dokdo', cursive;
   transition: all ease 0.3s 0s;

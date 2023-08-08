@@ -3,7 +3,7 @@ import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 import useModal from 'hooks/useModal';
 import UserInfo from 'components/userinfo/UserInfo';
 import axios from 'axios';
-import SearchMakeRoom from 'pages/Lobby/SearchMakeRoom/SearchMakeRoom';
+import RoomList from 'pages/Lobby/RoomList/RoomList';
 function PlayerList() {
   // 유저네임받아와야함
   // const [myName, setmyName] = useState('');
