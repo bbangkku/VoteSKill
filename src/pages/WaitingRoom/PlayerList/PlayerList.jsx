@@ -4,13 +4,13 @@ import useModal from 'hooks/useModal';
 import UserInfo from 'components/userinfo/UserInfo';
 import axios from 'axios';
 import RoomList from 'pages/Lobby/RoomList/RoomList';
+import { useParams } from 'react-router-dom';
+
 function PlayerList() {
-  // 유저네임받아와야함
-  // const [myName, setmyName] = useState('');
+  const [myName, setmyName] = useState('');
+  const sessionId = useParams();
   const Items = ['병국', '석준', '정인', '채영', '종명', '종호'];
-  // 인덱스를 먼저 찾아,, 그리고 인덱스에 해당하는 유저 정보 가져올 수 있도록
   const Master = '병국';
-  const RoomId = 1;
   const [userIdx, setUserIdx] = useState(Items);
   const [currentUsername, setcurrentUsername] = useState(Master);
 
@@ -18,16 +18,15 @@ function PlayerList() {
 
   // 강퇴 버튼
   const removeItem = (item) => {
-    // console.log(`${item} 삭제`);
-    // if (Master === '병국') {
-    //   axios
-    //   .delete(`http://localhost:8000/room/${item.name}/${item}`, {data: { username: item }})
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    console.log(sessionId);
+    axios
+      .delete(`http://localhost:8000/rooms/${sessionId}/${item}`, { data: { username: item } })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     const newuserIdx = userIdx.filter((data) => {
       console.log(data);
       return data !== item;
@@ -36,12 +35,11 @@ function PlayerList() {
   };
   // 나가기 버튼
   const roomOut = () => {
-    // axios.delete(`http://localhost:8080/room/${myName}`, {
-    //   data: {
-    //     username: myName,
-    //   },
-    // }
-    // );
+    axios.delete(`http://localhost:8080/rooms/${sessionId}`, {
+      data: {
+        username: myName,
+      },
+    });
   };
   // 게임시작 버튼
   const gameStart = () => {
