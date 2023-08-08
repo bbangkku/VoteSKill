@@ -30,7 +30,7 @@ function SignIn() {
   const handleNickNameChange = (event) => {
     setNickName(event.target.value);
   };
-
+  // 닉네임 검증
   const validateNickName = (nickName) => {
     const nickNameLength = nickName.trim().length;
     if (nickNameLength === 0) {

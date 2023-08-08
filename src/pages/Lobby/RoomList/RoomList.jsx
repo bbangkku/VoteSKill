@@ -1,69 +1,94 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from 'pages/Lobby/RoomList/RoomList.Style';
-// import { roomname, setRoomname } from 'pages/Lobby/SearchRoom/SearchRoom';
-import SearchRoom from 'pages/Lobby/SearchRoom/SearchRoom';
-import { constSelector } from 'recoil';
-
-//방 목록 가져오기
-export const roomLists = ['맢맢맢', '봇츠킬', '이겨내', '행복하게', '즐겜', '정인', '예에', '스크롤되나?', '된다'];
-
-// 방 인원수 가져오기
-export const PersonCount = ['1', '2', '3', '4', '5', '6'];
-
+import { constSelector, useSetRecoilState, useRecoilValue } from 'recoil';
+import { responseData } from 'recoil/atoms/lobbyState';
+import useModal from 'hooks/useModal';
+import Modal from 'components/modal/Modal';
+import PasswordModal from 'components/passwordmodal/PasswordModal';
+import { colors } from '@mui/material';
+import axios from 'axios';
+import PlayerList from 'pages/WaitingRoom/PlayerList/PlayerList';
 function RoomList() {
-  // 방 클릭 시 해당 방 입장
-  const [selectRoom, setSelectRoom] = useState(null);
+  // SearchRoom에서 받은 데이터 불러오기
+  // const allData = ({ data }) => {
+  //   console.log(data);
+  // };
+  const allData = useRecoilValue(responseData);
+  const roomPasswords = allData.map((item) => item.password);
+  // 체크박스 상태관리
 
-  // 필터링된 방 목록을 빈배열로 저장해놓음
-  const [filteredRooms, setFilteredRooms] = useState(roomLists);
+  // 방 필터링하기
+  const { openModal } = useModal('PasswordModal');
+  const [roomNumber, setRoomNumber] = useState('');
 
-  const handleItemClick = (item) => {
-    // 방에 입장하는코드
-    setSelectRoom(item);
-    console.log(item);
+  // 비밀번호 여부
+  const hasPassword = (item) => item.password !== '';
+
+  const checkPassword = (item, password) => {
+    axios
+      .post(`http://localhost:8000/room/${item.name}`, { password: password })
+      .then((response) => {
+        // 요청이 성공한 경우에 실행되는 부분
+        console.log(response.data);
+        // people 보내주기
+        window.location.href = `room/${item.name}`;
+      })
+      .catch((error) => {
+        // 요청이 실패한 경우에 실행되는 부분
+        console.error(error);
+        alert(error);
+      });
   };
-
-  // 받은 방 목록 저장
-  const handleFilteredRooms = (filteredRooms) => {
-    setFilteredRooms(filteredRooms);
-    // console.log('왔다');
+  const handleItemClick = (item) => {
+    const roomPassword = item.password;
+    // const selectedRoomData = allDatax.find((value) => value.name === item);
+    // setRoomNumber(selectedRoomId);
+    if (roomPassword === '') {
+      // 비밀번호가 없는 경우
+      console.log('비번없음');
+      const password = '';
+      checkPassword(item, password);
+      // window.location.href = `waitingroom/${selectedRoomId}`;
+    } else {
+      // 비밀번호가 있는 경우
+      console.log('비번있음');
+      openModal();
+    }
   };
 
   return (
-    <S.RoomSquare>
-      {/* SearchRoom에 prop 전달 */}
-      {filteredRooms.map((item) => (
-        <S.RoomContainer
-          key={item}
-          onClick={() => handleItemClick(item)}
-          style={{
-            backgroundImage: 'linear-gradient(to top, red, yellow)',
-            border: '10px solid black',
-            borderRadius: '30px',
-            textAlign: 'center',
-          }}
-        >
-          {item}
-          <S.People style={{ textAlign: 'center' }}>
-            {PersonCount[0]}/6
-            <S.Logo src={process.env.PUBLIC_URL + '/lock_logo.png'} />
-          </S.People>
-          {/* if 추가 (암호방일 때) */}
-        </S.RoomContainer>
-      ))}
-    </S.RoomSquare>
+    <>
+      {/* 방 목록 및 인원수, 잠금상태 */}
+      <S.RoomSquare>
+        {allData.map((item) => (
+          <S.RoomContainer
+            key={item.name}
+            onClick={() => {
+              handleItemClick(item);
+            }}
+            style={{
+              backgroundImage: 'linear-gradient(to top, red, yellow)',
+              border: '7px solid black',
+              borderRadius: '30px',
+              textAlign: 'center',
+              fontFamily: 'Dokdo',
+              fontSize: '25px',
+            }}
+          >
+            {item.name}
+            <S.People style={{ textAlign: 'center' }}>
+              {item.people}/6 {item.password && <S.Logo src={process.env.PUBLIC_URL + '/lock_logo.png'} />}
+            </S.People>
+          </S.RoomContainer>
+        ))}
+      </S.RoomSquare>
+
+      {/* useState해서 방 index props로 넘겨주는 거 만들기 */}
+      <Modal id="PasswordModal">
+        <PasswordModal roomNumber={roomNumber} />
+      </Modal>
+    </>
   );
 }
 
 export default RoomList;
-
-//  못한코드..
-// const Items = ['게임중', '초보', '중수', '고수'];
-// <S.LevelCheckDiv>
-//   {Items.map((item) => (
-//     <React.Fragment key={item}>
-//       <input type="checkbox" />
-//       {item}
-//     </React.Fragment>
-//   ))}
-// </S.LevelCheckDiv>
