@@ -59,10 +59,8 @@ function GameRoom() {
       <Header />
       <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
       <S.ScreenWrapper>
-        <S.PreVideoArea>
-          {/* <JobAssign showJobAssign={true} /> */}
-          <CamScreen sessionId={sessionId} />
-        </S.PreVideoArea>
+        {/* <JobAssign/> */}
+        <CamScreen sessionId={sessionId} />
       </S.ScreenWrapper>
     </Layout>
   );

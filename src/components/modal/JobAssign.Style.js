@@ -3,6 +3,8 @@ import styled, { keyframes } from 'styled-components';
 export const JobAssignModalBody = styled.div`
   width: 800px;
   height: 600px;
+  z-index: 999;
+  position: fixed;
   background: linear-gradient(
     to top,
     ${(props) =>
@@ -11,13 +13,13 @@ export const JobAssignModalBody = styled.div`
   );
   border: 2px solid black;
   border-radius: 20px;
-  transform: translate(32%, -10%);
-  animation: ${(props) => (props ? fadeIn : fadeOut)};
+  text-align: center;
+  transform: translate(35%, -30%);
+  animation: ${(props) => (props.showJobModal ? fadeIn : fadeOut)} 0.15s ease-out;
 `;
 
 export const JobImage = styled.img`
   margin-top: 20px;
-  width: 50%;
   height: 70%;
 `;
 
