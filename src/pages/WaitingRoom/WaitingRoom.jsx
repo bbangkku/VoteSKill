@@ -21,8 +21,6 @@ function WaitingRoom() {
     setUserName(nickname);
     setPassword(password);
     joinSession();
-
-    return gameAPI.exitRoom(sessionId);
   }, [sessionId]);
 
   console.log(session);
