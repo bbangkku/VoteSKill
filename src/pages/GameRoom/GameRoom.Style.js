@@ -44,3 +44,7 @@ export const VoteImage = styled.img`
   height: 250px;
   position: fixed;
 `;
+
+export const JobAssignModal = styled.div`
+  text-align: center;
+`;

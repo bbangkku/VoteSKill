@@ -1,7 +1,9 @@
+import { keyframes } from '@emotion/react';
 import * as S from 'components/modal/JobAssign.Style';
 import useLayoutChange from 'hooks/useLayoutChange';
+import { useEffect, useState } from 'react';
 
-function JobAssign() {
+function JobAssign({ showJobAssign }) {
   const { layout } = useLayoutChange();
   const job = 'spy';
 
@@ -20,11 +22,25 @@ function JobAssign() {
     }
   };
 
+  const [showJobModal, setShowJobModal] = useState(false);
+  const [fadeInOut, setFadeInOut] = useState('');
+
+  useEffect(() => {
+    setFadeInOut('fade-out');
+    setTimeout(() => {
+      setShowJobModal(!showJobModal);
+    }, 1000);
+  }, []);
+
   return (
-    <S.JobAssignModalBody layout={layout}>
-      <S.JobImage src={jobimage(job)}></S.JobImage>
-      <S.JobAssignText>당신은 {jobText(job)} 입니다.</S.JobAssignText>
-    </S.JobAssignModalBody>
+    <div>
+      {showJobModal ? (
+        <S.JobAssignModalBody layout={layout}>
+          <S.JobImage src={jobimage(job)}></S.JobImage>
+          <S.JobAssignText>당신은 {jobText(job)} 입니다.</S.JobAssignText>
+        </S.JobAssignModalBody>
+      ) : null}
+    </div>
   );
 }
 
