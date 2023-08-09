@@ -21,8 +21,6 @@ function WaitingRoom() {
     setUserName(nickname);
     setPassword(password);
     joinSession();
-
-    return gameAPI.exitRoom(sessionId);
   }, [sessionId]);
 
   return (
@@ -30,7 +28,7 @@ function WaitingRoom() {
       <Header />
       {session ? (
         <S.Total>
-          <PlayerList />
+          <PlayerList sessionId={sessionId} />
           <Chatting messageList={messageList} sendMessage={sendMessage} />
         </S.Total>
       ) : null}
