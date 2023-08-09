@@ -11,6 +11,7 @@ function CamScreen({ sessionId }) {
     const nickname = sessionStorage.getItem('nickname');
     setRoomId(sessionId);
     setUserName(nickname);
+    
     joinSession();
   }, [sessionId]);
 
