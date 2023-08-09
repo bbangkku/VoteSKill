@@ -8,7 +8,7 @@ import GameRoom from 'pages/GameRoom/GameRoom';
 import { useNavigate } from 'react-router';
 import JobAssign from 'components/modal/JobAssign';
 
-function PlayerList({ sessionId }) {
+function PlayerList({ sessionId, publisher, subscribers }) {
   // 유저네임받아와야함
   // const [myName, setmyName] = useState('');
   const Items = ['병국', '석준', '정인', '채영', '종명', '종호'];
@@ -49,8 +49,6 @@ function PlayerList({ sessionId }) {
     // );
   };
 
- 
-
   // 게임시작 버튼
   const gameStart = () => {
     // axios
@@ -62,9 +60,13 @@ function PlayerList({ sessionId }) {
     //     console.log(error);
     //   });
     // 게임방 이동
-    navigate(`/game/${sessionId}`);
+    const publisher1 = publisher;
+    const subscribers1 = subscribers;
+    navigate(`/game/${sessionId}`, {
+      state: { sessionId: sessionId, publisher: publisher1, subscribers: subscribers1 },
+    });
     // 모달 보임
-    return <JobAssign/>;
+    //return <JobAssign/>;
   };
   return (
     <S.PlayerListWrapper>

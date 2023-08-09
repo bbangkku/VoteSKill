@@ -4,15 +4,17 @@ import axios from 'axios';
 import { CustomScreen, JoinInput, VoteImage } from './CamScreen.Style';
 import useOpenVidu from 'hooks/useOpenVidu';
 
-function CamScreen() {
+function CamScreen({ sessionId }) {
   const { session, publisher, subscribers, setRoomId, setUserName, joinSession } = useOpenVidu();
 
   useEffect(() => {
-    setRoomId('ssafy7074');
-    setUserName('LEE');
-  }, []);
+    const nickname = sessionStorage.getItem('nickname');
+    setRoomId(sessionId);
+    setUserName(nickname);
+    joinSession();
+  }, [sessionId]);
+
   console.log(session);
-  console.log(subscribers.length);
 
   return (
     <div>

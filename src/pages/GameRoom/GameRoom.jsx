@@ -6,10 +6,16 @@ import CamScreen from './CamScreen';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import JobAssign from 'components/modal/JobAssign';
+import { useLocation } from 'react-router-dom';
 
 function GameRoom() {
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
   const { isVote, setVote } = useState(false);
+
+  const location = useLocation();
+
+  console.log(location.state.sessionId);
+  const sessionId = location.state.sessionId;
 
   useEffect(() => {
     setDay();
@@ -55,8 +61,8 @@ function GameRoom() {
       <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
       <S.ScreenWrapper>
         <S.PreVideoArea>
-          <JobAssign showJobAssign={true} />
-          <CamScreen />
+          {/* <JobAssign showJobAssign={true} /> */}
+          <CamScreen sessionId={sessionId} />
         </S.PreVideoArea>
       </S.ScreenWrapper>
     </Layout>

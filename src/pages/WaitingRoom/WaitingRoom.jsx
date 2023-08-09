@@ -8,8 +8,17 @@ import useOpenVidu from 'hooks/useOpenVidu';
 import { useParams } from 'react-router';
 
 function WaitingRoom() {
-  const { session, mainStreamManager, messageList, subscribers, sendMessage, setRoomId, setUserName, joinSession } =
-    useOpenVidu();
+  const {
+    session,
+    mainStreamManager,
+    messageList,
+    publisher,
+    subscribers,
+    sendMessage,
+    setRoomId,
+    setUserName,
+    joinSession,
+  } = useOpenVidu();
   const { sessionId } = useParams();
 
   useEffect(() => {
@@ -19,6 +28,7 @@ function WaitingRoom() {
     joinSession();
   }, [sessionId]);
 
+  console.log(session);
   return (
     <Layout>
       <Header />
