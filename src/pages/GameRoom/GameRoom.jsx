@@ -14,6 +14,7 @@ function GameRoom() {
 
   const location = useLocation();
   const sessionId = location.state.sessionId;
+  console.log(sessionId);
 
   useEffect(() => {
     setDay();

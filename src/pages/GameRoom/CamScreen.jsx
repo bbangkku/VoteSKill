@@ -15,22 +15,18 @@ function CamScreen({ sessionId }) {
   }, [sessionId]);
 
   console.log(session);
+  console.log(subscribers.length);
 
   return (
     <div>
-      {session === undefined ? (
+      {/* {session === undefined ? (
         <div>
           <p>참여자가 없습니다.</p>
         </div>
-      ) : null}
+      ) : null} */}
 
       {session !== undefined ? (
         <div>
-          {publisher !== undefined ? (
-            <div>
-              <UserVideoComponent streamManager={publisher} />
-            </div>
-          ) : null}
           {subscribers.map((sub) => (
             <div key={sub.stream.streamId}>
               <span>{sub.id}</span>

@@ -54,8 +54,9 @@ function PlayerList() {
     //     console.log(error);
     //   });
     // 게임방 이동
-    navigate(`/game/${sessionId}`, {
-      state: { sessionId: sessionId },
+    console.log(sessionId.sessionId);
+    navigate(`/game/${sessionId.sessionId}`, {
+      state: { sessionId: sessionId.sessionId },
     });
     // 모달 보임
     //return <JobAssign/>;
