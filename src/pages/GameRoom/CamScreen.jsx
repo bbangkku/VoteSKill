@@ -65,11 +65,7 @@ function OpenViduVideoComponent(props) {
     }
   }, []);
 
-  return (
-    <div>
-      <CustomScreen autoPlay={true} ref={videoRef}></CustomScreen>
-    </div>
-  );
+  return <CustomScreen autoPlay={true} ref={videoRef}></CustomScreen>;
 }
 
 export default CamScreen;

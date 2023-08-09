@@ -19,9 +19,10 @@ export const KillVote = styled.img`
   background-color: blue;
 `;
 
-export const VideoWrapper = styled.div``;
 export const CustomScreen = styled.video`
   border-radius: 50%;
+  width: 190px;
+  height: 190px;
   display: block;
 `;
 
