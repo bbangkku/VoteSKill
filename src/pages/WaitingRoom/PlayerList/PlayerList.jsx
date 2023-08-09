@@ -4,7 +4,7 @@ import useModal from 'hooks/useModal';
 import UserInfo from 'components/userinfo/UserInfo';
 import axios from 'axios';
 import RoomList from 'pages/Lobby/RoomList/RoomList';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function PlayerList() {
   const [myName, setmyName] = useState('');
@@ -15,6 +15,7 @@ function PlayerList() {
   const [currentUsername, setcurrentUsername] = useState(Master);
 
   const { openModal: openUserInfo } = useModal('UserInfo');
+  const navigate = useNavigate();
 
   // 강퇴 버튼
   const removeItem = (item) => {
@@ -41,6 +42,7 @@ function PlayerList() {
       },
     });
   };
+
   // 게임시작 버튼
   const gameStart = () => {
     // axios
@@ -51,6 +53,13 @@ function PlayerList() {
     //   .catch((error) => {
     //     console.log(error);
     //   });
+    // 게임방 이동
+    console.log(sessionId.sessionId);
+    navigate(`/game/${sessionId.sessionId}`, {
+      state: { sessionId: sessionId.sessionId },
+    });
+    // 모달 보임
+    //return <JobAssign/>;
   };
   return (
     <S.PlayerListWrapper>

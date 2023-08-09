@@ -23,12 +23,13 @@ function WaitingRoom() {
     joinSession();
   }, [sessionId]);
 
+  console.log(session);
   return (
     <Layout>
       <Header />
       {session ? (
         <S.Total>
-          <PlayerList sessionId={sessionId} />
+          <PlayerList />
           <Chatting messageList={messageList} sendMessage={sendMessage} />
         </S.Total>
       ) : null}
