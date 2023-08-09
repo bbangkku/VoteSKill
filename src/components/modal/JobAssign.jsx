@@ -3,7 +3,7 @@ import * as S from 'components/modal/JobAssign.Style';
 import useLayoutChange from 'hooks/useLayoutChange';
 import { useEffect, useState } from 'react';
 
-function JobAssign({ showJobAssign }) {
+function JobAssign() {
   const { layout } = useLayoutChange();
   const job = 'spy';
 
@@ -22,20 +22,21 @@ function JobAssign({ showJobAssign }) {
     }
   };
 
-  const [showJobModal, setShowJobModal] = useState(false);
-  const [fadeInOut, setFadeInOut] = useState('');
+  const [showJobModal, setShowJobModal] = useState(true);
 
+  // 2
   useEffect(() => {
-    setFadeInOut('fade-out');
+    setShowJobModal(!showJobModal);
     setTimeout(() => {
       setShowJobModal(!showJobModal);
-    }, 1000);
+    }, 5000);
   }, []);
 
+  // 1, 3
   return (
     <div>
       {showJobModal ? (
-        <S.JobAssignModalBody layout={layout}>
+        <S.JobAssignModalBody layout={layout} showJobModal={showJobModal}>
           <S.JobImage src={jobimage(job)}></S.JobImage>
           <S.JobAssignText>당신은 {jobText(job)} 입니다.</S.JobAssignText>
         </S.JobAssignModalBody>

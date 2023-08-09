@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
-import { CustomScreen, JoinInput, VoteImage } from './CamScreen.Style';
+import { CustomScreen, JoinInput, KillVote, VoteImage } from './CamScreen.Style';
 import useOpenVidu from 'hooks/useOpenVidu';
 
 function CamScreen({ sessionId }) {
@@ -14,19 +14,18 @@ function CamScreen({ sessionId }) {
     joinSession();
   }, [sessionId]);
 
-  console.log(session);
-  console.log(subscribers.length);
+  const [image, setImage] = useState(false);
+
+  const imageOn = () => {
+    setImage(!image);
+  };
 
   return (
     <div>
-      {/* {session === undefined ? (
-        <div>
-          <p>참여자가 없습니다.</p>
-        </div>
-      ) : null} */}
-
       {session !== undefined ? (
         <div>
+          {/* <KillVote src={process.env.PUBLIC_URL + '/image/game/killvote.png'} /> */}
+          {/* <button onClick={imageOn}></button> */}
           {subscribers.map((sub) => (
             <div key={sub.stream.streamId}>
               <span>{sub.id}</span>
@@ -66,28 +65,11 @@ function OpenViduVideoComponent(props) {
     }
   }, []);
 
-  // const ImageOn = () => {
-  //   return <VoteImage src={process.env.PUBLIC_URL + '/image/game/killvote.png'}></VoteImage>;
-  // };
-
   return (
     <div>
-      {/* <VoteImage src={process.env.PUBLIC_URL + '/image/game/killvote.png'}></VoteImage> */}
       <CustomScreen autoPlay={true} ref={videoRef}></CustomScreen>
     </div>
   );
 }
-
-// function Vote() {
-//   const { subscribers } = useOpenVidu();
-
-//   return (
-//     <div>
-//       {subscribers.map((sub) => (
-//         <div key={sub.stream.streamId} onClick={() => this.handleMainVideoStream(sub)}></div>
-//       ))}
-//     </div>
-//   );
-// }
 
 export default CamScreen;
