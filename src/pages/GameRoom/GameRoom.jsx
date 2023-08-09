@@ -13,8 +13,6 @@ function GameRoom() {
   const { isVote, setVote } = useState(false);
 
   const location = useLocation();
-
-  console.log(location.state.sessionId);
   const sessionId = location.state.sessionId;
 
   useEffect(() => {

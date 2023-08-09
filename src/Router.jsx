@@ -5,7 +5,7 @@ import Main from 'pages/Main/Main';
 import SignIn from 'pages/SignIn/SignIn';
 import TestPage from 'pages/TestPage';
 import WaitingRoom from 'pages/WaitingRoom/WaitingRoom';
-
+import GameTestPage from 'pages/GameTestPage/GameTestPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function Router() {
@@ -19,6 +19,7 @@ function Router() {
         <Route path="/test" element={<TestPage />} />
         <Route path="/kakao/callback" element={<KakaoLogin />} />
         <Route path="/waitingroom/:sessionId" element={<WaitingRoom />} />
+        {/* <Route path="/game/test" element={<GameTestPage />} /> */}
       </Routes>
     </BrowserRouter>
   );

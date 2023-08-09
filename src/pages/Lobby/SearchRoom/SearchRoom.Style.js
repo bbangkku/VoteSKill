@@ -9,10 +9,8 @@ link.href = fontUrl;
 export const RoomSquare = styled.div`
   height: 55vh;
   display: grid;
-  /* place-items: center; */
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-
   column-gap: 130px;
   row-gap: 20px;
   padding: 40px;
@@ -37,7 +35,6 @@ export const Logo = styled.img`
 export const InputRoomName = styled.input`
   width: 30rem;
   height: 7vh;
-  /* margin: 0 auto; */
   font-size: 1.2em;
   text-align: center;
   background: greenyellow;
@@ -45,19 +42,6 @@ export const InputRoomName = styled.input`
   border-radius: 5px;
   opacity: 0.3; /* 80% 불투명도 */
 `;
-// export const Button = styled.button`
-//   width: 15rem;
-//   height: 5vh;
-//   color: tomato;
-//   font-size: 1.1em;
-//   justify-content: center;
-//   align-items: center;
-//   border: 3px solid #bf4f74;
-//   border-radius: 5px;
-//   &.grow {
-//     background-color: ${({ theme }) => theme.color.red};
-//   }
-// `;
 
 export const LevelCheckDiv = styled.div`
   display: flex;
@@ -67,11 +51,6 @@ export const LevelCheckDiv = styled.div`
   margin-left: 40%;
   margin-right: 40%;
 `;
-//
-//
-//
-//
-//
 
 export const SearchBarWrapper = styled.form`
   display: flex;

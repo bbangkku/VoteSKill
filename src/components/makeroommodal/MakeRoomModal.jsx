@@ -4,7 +4,7 @@ import { Switch } from '@mui/material';
 import gameAPI from 'apis/gameAPI';
 import useInput from 'hooks/useInput';
 import { useNavigate } from 'react-router';
-import { async } from 'q';
+
 function MakeRoomModal() {
   const [customSessionId, setCustomSessionId, customSessionIdHandler] = useInput('');
   const [password, setPassword, passwordHandler] = useInput('');
@@ -18,12 +18,21 @@ function MakeRoomModal() {
       password,
       admitNumber: 6,
     };
-    const { data } = await gameAPI.setRoom(requestData);
-    enterWaitingRoom(data.room.name);
+    try {
+      const { data } = await gameAPI.setRoom(requestData);
+      enterWaitingRoom(data.name);
+    } catch (e) {
+      console.log(e);
+      alert('게임방 생성에 실패했습니다. 다시 신청해주세요.');
+    }
   };
 
   const enterWaitingRoom = async (sessionId) => {
-    navigate(`/waitingroom/${sessionId}`);
+    navigate(`/waitingroom/${sessionId}`, {
+      state: {
+        password,
+      },
+    });
   };
 
   const handleBoxChecked = () => {

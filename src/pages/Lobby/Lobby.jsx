@@ -3,14 +3,19 @@ import * as S from 'pages/Lobby/Lobby.Style';
 import MakeRoom from './MakeRoom/MakeRoom';
 import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
-import SearchMakeRoom from './SearchMakeRoom/SearchMakeRoom';
-import { getRoomList } from 'recoil/atoms/lobbyState'; // 위에서 작성한 getRoomList 함수를 가져옵니다.
+import { getRoomList } from 'recoil/atoms/lobbyState';
 import SearchRoom from './SearchRoom/SearchRoom';
-
+import RoomList from './RoomList/RoomList';
+import axios from 'axios';
+import gameAPI from 'apis/gameAPI';
 function Lobby() {
-  //todo : 백엔드에 방 목록 get 요청
   useEffect(() => {
     getRoomList();
+    const fetchData = async () => {
+      const response = await gameAPI.getRoomList();
+      console.log(response);
+    };
+    fetchData();
   }, []);
 
   return (
@@ -20,7 +25,7 @@ function Lobby() {
         <S.Container>
           <S.Center>
             <SearchRoom />
-            <SearchMakeRoom />
+            <RoomList />
           </S.Center>
           <MakeRoom />
         </S.Container>

@@ -3,18 +3,14 @@ import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 import useModal from 'hooks/useModal';
 import UserInfo from 'components/userinfo/UserInfo';
 import axios from 'axios';
-import SearchMakeRoom from 'pages/Lobby/SearchMakeRoom/SearchMakeRoom';
-import GameRoom from 'pages/GameRoom/GameRoom';
-import { useNavigate } from 'react-router';
-import JobAssign from 'components/modal/JobAssign';
+import RoomList from 'pages/Lobby/RoomList/RoomList';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function PlayerList({ sessionId, publisher, subscribers }) {
-  // 유저네임받아와야함
-  // const [myName, setmyName] = useState('');
+function PlayerList() {
+  const [myName, setmyName] = useState('');
+  const sessionId = useParams();
   const Items = ['병국', '석준', '정인', '채영', '종명', '종호'];
-  // 인덱스를 먼저 찾아,, 그리고 인덱스에 해당하는 유저 정보 가져올 수 있도록
   const Master = '병국';
-  const RoomId = 1;
   const [userIdx, setUserIdx] = useState(Items);
   const [currentUsername, setcurrentUsername] = useState(Master);
 
@@ -23,16 +19,15 @@ function PlayerList({ sessionId, publisher, subscribers }) {
 
   // 강퇴 버튼
   const removeItem = (item) => {
-    // console.log(`${item} 삭제`);
-    // if (Master === '병국') {
-    //   axios
-    //   .delete(`http://localhost:8000/room/${item.name}/${item}`, {data: { username: item }})
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    console.log(sessionId);
+    axios
+      .delete(`http://localhost:8000/rooms/${sessionId}/${item}`, { data: { username: item } })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     const newuserIdx = userIdx.filter((data) => {
       console.log(data);
       return data !== item;
@@ -41,12 +36,11 @@ function PlayerList({ sessionId, publisher, subscribers }) {
   };
   // 나가기 버튼
   const roomOut = () => {
-    // axios.delete(`http://localhost:8080/room/${myName}`, {
-    //   data: {
-    //     username: myName,
-    //   },
-    // }
-    // );
+    axios.delete(`http://localhost:8080/rooms/${sessionId}`, {
+      data: {
+        username: myName,
+      },
+    });
   };
 
   // 게임시작 버튼
@@ -60,10 +54,8 @@ function PlayerList({ sessionId, publisher, subscribers }) {
     //     console.log(error);
     //   });
     // 게임방 이동
-    const publisher1 = publisher;
-    const subscribers1 = subscribers;
     navigate(`/game/${sessionId}`, {
-      state: { sessionId: sessionId, publisher: publisher1, subscribers: subscribers1 },
+      state: { sessionId: sessionId },
     });
     // 모달 보임
     //return <JobAssign/>;

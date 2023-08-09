@@ -17,6 +17,7 @@ const useOpenVidu = () => {
   const [roomId, setRoomId] = useRecoilState(OVAtom.roomIdState);
   const [userName, setUserName] = useRecoilState(OVAtom.userNameState);
   const [messageList, setMessageList] = useState([]);
+  const [password, setPassword] = useState('');
   const [publisherSetting, setPublisherSetting] = useRecoilState(OVAtom.publisherState);
 
   const joinSession = useCallback(() => {
@@ -49,17 +50,14 @@ const useOpenVidu = () => {
     if (!session) return;
     getToken().then(async (token) => {
       try {
+        console.log(session);
         await session.connect(token, { clientData: userName });
-
         let publisher = await OV.initPublisherAsync(userName, publisherSetting);
-
         session.publish(publisher);
-
         const devices = await OV.getDevices();
         const videoDevices = devices.filter((device) => device.kind === 'videoinput');
         const currentVideoDeviceId = publisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
         const currentVideoDevice = videoDevices.find((device) => device.deviceId === currentVideoDeviceId);
-
         setMainStreamManager(publisher);
         setPublisher(publisher);
         setCurrentVideoDevice(currentVideoDevice);
@@ -69,34 +67,33 @@ const useOpenVidu = () => {
     });
   }, [OV, session, roomId]);
 
-  // const getToken = async (roomData) => {
-  //   const sessionResponse = await gameAPI.setRoom(roomData); // createSession: 방이름 리턴해서 ws토큰 받아야 함
-  //   const roomId = sessionResponse.data.room.name; // 백엔드에서 받아오는 방 정보
-  //   const { data } = await gameAPI.enterRoom(roomId);
-  //   return data.token;
+  const getToken = async () => {
+    const { data } = await gameAPI.enterRoom(roomId, password);
+    console.log(data);
+    return data.token;
+  };
+
+  // const getToken = useCallback(async () => {
+  //   return createSession(roomId).then((sessionId) => createToken(sessionId));
+  // }, [roomId]);
+
+  // const createSession = async (roomId) => {
+  //   const response = await axios.post(
+  //     process.env.REACT_APP_DEMO_SERVER_URL + 'api/sessions',
+  //     { customSessionId: roomId },
+  //     { headers: { 'Content-Type': 'application/json' } },
+  //   );
+  //   return response.data; // The sessionId
   // };
 
-  const getToken = useCallback(async () => {
-    return createSession(roomId).then((sessionId) => createToken(sessionId));
-  }, [roomId]);
-
-  const createSession = async (roomId) => {
-    const response = await axios.post(
-      process.env.REACT_APP_SERVER_URL + 'api/sessions',
-      { customSessionId: roomId },
-      { headers: { 'Content-Type': 'application/json' } },
-    );
-    return response.data; // The sessionId
-  };
-
-  const createToken = async (roomId) => {
-    const response = await axios.post(
-      process.env.REACT_APP_SERVER_URL + 'api/sessions/' + roomId + '/connections',
-      {},
-      { headers: { 'Content-Type': 'application/json' } },
-    );
-    return response.data; // The token
-  };
+  // const createToken = async (roomId) => {
+  //   const response = await axios.post(
+  //     process.env.REACT_APP_DEMO_SERVER_URL + 'api/sessions/' + roomId + '/connections',
+  //     {},
+  //     { headers: { 'Content-Type': 'application/json' } },
+  //   );
+  //   return response.data; // The token
+  // };
 
   const sendMessage = (inputMessage) => {
     session
@@ -108,7 +105,7 @@ const useOpenVidu = () => {
       .then(() => {
         console.log('Message successfully sent');
       })
-      .catch((error) => {
+      .catch(() => {
         alert('메세지 전송에 실패했습니다.');
       });
   };
@@ -168,6 +165,7 @@ const useOpenVidu = () => {
     sendMessage,
     messageList,
     setPublisherSetting,
+    setPassword,
   };
 };
 export default useOpenVidu;
