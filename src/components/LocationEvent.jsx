@@ -15,11 +15,9 @@ function LocationEvent() {
         } else {
           setLocationKeys((keys) => [location.key, ...keys]);
 
-          history.push('/detail');
+          history.push('/lobby');
         }
       }
     });
   }, [locationKeys, history]);
-
-  
 }

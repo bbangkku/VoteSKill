@@ -54,6 +54,7 @@ function PlayerList() {
     //     console.log(error);
     //   });
     // 게임방 이동
+
     console.log(sessionId.sessionId);
     navigate(`/game/${sessionId.sessionId}`, {
       state: { sessionId: sessionId.sessionId },

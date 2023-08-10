@@ -1,10 +1,9 @@
 import styled, { keyframes } from 'styled-components';
 
 export const JobAssignModalBody = styled.div`
-  width: 800px;
-  height: 600px;
-  z-index: 999;
-  position: fixed;
+  width: 500px;
+  height: 500px;
+  z-index: 2;
   background: linear-gradient(
     to top,
     ${(props) =>
@@ -13,8 +12,9 @@ export const JobAssignModalBody = styled.div`
   );
   border: 2px solid black;
   border-radius: 20px;
+  position: fixed;
+  transform: translate(80%, 0);
   text-align: center;
-  transform: translate(35%, -30%);
   animation: ${(props) => (props.showJobModal ? fadeIn : fadeOut)} 0.15s ease-out;
 `;
 

@@ -6,15 +6,49 @@ import CamScreen from './CamScreen';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import JobAssign from 'components/modal/JobAssign';
+import GoBack from 'utils/preventGoBack';
 import { useLocation } from 'react-router-dom';
+import useOpenVidu from 'hooks/useOpenVidu';
+import { KillVote } from './CamScreen.Style';
+import { createBrowserHistory } from 'history';
 
 function GameRoom() {
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
   const { isVote, setVote } = useState(false);
+  const history = createBrowserHistory();
 
-  const location = useLocation();
-  const sessionId = location.state.sessionId;
-  console.log(sessionId);
+  // const location = useLocation();
+  // const sessionId = location.state.sessionId;
+
+  // 뒤로 가기 방지용
+
+  const GoBack = () => {
+    history.push(null, '', history.location.href);
+
+    const outRoom = confirm('뒤로 가시면 방을 나가게 됩니다. 나가시겠습니까?');
+
+    if (outRoom) {
+      window.location.href('/lobby');
+    }
+  };
+  
+  useEffect(() => {
+    (() => {
+      history.push('/lobby');
+      history.push(null, '', history.location.href);
+
+      window.addEventListener('popstate', GoBack);
+    })();
+
+    return () => {
+      window.removeEventListener('popstate', GoBack);
+    };
+  }, []);
+
+  useEffect(() => {
+    history.push(null, '', history.location.href);
+  }, [history.location]);
+  //---------------------------------
 
   useEffect(() => {
     setDay();
@@ -33,9 +67,9 @@ function GameRoom() {
       if (isVote) {
         return ' 0:15';
       }
-      return ' 3:00';
+      return ' 2:00';
     } else {
-      return ' 1:00';
+      return ' 0:30';
     }
   };
 
@@ -57,10 +91,11 @@ function GameRoom() {
   return (
     <Layout isMain={false} $layout={layout}>
       <Header />
-      <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
       <S.ScreenWrapper>
-        {/* <JobAssign/> */}
-        <CamScreen sessionId={sessionId} />
+        <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
+        <JobAssign></JobAssign>
+        <CamScreen></CamScreen>
+        {/* <CamScreen sessionId={sessionId} /> */}
       </S.ScreenWrapper>
     </Layout>
   );
