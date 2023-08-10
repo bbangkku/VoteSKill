@@ -1,25 +1,34 @@
 import { useEffect, useState } from 'react';
 
-const useEventSource = (server) => {
-  const url = process.env.REACT_APP_GAME_SERVER_URL + `/${server}`;
+const useEventSource = (dataType, sessionId, nickname) => {
+  // const url = process.env.REACT_APP_GAME_SERVER_URL + `/${server}`;
+
+  // 해당 유저아이디 구독
+  const url = `http://localhost:8080/sse/enter/${sessionId}/${nickname}`;
   const [data, setData] = useState();
   const [listening, setListening] = useState(false);
   const [eventSource, setEventSource] = useState(undefined);
-
+  let eventType = 'role';
   const startListening = () => {
     if (!listening) {
+      console.log('리스닝asdasd');
       const source = new EventSource(url); // 구독했어요
       setEventSource(source);
-
-      source.onopen = () => {
-        console.log('연결 성공');
-      };
+      console.log(source, '구독완료');
 
       source.onmessage = async (event) => {
         const response = await event.data;
-        console.log(response);
+
+        console.log(response, '메시지보내줘ㅁㄴㅇ');
         const parsedData = JSON.parse(response);
         setData(parsedData);
+      };
+      source.addEventListener(eventType, function (e) {
+        console.log(e.data);
+        setData(e.data);
+      });
+      source.onopen = () => {
+        console.log('연결 성공');
       };
 
       source.onerror = () => {
@@ -34,8 +43,8 @@ const useEventSource = (server) => {
   const stopListening = () => {
     console.log('이벤트소스 닫힘');
     if (eventSource) {
-      eventSource.close();
-      setListening(false);
+      // eventSource.close();
+      setListening(true);
     }
   };
 
@@ -47,7 +56,7 @@ const useEventSource = (server) => {
     };
   }, []);
 
-  return { data, startListening, stopListening };
+  return data;
 };
 
 export default useEventSource;

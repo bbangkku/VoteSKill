@@ -10,30 +10,22 @@ import JobAssign from 'components/modal/JobAssign';
 import { useLocation } from 'react-router-dom';
 import useEventSource from 'hooks/useEventsource';
 
-function GameRoom(props) {
-  console.log(props);
+function GameRoom() {
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
   const { isVote, setVote } = useState(false);
 
   const location = useLocation();
   const sessionId = location.state.sessionId;
+  const nickname = sessionStorage.getItem('nickname');
   // const minutes = Math.floor(time / 60) >= 0 ? Math.floor(time / 60) : 0; // 분
   // const seconds = Math.floor(time % 60) >= 0 ? Math.floor(time % 60) : 0; // 초
-  const roleData = useEventSource('role');
-  const roomData = useEventSource('room');
+  const roleData = useEventSource('role', sessionId, nickname);
+  const roomData = useEventSource('room', sessionId, nickname);
 
   //투표
 
-
-
   useEffect(() => {
     setDay();
-    roleData.startListening();
-    roomData.startListening();
-    return () => {
-      roleData.stopListening();
-      roomData.stopListening();
-    };
   }, []);
 
   const imageUrl = (layout) => {
@@ -71,7 +63,7 @@ function GameRoom(props) {
   };
   const checkData = () => {
     console.log(roleData);
-    console.log(roomData);
+    console.log(JSON.stringify(roleData));
   };
   return (
     <Layout isMain={false} $layout={layout}>
@@ -83,9 +75,9 @@ function GameRoom(props) {
       </S.ScreenWrapper>
       <button onClick={checkData}>확인</button>
       <div>
-        {JSON.stringify(roleData.data)}롤데이터
+        {JSON.stringify(roleData)}롤데이터
         <br />
-        {JSON.stringify(roomData.data)}룸데이터
+        {/* {JSON.stringify(roomData.data)}룸데이터 */}
         {/* {roomData && roomData.map((item, index) => <span key={index}>{item}</span>)}
         {roleData && roleData.map((item, index) => <span key={index}>{item}</span>)} */}
       </div>

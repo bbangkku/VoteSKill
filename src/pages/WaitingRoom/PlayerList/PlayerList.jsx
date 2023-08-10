@@ -58,8 +58,6 @@ function PlayerList() {
     navigate(`/game/${sessionId.sessionId}`, {
       state: { sessionId: sessionId.sessionId },
     });
-    // 모달 보임
-    //return <JobAssign/>;
   };
   return (
     <S.PlayerListWrapper>
