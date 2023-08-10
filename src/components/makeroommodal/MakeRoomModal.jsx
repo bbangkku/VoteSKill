@@ -1,11 +1,16 @@
 import * as S from 'components/makeroommodal/MakeRoomModal.Style';
+import { getRoomList, responseData } from 'recoil/atoms/lobbyState';
+
 import { useState } from 'react';
 import { Switch } from '@mui/material';
 import gameAPI from 'apis/gameAPI';
 import useInput from 'hooks/useInput';
 import { useNavigate } from 'react-router';
+import { constSelector, useSetRecoilState, useRecoilValue } from 'recoil';
 
 function MakeRoomModal() {
+  const NameCheck = useRecoilValue(responseData);
+
   const [customSessionId, setCustomSessionId, customSessionIdHandler] = useInput('');
   const [password, setPassword, passwordHandler] = useInput('');
   const [boxChecked, setboxChecked] = useState(false);
@@ -18,19 +23,17 @@ function MakeRoomModal() {
       password,
       admitNumber: 6,
     };
-<<<<<<< Updated upstream
-    const { data } = await gameAPI.setRoom(requestData);
-    enterWaitingRoom(data.name);
-=======
+
 
     try {
       const { data } = await gameAPI.setRoom(requestData);
       enterWaitingRoom(requestData.customSessionId);
+
     } catch (e) {
       console.log(e);
       alert('게임방 생성에 실패했습니다. 다시 신청해주세요.');
     }
->>>>>>> Stashed changes
+
   };
 
   const enterWaitingRoom = async (sessionId) => {

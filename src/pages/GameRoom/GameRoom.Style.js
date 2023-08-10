@@ -6,15 +6,7 @@ export const ScreenWrapper = styled.div`
 
   position: absolute;
   left: 10%;
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: repeat(3, 1fr);
   align-items: center;
-`;
-
-export const PreVideoArea = styled.div`
-  padding: 10px;
-  text-align: center;
 `;
 
 export const TimeHeader = styled.div`
@@ -35,12 +27,4 @@ export const LeftTime = styled.div`
 
 export const DayText = styled.div`
   margin-top: 10px;
-`;
-
-export const VoteImageInput = styled.input``;
-
-export const VoteImage = styled.img`
-  width: 250px;
-  height: 250px;
-  position: fixed;
 `;
