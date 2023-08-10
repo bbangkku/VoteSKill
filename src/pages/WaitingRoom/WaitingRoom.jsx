@@ -19,9 +19,17 @@ function WaitingRoom() {
     setRoomId(sessionId);
     setUserName(nickname);
     setPassword(password);
+<<<<<<< Updated upstream
     joinSession();
   }, [sessionId]);
 
+=======
+    setPublisherSetting({ ...publisherSetting, publishAudio: true, publishVideo: true });
+    joinSession();
+  }, [sessionId]);
+
+  console.log(sessionId);
+>>>>>>> Stashed changes
   return (
     <Layout>
       <Header />

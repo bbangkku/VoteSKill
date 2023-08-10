@@ -53,7 +53,7 @@ function RoomList() {
     <>
       {/* 방 목록 및 인원수, 잠금상태 */}
       <S.RoomSquare>
-        {allData.map((item) => (
+        {/* {allData.map((item) => (
           <S.RoomContainer
             key={item.name}
             onClick={() => {
@@ -73,7 +73,7 @@ function RoomList() {
               {item.people}/6 {item.password && <S.Logo src={process.env.PUBLIC_URL + '/lock_logo.png'} />}
             </S.People>
           </S.RoomContainer>
-        ))}
+        ))} */}
       </S.RoomSquare>
 
       {/* useState해서 방 index props로 넘겨주는 거 만들기 */}

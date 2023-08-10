@@ -5,19 +5,14 @@ import * as S from 'pages/GameRoom/GameRoom.Style';
 import CamScreen from './CamScreen';
 import { useEffect } from 'react';
 import { useState } from 'react';
-<<<<<<< Updated upstream
-=======
 import JobAssign from 'components/modal/JobAssign';
 import { useLocation } from 'react-router-dom';
 import useEventSource from 'hooks/useEventsource';
->>>>>>> Stashed changes
 
 function GameRoom(props) {
   console.log(props);
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
   const { isVote, setVote } = useState(false);
-<<<<<<< Updated upstream
-=======
   const location = useLocation();
   const sessionId = location.state.sessionId;
   // const minutes = Math.floor(time / 60) >= 0 ? Math.floor(time / 60) : 0; // 분
@@ -27,19 +22,10 @@ function GameRoom(props) {
 
   //투표
 
->>>>>>> Stashed changes
   useEffect(() => {
-    // 백엔드 데이터 받아올수도? : 낮, 밤, 시간, 직업
     setDay();
-    roleData.startListening();
-    roomData.startListening();
-    return () => {
-      roleData.stopListening();
-      roomData.stopListening();
-    };
+    useEventSource();
   }, []);
-
-  const camScreenData = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }];
 
   const imageUrl = (layout) => {
     if (layout.Day) {
@@ -48,8 +34,6 @@ function GameRoom(props) {
       return process.env.PUBLIC_URL + '/image/game/time_icon_white.svg';
     }
   };
-
-  // 낮 -> 투표 -> 밤 -> 능력사용 : 반복
 
   const time = (layout) => {
     if (layout.Day) {
@@ -83,22 +67,15 @@ function GameRoom(props) {
   return (
     <Layout isMain={false} $layout={layout}>
       <Header />
-
       <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
       <S.ScreenWrapper>
-        {camScreenData.map((item2) => (
-          <S.PreVideoArea key={item2.id}>
-            <CamScreen></CamScreen>
-          </S.PreVideoArea>
-        ))}
+        {/* <JobAssign/> */}
+        <CamScreen sessionId={sessionId} />
       </S.ScreenWrapper>
       <button onClick={checkData}>확인</button>
       <div>
-        {JSON.stringify(roleData.data)}롤데이터
-        <br />
-        {JSON.stringify(roomData.data)}룸데이터
-        {/* {roomData && roomData.map((item, index) => <span key={index}>{item}</span>)}
-        {roleData && roleData.map((item, index) => <span key={index}>{item}</span>)} */}
+        {roomData && roomData.map((item, index) => <span key={index}>{item}</span>)}
+        {roleData && roleData.map((item, index) => <span key={index}>{item}</span>)}
       </div>
     </Layout>
   );
