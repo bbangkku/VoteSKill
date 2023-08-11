@@ -6,17 +6,41 @@ export const CamScreen = styled.div`
   width: 190px;
   height: 190px;
   position: relative;
+`;
+
+export const VideoWrapper = styled.div`
+  display: grid;
+  grid-template-rows: repeat(2, 300px);
+  grid-template-columns: repeat(3, 500px);
+  align-items: center;
+`;
+
+export const VideoComponent = styled.div`
+  display: inline;
   z-index: 1;
+`;
+
+export const UserId = styled.span`
+  font-size: xx-large;
+  color: white;
+  z-index: 1;
+`;
+
+export const Day = styled.img`
+  border-radius: ${theme.borderRadius.l};
+  width: 190px;
+  height: 190px;
+  position: relative;
+  z-index: 2;
   background-color: red;
 `;
 
 export const KillVote = styled.img`
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  z-index: 3;
   width: 250px;
   height: 250px;
-  display: block;
-  background-color: blue;
+  /* visibility: ${(props) => (props === false ? 'hidden' : 'visible')}; */
 `;
 
 export const CustomScreen = styled.video`

@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 import JobAssign from 'components/modal/JobAssign';
 import { useLocation } from 'react-router-dom';
+import useOpenVidu from 'hooks/useOpenVidu';
 import useEventSource from 'hooks/useEventsource';
 
 function GameRoom() {
@@ -41,9 +42,9 @@ function GameRoom() {
       if (isVote) {
         return ' 0:15';
       }
-      return ' 3:00';
+      return ' 2:00';
     } else {
-      return ' 1:00';
+      return ' 0:30';
     }
   };
 
@@ -68,9 +69,9 @@ function GameRoom() {
   return (
     <Layout isMain={false} $layout={layout}>
       <Header />
-      <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
       <S.ScreenWrapper>
-        {/* <JobAssign/> */}
+        <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
+        <JobAssign></JobAssign>
         <CamScreen sessionId={sessionId} />
       </S.ScreenWrapper>
       <button onClick={checkData}>확인</button>
