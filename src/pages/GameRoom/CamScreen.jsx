@@ -36,14 +36,22 @@ function CamScreen({ sessionId }) {
     <div>
       {session !== undefined ? (
         <VideoWrapper>
-          {/* <button onClick={imageOn}></button> */}
-          {/* {subscribers.map((sub) => (
-            <div key={sub.stream.streamId}>
-              <span>{sub.id}</span>
-              <UserVideoComponent streamManager={sub} />
+          {subscribers.map((sub) => (
+            <div
+              key={sub.stream.streamId}
+              onClick={() => {
+                handleClickKillVote(sub.id);
+              }}
+            >
+              {imageOn === sub.id ? <KillVote src={process.env.PUBLIC_URL + '/image/game/killvote.png'} /> : null}
+              <VideoComponent>
+                <UserVideoComponent streamManager={sub}>
+                  <UserId>{sub.id}</UserId>
+                </UserVideoComponent>
+              </VideoComponent>
             </div>
-          ))} */}
-          {users.map((users) => (
+          ))}
+          {/* {users.map((users) => (
             <div
               key={users.id}
               onClick={() => {
@@ -56,7 +64,7 @@ function CamScreen({ sessionId }) {
                 <UserId>{users.id}</UserId>
               </VideoComponent>
             </div>
-          ))}
+          ))} */}
         </VideoWrapper>
       ) : null}
     </div>

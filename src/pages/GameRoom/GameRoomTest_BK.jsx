@@ -5,28 +5,26 @@ import * as S from 'pages/GameRoom/GameRoom.Style';
 import CamScreen from './CamScreen';
 import { useEffect } from 'react';
 import { useState } from 'react';
-
 import JobAssign from 'components/modal/JobAssign';
 import { useLocation } from 'react-router-dom';
-import useOpenVidu from 'hooks/useOpenVidu';
 import useEventSource from 'hooks/useEventsource';
 
-function GameRoom() {
+function GameRoom(props) {
+  console.log(props);
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
   const { isVote, setVote } = useState(false);
-
   const location = useLocation();
   const sessionId = location.state.sessionId;
-  const nickname = sessionStorage.getItem('nickname');
   // const minutes = Math.floor(time / 60) >= 0 ? Math.floor(time / 60) : 0; // 분
   // const seconds = Math.floor(time % 60) >= 0 ? Math.floor(time % 60) : 0; // 초
-  const roleData = useEventSource('role', sessionId, nickname);
-  const roomData = useEventSource('room', sessionId, nickname);
+  const roleData = useEventSource('role');
+  const roomData = useEventSource('room');
 
   //투표
 
   useEffect(() => {
     setDay();
+    useEventSource();
   }, []);
 
   const imageUrl = (layout) => {
@@ -42,9 +40,9 @@ function GameRoom() {
       if (isVote) {
         return ' 0:15';
       }
-      return ' 2:00';
+      return ' 3:00';
     } else {
-      return ' 0:30';
+      return ' 1:00';
     }
   };
 
@@ -64,23 +62,20 @@ function GameRoom() {
   };
   const checkData = () => {
     console.log(roleData);
-    console.log(JSON.stringify(roleData));
+    console.log(roomData);
   };
   return (
     <Layout isMain={false} $layout={layout}>
       <Header />
+      <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
       <S.ScreenWrapper>
-        <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
-        <JobAssign></JobAssign>
+        {/* <JobAssign/> */}
         <CamScreen sessionId={sessionId} />
       </S.ScreenWrapper>
       <button onClick={checkData}>확인</button>
       <div>
-        {JSON.stringify(roleData)}롤데이터
-        <br />
-        {/* {JSON.stringify(roomData.data)}룸데이터 */}
-        {/* {roomData && roomData.map((item, index) => <span key={index}>{item}</span>)}
-        {roleData && roleData.map((item, index) => <span key={index}>{item}</span>)} */}
+        {roomData && roomData.map((item, index) => <span key={index}>{item}</span>)}
+        {roleData && roleData.map((item, index) => <span key={index}>{item}</span>)}
       </div>
     </Layout>
   );

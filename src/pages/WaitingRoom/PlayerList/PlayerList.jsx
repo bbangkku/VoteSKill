@@ -59,8 +59,6 @@ function PlayerList() {
     navigate(`/game/${sessionId.sessionId}`, {
       state: { sessionId: sessionId.sessionId },
     });
-    // 모달 보임
-    //return <JobAssign/>;
   };
   return (
     <S.PlayerListWrapper>
@@ -78,7 +76,7 @@ function PlayerList() {
       </S.Square>
       <S.ButtonSquare>
         <S.OutButton onClick={roomOut}>EXIT</S.OutButton>
-        <S.StartButton onClick={gameStart}>START</S.StartButton>
+        {currentUsername === Master && <S.StartButton onClick={gameStart}>START</S.StartButton>}
       </S.ButtonSquare>
     </S.PlayerListWrapper>
   );
