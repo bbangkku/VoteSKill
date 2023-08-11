@@ -70,7 +70,7 @@ function UserVideoComponent(props) {
       console.log(props);
       props.streamManager.addVideoElement(videoRef.current);
     }
-  }, []);
+  }, [props.streamManager]);
 
   return (
     <div>
