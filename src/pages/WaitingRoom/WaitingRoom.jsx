@@ -30,19 +30,17 @@ function WaitingRoom() {
     setRoomId(sessionId);
     setUserName(nickname);
     setPassword(password);
-
     setPublisherSetting({ ...publisherSetting, publishAudio: true, publishVideo: true });
+
     joinSession();
   }, [sessionId]);
-
-  console.log(sessionId);
 
   return (
     <Layout>
       <Header />
       {session ? (
         <S.Total>
-          <PlayerList />
+          <PlayerList subscribers={subscribers} />
           <Chatting messageList={messageList} sendMessage={sendMessage} />
         </S.Total>
       ) : null}

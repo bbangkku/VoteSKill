@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 
 function SearchRoom() {
   // 검색기능
-  const { data } = useQuery('roomList', () => gameAPI.getRoomList(nameSearch, checkedLevels, gameCheck));
+  const { data } = useQuery(['roomList'], () => gameAPI.getRoomList(nameSearch, checkedLevels, gameCheck));
   const handleClick = () => {
     gameAPI
       .getRoomList(nameSearch, checkedLevels, gameCheck)
