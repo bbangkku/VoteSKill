@@ -39,7 +39,6 @@ function JobAssign() {
     //console.log(modalToggleState);
     openModal();
     handleJobModal();
-    console.log(showJobModal);
     setTimeout(() => {
       handleJobModal();
     }, 5000);

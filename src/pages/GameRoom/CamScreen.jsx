@@ -20,51 +20,38 @@ function CamScreen({ sessionId }) {
     const nickname = sessionStorage.getItem('nickname');
     setRoomId(sessionId);
     setUserName(nickname);
-
     joinSession();
   }, [sessionId]);
 
-  const users = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }];
-
   const [imageOn, setImageOn] = useState('');
 
-  console.log(imageOn);
   const handleClickKillVote = (id) => {
     setImageOn(id);
   };
+
   return (
     <div>
       {session !== undefined ? (
         <VideoWrapper>
+          {publisher !== undefined ? (
+            <div>
+              <UserVideoComponent streamManager={publisher} />
+            </div>
+          ) : null}
           {subscribers.map((sub) => (
             <div
               key={sub.stream.streamId}
               onClick={() => {
-                handleClickKillVote(sub.id);
+                handleClickKillVote(sub.stream.streamId);
               }}
             >
               {imageOn === sub.id ? <KillVote src={process.env.PUBLIC_URL + '/image/game/killvote.png'} /> : null}
               <VideoComponent>
-                <UserVideoComponent streamManager={sub}>
-                  <UserId>{sub.id}</UserId>
-                </UserVideoComponent>
+                <UserVideoComponent streamManager={sub} />
+                <UserId>{sub.id}</UserId>
               </VideoComponent>
             </div>
           ))}
-          {/* {users.map((users) => (
-            <div
-              key={users.id}
-              onClick={() => {
-                handleClickKillVote(users.id);
-              }}
-            >
-              {imageOn === users.id ? <KillVote src={process.env.PUBLIC_URL + '/image/game/killvote.png'} /> : null}
-
-              <VideoComponent>
-                <UserId>{users.id}</UserId>
-              </VideoComponent>
-            </div>
-          ))} */}
         </VideoWrapper>
       ) : null}
     </div>
@@ -80,7 +67,6 @@ function UserVideoComponent(props) {
 
   useEffect(() => {
     if (props.streamManager && !!videoRef.current) {
-      console.log(videoRef.current);
       props.streamManager.addVideoElement(videoRef.current);
     }
   }, []);
@@ -89,7 +75,7 @@ function UserVideoComponent(props) {
     <div>
       {props.streamManager !== undefined ? (
         <div>
-          <CustomScreen autoPlay={true} ref={videoRef}></CustomScreen>
+          <CustomScreen autoPlay={true} ref={videoRef} />
           <p>{getNicknameTag()}</p>
         </div>
       ) : null}
