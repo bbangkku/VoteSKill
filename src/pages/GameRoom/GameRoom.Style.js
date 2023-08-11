@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
+//---------------------------
 export const ScreenWrapper = styled.div`
   width: 80vw;
   height: 80vh;
-
   position: absolute;
   left: 10%;
-  align-items: center;
 `;
 
 export const TimeHeader = styled.div`
@@ -21,6 +20,7 @@ export const TimeIcon = styled.img`
   height: 30px;
   display: inline;
 `;
+
 export const LeftTime = styled.div`
   display: inline;
 `;
@@ -28,3 +28,5 @@ export const LeftTime = styled.div`
 export const DayText = styled.div`
   margin-top: 10px;
 `;
+
+//---------------------------
