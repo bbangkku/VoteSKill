@@ -5,30 +5,38 @@ import * as S from 'pages/GameRoom/GameRoom.Style';
 import CamScreen from './CamScreen';
 import { useEffect } from 'react';
 import { useState } from 'react';
-
-import JobAssign from 'components/modal/JobAssign';
+import Modal from 'components/modal/Modal';
+import useModal from 'hooks/useModal';
+import { HiQuestionMarkCircle, HiOutlineUserCircle } from 'react-icons/hi';
+import JobAssign from 'components/jobassign/JobAssign';
 import { useLocation } from 'react-router-dom';
 import useOpenVidu from 'hooks/useOpenVidu';
 import useEventSource from 'hooks/useEventsource';
-
+import JobIntroduce from 'components/jobintroduce/JobIntroduce';
 function GameRoom() {
-  const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
   const { isVote, setVote } = useState(false);
+  const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
 
   const location = useLocation();
   const sessionId = location.state.sessionId;
   const nickname = sessionStorage.getItem('nickname');
+  // const roomData = useEventSource('room', sessionId, nickname);
+  const roleData = useEventSource('role', sessionId, nickname);
+  const [roleParsed, setroleParsed] = useState('');
+  const [roomParsed, setroomParsed] = useState('');
+  // 직업배정 모달 열기
+  const { openModal: openjobAssign } = useModal('JobAssign');
+  const { openModal: openJobIntroduceModal } = useModal('JobIntroduce');
+
   // const minutes = Math.floor(time / 60) >= 0 ? Math.floor(time / 60) : 0; // 분
   // const seconds = Math.floor(time % 60) >= 0 ? Math.floor(time % 60) : 0; // 초
-  const roleData = useEventSource('role', sessionId, nickname);
-  const roomData = useEventSource('room', sessionId, nickname);
 
   //투표
 
   useEffect(() => {
     setDay();
+    console.log('호출');
   }, []);
-
   const imageUrl = (layout) => {
     if (layout.Day) {
       return process.env.PUBLIC_URL + '/image/game/timeicon.svg';
@@ -64,7 +72,8 @@ function GameRoom() {
   };
   const checkData = () => {
     console.log(roleData);
-    console.log(JSON.stringify(roleData));
+    const roleParse = JSON.parse(roleData);
+    setroleParsed(roleParse.role);
   };
   return (
     <Layout isMain={false} $layout={layout}>
@@ -74,13 +83,25 @@ function GameRoom() {
         <JobAssign></JobAssign>
         <CamScreen sessionId={sessionId} />
       </S.ScreenWrapper>
-      <button onClick={checkData}>확인</button>
+      <button onClick={checkData}>메뉴</button>
+      <br />
       <div>
-        {JSON.stringify(roleData)}롤데이터
+        <HiQuestionMarkCircle size={'5%'} onClick={openjobAssign} />
+
+        <Modal id="JobAssign">
+          <JobAssign data={roleParsed} />
+        </Modal>
+      </div>
+      <div>
+        {roleData}
         <br />
-        {/* {JSON.stringify(roomData.data)}룸데이터 */}
-        {/* {roomData && roomData.map((item, index) => <span key={index}>{item}</span>)}
-        {roleData && roleData.map((item, index) => <span key={index}>{item}</span>)} */}
+        {roleParsed}파스데이터
+        <br />
+        {/* {roleParsed === 'DEVELOPER' ? 
+        (
+          <img src={process.env.PUBLIC_URL + '/image/jobintroduce/developer.png'} alt="mafia" />
+        ) : null}
+        {roleParsed}파스 */}
       </div>
     </Layout>
   );
