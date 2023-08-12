@@ -1,9 +1,9 @@
 import gameAPI from 'apis/gameAPI';
-import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import * as OVAtom from 'recoil/atoms/openViduState';
+import { roomState } from 'recoil/atoms/roomState';
 
 const useOpenVidu = () => {
   const [OV, setOV] = useState(undefined);
@@ -19,6 +19,7 @@ const useOpenVidu = () => {
   const [messageList, setMessageList] = useState([]);
   const [password, setPassword] = useState('');
   const [publisherSetting, setPublisherSetting] = useRecoilState(OVAtom.publisherState);
+  const [host, setHost] = useRecoilState(roomState);
 
   const joinSession = useCallback(() => {
     const newOV = new OpenVidu();
@@ -27,6 +28,7 @@ const useOpenVidu = () => {
 
     mySession.on('streamCreated', (event) => {
       const subscriber = mySession.subscribe(event.stream, undefined);
+      console.log('추가된 인원', JSON.parse(subscriber.stream.connection.data).clientData);
       setSubscribers((subscribers) => [...subscribers, subscriber]);
     });
 
@@ -35,8 +37,17 @@ const useOpenVidu = () => {
     });
 
     mySession.on('exception', (exception) => {
-      console.warn('exception:', exception);
+      console.warn('예외발생:', exception);
     });
+
+    mySession.on('reconnecting', (exception) => {
+      console.warn('다시 연결중:', exception);
+    });
+
+    mySession.on('reconnected', (exception) => {
+      console.warn('다시 연결됨:', exception);
+    });
+
     mySession.on('signal', (event) => {
       const message = event.data;
       const nickname = JSON.parse(event.from.data).clientData;
@@ -44,56 +55,42 @@ const useOpenVidu = () => {
     });
     setOV(newOV);
     setSession(mySession);
+    console.log('JOIN');
   }, []);
 
   useEffect(() => {
     if (!session) return;
     getToken().then(async (token) => {
       try {
-        console.log(session);
-        await session.connect(token, { clientData: userName });
-        let publisher = await OV.initPublisherAsync(userName, publisherSetting);
-        session.publish(publisher);
-        const devices = await OV.getDevices();
-        const videoDevices = devices.filter((device) => device.kind === 'videoinput');
-        const currentVideoDeviceId = publisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
-        const currentVideoDevice = videoDevices.find((device) => device.deviceId === currentVideoDeviceId);
-        setMainStreamManager(publisher);
-        setPublisher(publisher);
-        setCurrentVideoDevice(currentVideoDevice);
+        connectSession(token);
       } catch (error) {
         console.log('세션 연결에 오류가 발생했습니다.', error, error.message);
       }
     });
-  }, [OV, session, roomId]);
+  }, [OV, session]);
 
-  const getToken = async () => {
-    const { data } = await gameAPI.enterRoom(roomId, password);
-    console.log(data);
-    return data.token;
+  const connectSession = async (token) => {
+    await session.connect(token, { clientData: userName });
+    let publisher = await OV.initPublisherAsync(userName, publisherSetting);
+    session.publish(publisher);
+    const devices = await OV.getDevices();
+    const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+    const currentVideoDeviceId = publisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
+    const currentVideoDevice = videoDevices.find((device) => device.deviceId === currentVideoDeviceId);
+    setMainStreamManager(publisher);
+    setPublisher(publisher);
+    setCurrentVideoDevice(currentVideoDevice);
   };
 
-  // const getToken = useCallback(async () => {
-  //   return createSession(roomId).then((sessionId) => createToken(sessionId));
-  // }, [roomId]);
-
-  // const createSession = async (roomId) => {
-  //   const response = await axios.post(
-  //     process.env.REACT_APP_DEMO_SERVER_URL + 'api/sessions',
-  //     { customSessionId: roomId },
-  //     { headers: { 'Content-Type': 'application/json' } },
-  //   );
-  //   return response.data; // The sessionId
-  // };
-
-  // const createToken = async (roomId) => {
-  //   const response = await axios.post(
-  //     process.env.REACT_APP_DEMO_SERVER_URL + 'api/sessions/' + roomId + '/connections',
-  //     {},
-  //     { headers: { 'Content-Type': 'application/json' } },
-  //   );
-  //   return response.data; // The token
-  // };
+  const getToken = async () => {
+    try {
+      const { data } = await gameAPI.enterRoom(roomId, password);
+      return data.token;
+    } catch {
+      alert('입장실패!');
+      location.replace('/lobby');
+    }
+  };
 
   const sendMessage = (inputMessage) => {
     session
@@ -125,6 +122,7 @@ const useOpenVidu = () => {
 
   const leaveSession = useCallback(() => {
     if (session) {
+      console.log('LEAVE SESSION');
       session.disconnect();
     }
     setOV(new OpenVidu());
@@ -132,6 +130,7 @@ const useOpenVidu = () => {
     setSubscribers([]);
     setMainStreamManager(undefined);
     setPublisher(undefined);
+    setHost(null);
   }, [session]);
 
   const handleMainVideoStream = useCallback(
@@ -144,7 +143,11 @@ const useOpenVidu = () => {
   );
 
   useEffect(() => {
-    const handleBeforeUnload = () => leaveSession();
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+      leaveSession();
+    };
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [leaveSession]);

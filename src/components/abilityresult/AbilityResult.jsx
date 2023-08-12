@@ -8,7 +8,7 @@ import { Background } from 'components/layout/Layout.Style';
 import { keyframes } from 'styled-components';
 import * as M from 'components/modal/Modal.style';
 
-function JobAssign(props) {
+function AbilityResult(props) {
   console.log(props.data);
   const { layout } = useLayoutChange();
   const { modalToggleState, openModal, closeModal } = useModal('JobAssign');
@@ -70,6 +70,7 @@ function JobAssign(props) {
 
   return (
     <div>
+      <div>여기는 능력사용결과창입니다.</div>
       {modalToggleState && (
         <S.JobAssignModalBody layout={layout} showJobModal={showJobModal}>
           {modalJob.map((job, index) => (
@@ -93,4 +94,4 @@ function JobAssign(props) {
   );
 }
 
-export default JobAssign;
+export default AbilityResult;

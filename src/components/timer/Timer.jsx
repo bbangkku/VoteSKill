@@ -2,12 +2,23 @@ import { useCallback, useEffect, useState } from 'react';
 import * as S from 'components/timer/Timer.style';
 import { GiTimeBomb } from 'react-icons/gi';
 
-function Timer({ initSecond }) {
-  const [count, setCount] = useState(15);
+function Timer({ initSecond, callbackFunction }) {
+  const [count, setCount] = useState(initSecond);
 
   useEffect(() => {
     if (count === 0) {
-      setCount(15);
+      // callback props받고 0초됐을때 모달띄우기
+      console.log('초다됨');
+      console.log(callbackFunction, '콜백함수');
+      if (callbackFunction) {
+        console.log('콜백있다');
+        callbackFunction();
+        console.log('콜백끝났다');
+        setCount(5);
+      }
+      // console.log('0초입니다');
+      // callbackFunction();
+
       return;
     }
     const calculate = setInterval(() => {

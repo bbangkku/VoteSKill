@@ -1,6 +1,7 @@
 import useModal from 'hooks/useModal';
 import * as S from 'components/modal/Modal.style';
 import { FiXCircle } from 'react-icons/fi';
+import { useState } from 'react';
 
 function Modal({ children, id }) {
   const { modalToggleState, closeModal } = useModal(id);

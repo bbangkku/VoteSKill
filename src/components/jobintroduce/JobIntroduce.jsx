@@ -1,8 +1,8 @@
 import Modal from 'components/modal/Modal';
 import * as S from 'components/jobintroduce/JobIntroduce.Style';
 import React, { useState, useEffect } from 'react';
-import { Background } from 'components/layout/Layout.Style';
-import { keyframes } from 'styled-components';
+import useModal from 'hooks/useModal';
+
 // import { Swiper, SwiperSlide } from 'swiper/react';
 // import 'swiper/css';
 // import 'swiper/effect-coverflow';
@@ -14,17 +14,8 @@ import { keyframes } from 'styled-components';
 // import slide_image from './assets/images';
 
 function JobIntroduce() {
-  const SlideLeft = keyframes`
-from{transform:translateX(-300px)}
-to{transform:translateX(0px)}
+  const { modalToggleState, openModal, closeModal } = useModal('JobIntroduce');
 
-`;
-
-  const SlideRight = keyframes`
-from{transform:translateX(0px)}
-to{transform:translateX(300px)}
-
-`;
   const modalImg = [
     '/image/jobintroduce/mafia.png',
     '/image/jobintroduce/spy.png',
@@ -63,23 +54,26 @@ to{transform:translateX(300px)}
 
   return (
     <div>
-      <S.JobIntroduceBackground isRed={currentModalIndex === 0 || currentModalIndex === 1}>
-        <S.Job>
-          {modalJob.map((job, index) => (
-            <S.ModalContent key={index} active={index === currentModalIndex}>
-              <S.JobImg src={process.env.PUBLIC_URL + modalImg[currentModalIndex]} alt="mafia" />
-              <S.JobIntroduceDiv>
-                <S.JobName>{modalJob[currentModalIndex]}</S.JobName>
-                <S.JobDescription>{modalDescription[currentModalIndex]}</S.JobDescription>
-              </S.JobIntroduceDiv>
-            </S.ModalContent>
-          ))}
-        </S.Job>
-        <S.ButtonArea>
-          <S.ScrollButtonLeft onClick={goToPreviousModal}></S.ScrollButtonLeft>
-          <S.ScrollButtonRight onClick={goToNextModal}></S.ScrollButtonRight>
-        </S.ButtonArea>
-      </S.JobIntroduceBackground>
+      {modalToggleState && (
+        <S.JobIntroduceBackground isRed={currentModalIndex === 0 || currentModalIndex === 1}>
+          <S.Job>
+            {modalJob.map((job, index) => (
+              <S.ModalContent key={index} active={index === currentModalIndex}>
+                <S.JobImg src={process.env.PUBLIC_URL + modalImg[currentModalIndex]} alt="mafia" />
+                <S.JobIntroduceDiv>
+                  <S.JobName>{modalJob[currentModalIndex]}</S.JobName>
+                  <S.JobDescription>{modalDescription[currentModalIndex]}</S.JobDescription>
+                </S.JobIntroduceDiv>
+              </S.ModalContent>
+            ))}
+          </S.Job>
+
+          <S.ButtonArea>
+            <S.ScrollButtonLeft onClick={goToPreviousModal}></S.ScrollButtonLeft>
+            <S.ScrollButtonRight onClick={goToNextModal}></S.ScrollButtonRight>
+          </S.ButtonArea>
+        </S.JobIntroduceBackground>
+      )}
     </div>
   );
 }

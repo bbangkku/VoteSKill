@@ -8,11 +8,15 @@ import { useState } from 'react';
 import Modal from 'components/modal/Modal';
 import useModal from 'hooks/useModal';
 import { HiQuestionMarkCircle, HiOutlineUserCircle } from 'react-icons/hi';
-import JobAssign from 'components/jobassign/JobAssign';
 import { useLocation } from 'react-router-dom';
 import useOpenVidu from 'hooks/useOpenVidu';
 import useEventSource from 'hooks/useEventsource';
 import JobIntroduce from 'components/jobintroduce/JobIntroduce';
+import Timer from 'components/timer/Timer';
+import JobAssign from 'components/jobassign/JobAssign';
+import VoteResult from 'components/voteresult/VoteResult';
+import AbilityResult from 'components/abilityresult/AbilityResult';
+
 function GameRoom() {
   const { isVote, setVote } = useState(false);
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
@@ -20,13 +24,22 @@ function GameRoom() {
   const location = useLocation();
   const sessionId = location.state.sessionId;
   const nickname = sessionStorage.getItem('nickname');
-  // const roomData = useEventSource('room', sessionId, nickname);
+
+  // 역할배분
   const roleData = useEventSource('role', sessionId, nickname);
+  // 투표결과
+  const voteData = useEventSource('vote', sessionId, nickname);
+  // 모든알림(능력사용결과 등)
+  const roomData = useEventSource('room', sessionId, nickname);
+
   const [roleParsed, setroleParsed] = useState('');
+  const [voteParsed, setvoteParsed] = useState('');
   const [roomParsed, setroomParsed] = useState('');
   // 직업배정 모달 열기
   const { openModal: openjobAssign } = useModal('JobAssign');
+  const { openModal: openvoteResult } = useModal('VoteResult');
   const { openModal: openJobIntroduceModal } = useModal('JobIntroduce');
+  const { openModal: openabilityResult } = useModal('AbilityResult');
 
   // const minutes = Math.floor(time / 60) >= 0 ? Math.floor(time / 60) : 0; // 분
   // const seconds = Math.floor(time % 60) >= 0 ? Math.floor(time % 60) : 0; // 초
@@ -35,85 +48,93 @@ function GameRoom() {
 
   useEffect(() => {
     setDay();
+    // roleData 변경될 때마다 checkData 실행
+    checkData();
     console.log('호출');
   }, []);
-  const imageUrl = (layout) => {
-    if (layout.Day) {
-      return process.env.PUBLIC_URL + '/image/game/timeicon.svg';
-    } else {
-      return process.env.PUBLIC_URL + '/image/game/time_icon_white.svg';
-    }
-  };
 
-  const time = (layout) => {
-    if (layout.Day) {
-      if (isVote) {
-        return ' 0:15';
-      }
-      return ' 2:00';
-    } else {
-      return ' 0:30';
+  useEffect(() => {
+    if (roleParsed) {
+      // roleParsed 값이 변경되면 모달을 열도록 실행
+      openjobAssign();
+      // openjobAssign() 받자마자 타이머 실행
+      Timer(120);
     }
-  };
+  }, [roleParsed]);
 
-  const comment = (layout) => {
-    if (layout.Day) {
-      if (isVote) {
-        return '마피아로 생각되는 사람을 투표해주세요.';
-      }
-      return '~번째 낮입니다.';
-    } else {
-      if (layout.Mafia) {
-        return '당신은 마피아입니다. 죽일 사람을 선택해주세요.';
-      } else {
-        return '능력을 사용중입니다...';
-      }
+  useEffect(() => {
+    if (voteParsed) {
+      // roleParsed 값이 변경되면 모달을 열도록 실행
+      openvoteResult();
+      // openjobAssign() 받자마자 타이머 실행
+      Timer(5);
     }
-  };
+  }, [roleParsed]);
+
+  useEffect(() => {
+    if (roomParsed) {
+      // roleParsed 값이 변경되면 모달을 열도록 실행
+      openvoteResult();
+      // openjobAssign() 받자마자 타이머 실행
+      Timer(5);
+    }
+  }, [roomParsed]);
+
   const checkData = () => {
     console.log(roleData);
     const roleParse = JSON.parse(roleData);
     setroleParsed(roleParse.role);
+
+    // voteData 처리
+    console.log(voteData);
+    const voteParse = JSON.parse(voteData);
+    setvoteParsed(voteParse.vote);
+
+    // ability 처리
+    console.log(roomData);
+    const roomParse = JSON.parse(roomData);
+    setroomParsed(roomParse.room);
+  };
+
+  const handleModal = (sseMessage) => {
+    // console.log('콜백한거임..');
+    // vote로 들어오면
+    // if (sseMessage == '') return openjobAssign();
+    console.log(sseMessage, 'vote일때');
+    // return openvoteResult();
+    // ability로 들어오면
+    // else (sseMessage == "")
+    // return openabilityResult()
   };
   return (
     <Layout isMain={false} $layout={layout}>
       <Header />
       <S.ScreenWrapper>
-        <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
-        <JobAssign></JobAssign>
+        <Timer
+          initSecond={5}
+          callbackFunction={() => {
+            handleModal();
+          }}
+        />
         <CamScreen sessionId={sessionId} />
       </S.ScreenWrapper>
       <button onClick={checkData}>메뉴</button>
       <br />
       <div>
         <HiQuestionMarkCircle size={'5%'} onClick={openjobAssign} />
-
-        <Modal id="JobAssign">
-          <JobAssign data={roleParsed} />
-        </Modal>
       </div>
-      <div>
-        {roleData}
-        <br />
-        {roleParsed}파스데이터
-        <br />
-        {/* {roleParsed === 'DEVELOPER' ? 
-        (
-          <img src={process.env.PUBLIC_URL + '/image/jobintroduce/developer.png'} alt="mafia" />
-        ) : null}
-        {roleParsed}파스 */}
-      </div>
+      <Modal id="JobAssign">
+        <JobAssign data={roleParsed} />
+      </Modal>
+      <Modal id="VoteResult">
+        <VoteResult data={voteParsed} />
+      </Modal>
+      <Modal id="AbilityResult">
+        <AbilityResult data={roomParsed} />
+      </Modal>
+      {roleData}
+      {roleParsed}파스데이터
     </Layout>
-  );
-}
-
-function SecondHeader({ layout, imageUrl, time, comment }) {
-  return (
-    <S.TimeHeader layout={layout}>
-      <S.TimeIcon src={imageUrl(layout)} />
-      <S.LeftTime>{time(layout)}</S.LeftTime>
-      <S.DayText>{comment(layout)}</S.DayText>
-    </S.TimeHeader>
   );
 }
 

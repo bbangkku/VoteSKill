@@ -4,7 +4,7 @@ const useEventSource = (eventType, sessionId, nickname) => {
   // const url = process.env.REACT_APP_GAME_SERVER_URL + `/${server}`;
 
   // 해당 유저아이디 구독
-  const url = `http://localhost:8080/sse/enter/${sessionId}/${nickname}`;
+  const url = `http://13.125.113.149:8080/sse/enter/${sessionId}/${nickname}`;
   const [realData, setRealData] = useState([]);
   const [listening, setListening] = useState(false);
   const [eventSource, setEventSource] = useState(undefined);
@@ -19,7 +19,7 @@ const useEventSource = (eventType, sessionId, nickname) => {
         console.log(event.data);
         console.log('onmessage 완료');
       };
-      source.addEventListener('role', function (e) {
+      source.addEventListener(eventType, function (e) {
         console.log(e.data, '백엔드가보낸데이터');
         setRealData(e.data);
       });

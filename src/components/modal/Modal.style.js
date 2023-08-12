@@ -31,5 +31,5 @@ export const ModalExitButton = styled.button`
   position: absolute;
   right: 10px;
   top: 10px;
-  z-index: 101;
+  /* z-index: 101; */
 `;

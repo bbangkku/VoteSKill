@@ -7,12 +7,7 @@ export const JobAssignModalBody = styled.div`
   height: 400px;
   z-index: 2;
   margin-left: 100px;
-  background: linear-gradient(
-    to top,
-    ${(props) =>
-      props.layout.Day ? props.theme.day.start : props.layout.Mafia ? props.theme.night.start : props.theme.color.blue},
-    ${(props) => (props.layout.Day ? props.theme.day.end : props.theme.night.end)} 80%
-  );
+  background: red;
   border: 2px solid black;
   border-radius: 20px;
   text-align: center;
