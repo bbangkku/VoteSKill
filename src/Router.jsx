@@ -7,6 +7,7 @@ import TestPage from 'pages/TestPage';
 import WaitingRoom from 'pages/WaitingRoom/WaitingRoom';
 import GameTestPage from 'pages/GameTestPage/GameTestPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Game from 'pages/Game/Game';
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
         <Route path="/test" element={<TestPage />} />
         <Route path="/kakao/callback" element={<KakaoLogin />} />
         <Route path="/waitingroom/:sessionId" element={<WaitingRoom />} />
+        <Route path="/play/:sessionId" element={<Game />} />
         {/* <Route path="/game/test" element={<GameTestPage />} /> */}
       </Routes>
     </BrowserRouter>

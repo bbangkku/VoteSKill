@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 import useModal from 'hooks/useModal';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { roomState } from 'recoil/atoms/roomState';
 import gameAPI from 'apis/gameAPI';
 
-function PlayerList({ subscribers, publisher, roleData }) {
-  const sessionId = useParams();
-  const navigate = useNavigate();
+function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId }) {
   const [userList, setUserList] = useState([]);
   const [host, setHost] = useRecoilState(roomState);
   const { openModal: openUserInfo } = useModal('UserInfo');
@@ -18,20 +15,18 @@ function PlayerList({ subscribers, publisher, roleData }) {
   }, [subscribers]);
 
   useEffect(() => {
-    console.log('roleData', roleData);
+    console.log('직업 배정', roleData);
     if (roleData) {
-      moveTo();
+      setInGame(true);
     }
   }, [roleData]);
 
-  const moveTo = () => {
-    navigate(`/game/${sessionId.sessionId}`, {
-      state: { sessionId: sessionId.sessionId },
-    });
-  };
-
   const gameStart = async () => {
-    const { status } = await gameAPI.startGame(sessionId.sessionId);
+    try {
+      const { status } = await gameAPI.startGame(sessionId);
+    } catch (error) {
+      console.log('게임시작 실패', error);
+    }
   };
 
   const checkHost = () => sessionStorage.getItem('nickname') === host;
