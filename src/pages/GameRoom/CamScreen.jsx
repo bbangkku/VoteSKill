@@ -1,17 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
-import {
-  CustomScreen,
-  Day,
-  JoinInput,
-  KillVote,
-  UserId,
-  VideoComponent,
-  VideoWrapper,
-  VoteImage,
-} from './CamScreen.Style';
+import * as S from './CamScreen.Style';
 
-function CamScreen({ sessionId, openvidu }) {
+function CamScreen({ publisher, subscribers }) {
   const [imageOn, setImageOn] = useState('');
 
   const handleClickKillVote = (id) => {
@@ -19,31 +9,27 @@ function CamScreen({ sessionId, openvidu }) {
   };
 
   return (
-    <div>
-      {openvidu.session !== undefined ? (
-        <VideoWrapper>
-          {openvidu.publisher !== undefined ? (
-            <div>
-              <UserVideoComponent streamManager={openvidu.publisher} />
-            </div>
-          ) : null}
-          {openvidu.subscribers.map((sub) => (
-            <div
-              key={sub.stream.streamId}
-              onClick={() => {
-                handleClickKillVote(sub.stream.streamId);
-              }}
-            >
-              {imageOn === sub.id ? <KillVote src={process.env.PUBLIC_URL + '/image/game/killvote.png'} /> : null}
-              <VideoComponent>
-                <UserVideoComponent streamManager={sub.stream} />
-                <UserId>{sub.id}</UserId>
-              </VideoComponent>
-            </div>
-          ))}
-        </VideoWrapper>
+    <S.VideoWrapper>
+      {publisher !== undefined ? (
+        <div>
+          <UserVideoComponent streamManager={publisher} />
+        </div>
       ) : null}
-    </div>
+      {subscribers.map((sub) => (
+        <div
+          key={sub.stream.streamId}
+          onClick={() => {
+            handleClickKillVote(sub.stream.streamId);
+          }}
+        >
+          {imageOn === sub.id ? <S.KillVote src={process.env.PUBLIC_URL + '/image/game/killvote.png'} /> : null}
+          <S.VideoComponent>
+            <UserVideoComponent streamManager={sub.stream} />
+            <S.UserId>{sub.id}</S.UserId>
+          </S.VideoComponent>
+        </div>
+      ))}
+    </S.VideoWrapper>
   );
 }
 
@@ -65,7 +51,7 @@ function UserVideoComponent(props) {
     <div>
       {props.streamManager !== undefined ? (
         <div>
-          <CustomScreen autoPlay={true} ref={videoRef} />
+          <S.CustomScreen autoPlay={true} ref={videoRef} />
           {/* <p>{getNicknameTag()}</p> */}
         </div>
       ) : null}
