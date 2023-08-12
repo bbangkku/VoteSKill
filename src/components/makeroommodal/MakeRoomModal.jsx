@@ -32,8 +32,8 @@ function MakeRoomModal() {
     }
   };
 
-  const enterWaitingRoom = async (sessionId) => {
-    navigate(`/waitingroom/${sessionId}`, {
+  const enterWaitingRoom = (sessionId) => {
+    navigate(`/play/${sessionId}`, {
       state: {
         password,
       },

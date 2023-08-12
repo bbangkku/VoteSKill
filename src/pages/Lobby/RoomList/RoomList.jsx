@@ -26,7 +26,7 @@ function RoomList() {
   };
 
   const enterWaitingRoom = (sessionId) => {
-    navigate(`/waitingroom/${sessionId}`, {
+    navigate(`/play/${sessionId}`, {
       state: {
         password: '',
       },
