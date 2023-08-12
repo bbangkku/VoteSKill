@@ -17,12 +17,10 @@ import JobAssign from 'components/jobassign/JobAssign';
 import VoteResult from 'components/voteresult/VoteResult';
 import AbilityResult from 'components/abilityresult/AbilityResult';
 
-function GameRoom() {
-  const { isVote, setVote } = useState(false);
+function GameRoom({ sessionId, openvidu, myRole }) {
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
 
   const location = useLocation();
-  const sessionId = location.state.sessionId;
   const nickname = sessionStorage.getItem('nickname');
 
   // 역할배분
@@ -41,16 +39,10 @@ function GameRoom() {
   const { openModal: openJobIntroduceModal } = useModal('JobIntroduce');
   const { openModal: openabilityResult } = useModal('AbilityResult');
 
-  // const minutes = Math.floor(time / 60) >= 0 ? Math.floor(time / 60) : 0; // 분
-  // const seconds = Math.floor(time % 60) >= 0 ? Math.floor(time % 60) : 0; // 초
-
-  //투표
-
   useEffect(() => {
     setDay();
     // roleData 변경될 때마다 checkData 실행
     checkData();
-    console.log('호출');
   }, []);
 
   useEffect(() => {
@@ -96,8 +88,7 @@ function GameRoom() {
     // return openabilityResult()
   };
   return (
-    <Layout isMain={false} $layout={layout}>
-      <Header />
+    <>
       <S.ScreenWrapper>
         <Timer
           initSecond={5}
@@ -105,7 +96,7 @@ function GameRoom() {
             handleModal();
           }}
         />
-        <CamScreen sessionId={sessionId} />
+        <CamScreen sessionId={sessionId} openvidu={openvidu} />
       </S.ScreenWrapper>
       <button onClick={checkData}>메뉴</button>
       <br />
@@ -123,7 +114,7 @@ function GameRoom() {
       </Modal>
       {roleData}
       {roleParsed}파스데이터
-    </Layout>
+    </>
   );
 }
 

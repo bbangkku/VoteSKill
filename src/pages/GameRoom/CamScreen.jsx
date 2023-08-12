@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 import {
   CustomScreen,
@@ -11,18 +10,8 @@ import {
   VideoWrapper,
   VoteImage,
 } from './CamScreen.Style';
-import useOpenVidu from 'hooks/useOpenVidu';
 
-function CamScreen({ sessionId }) {
-  const { session, publisher, subscribers, setRoomId, setUserName, joinSession } = useOpenVidu();
-
-  useEffect(() => {
-    const nickname = sessionStorage.getItem('nickname');
-    setRoomId(sessionId);
-    setUserName(nickname);
-    joinSession();
-  }, [sessionId]);
-
+function CamScreen({ sessionId, openvidu }) {
   const [imageOn, setImageOn] = useState('');
 
   const handleClickKillVote = (id) => {
@@ -31,14 +20,14 @@ function CamScreen({ sessionId }) {
 
   return (
     <div>
-      {session !== undefined ? (
+      {openvidu.session !== undefined ? (
         <VideoWrapper>
-          {/* {publisher !== undefined ? (
+          {openvidu.publisher !== undefined ? (
             <div>
-              <UserVideoComponent streamManager={publisher} />
+              <UserVideoComponent streamManager={openvidu.publisher} />
             </div>
-          ) : null} */}
-          {subscribers.map((sub) => (
+          ) : null}
+          {openvidu.subscribers.map((sub) => (
             <div
               key={sub.stream.streamId}
               onClick={() => {

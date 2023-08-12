@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const roomState = atom({
-  key: 'roomState',
+export const hostState = atom({
+  key: 'hostState',
   default: null,
 });

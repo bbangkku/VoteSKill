@@ -5,7 +5,7 @@ import PlayerList from './PlayerList/PlayerList';
 import useEventSource from 'hooks/useEventsource';
 import axios from 'axios';
 
-function WaitingRoom({ sessionId, openvidu, password, setInGame }) {
+function WaitingRoom({ sessionId, openvidu, password, setInGame, setMyRole }) {
   const nickname = sessionStorage.getItem('nickname');
   const roleData = useEventSource('role', sessionId, nickname);
 
@@ -41,6 +41,7 @@ function WaitingRoom({ sessionId, openvidu, password, setInGame }) {
             roleData={roleData}
             setInGame={setInGame}
             sessionId={sessionId}
+            setMyRole={setMyRole}
           />
           <Chatting messageList={openvidu.messageList} sendMessage={openvidu.sendMessage} />
         </S.Total>

@@ -5,13 +5,13 @@ import gameAPI from 'apis/gameAPI';
 import useInput from 'hooks/useInput';
 import { useNavigate } from 'react-router';
 import { useRecoilState } from 'recoil';
-import { roomState } from 'recoil/atoms/roomState';
+import { hostState } from 'recoil/atoms/hostState';
 
 function MakeRoomModal() {
   const [customSessionId, setCustomSessionId, customSessionIdHandler] = useInput('');
   const [password, setPassword, passwordHandler] = useInput('');
   const [boxChecked, setboxChecked] = useState(false);
-  const [host, setHost] = useRecoilState(roomState);
+  const [host, setHost] = useRecoilState(hostState);
 
   const navigate = useNavigate();
 
