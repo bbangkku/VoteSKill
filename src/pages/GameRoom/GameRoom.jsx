@@ -18,11 +18,8 @@ import VoteResult from 'components/voteresult/VoteResult';
 import AbilityResult from 'components/abilityresult/AbilityResult';
 
 function GameRoom({ sessionId, openvidu, myRole }) {
-  const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
-
-  const location = useLocation();
+  const { setDay, setMafia, setCitizen } = useLayoutChange();
   const nickname = sessionStorage.getItem('nickname');
-
   // 역할배분
   const roleData = useEventSource('role', sessionId, nickname);
   // 투표결과
@@ -36,7 +33,6 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   // 직업배정 모달 열기
   const { openModal: openjobAssign } = useModal('JobAssign');
   const { openModal: openvoteResult } = useModal('VoteResult');
-  const { openModal: openJobIntroduceModal } = useModal('JobIntroduce');
   const { openModal: openabilityResult } = useModal('AbilityResult');
 
   useEffect(() => {
@@ -96,10 +92,8 @@ function GameRoom({ sessionId, openvidu, myRole }) {
             handleModal();
           }}
         />
-        <CamScreen sessionId={sessionId} openvidu={openvidu} />
+        {openvidu.session && <CamScreen publisher={openvidu.publisher} subscribers={openvidu.subscribers} />}
       </S.ScreenWrapper>
-      <button onClick={checkData}>메뉴</button>
-      <br />
       <div>
         <HiQuestionMarkCircle size={'5%'} onClick={openjobAssign} />
       </div>
