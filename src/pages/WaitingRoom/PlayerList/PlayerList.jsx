@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 import useModal from 'hooks/useModal';
 import { useRecoilState } from 'recoil';
-import { roomState } from 'recoil/atoms/roomState';
+import { hostState } from 'recoil/atoms/hostState';
 import gameAPI from 'apis/gameAPI';
 
-function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId }) {
+function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId, setMyRole }) {
   const [userList, setUserList] = useState([]);
-  const [host, setHost] = useRecoilState(roomState);
+  const [host, setHost] = useRecoilState(hostState);
   const { openModal: openUserInfo } = useModal('UserInfo');
 
   useEffect(() => {
@@ -18,12 +18,14 @@ function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId }) 
     console.log('직업 배정', roleData);
     if (roleData) {
       setInGame(true);
+      setMyRole(roleData);
     }
   }, [roleData]);
 
   const gameStart = async () => {
     try {
-      const { status } = await gameAPI.startGame(sessionId);
+      // const { status } = await gameAPI.startGame(sessionId);
+      setInGame(true); //임시로 게임화면으로 전환
     } catch (error) {
       console.log('게임시작 실패', error);
     }

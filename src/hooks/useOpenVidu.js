@@ -3,7 +3,7 @@ import { OpenVidu } from 'openvidu-browser';
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import * as OVAtom from 'recoil/atoms/openViduState';
-import { roomState } from 'recoil/atoms/roomState';
+import { hostState } from 'recoil/atoms/hostState';
 
 const useOpenVidu = () => {
   const [OV, setOV] = useState(undefined);
@@ -19,7 +19,7 @@ const useOpenVidu = () => {
   const [messageList, setMessageList] = useState([]);
   const [password, setPassword] = useState('');
   const [publisherSetting, setPublisherSetting] = useRecoilState(OVAtom.publisherState);
-  const [host, setHost] = useRecoilState(roomState);
+  const [host, setHost] = useRecoilState(hostState);
 
   const joinSession = useCallback(() => {
     const newOV = new OpenVidu();
