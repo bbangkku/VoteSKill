@@ -15,9 +15,7 @@ const SlideRight = keyframes`
 export const JobIntroduceBackground = styled.div`
   width: 700px;
   height: 400px;
-  border-radius: ${(props) => props.theme.borderRadius.s};
-  overflow: hidden;
-  position: relative;
+  /* position: absolute; */
   /* 다른 스타일들을 여기에 작성하세요 */
   background-color: ${(props) => (props.isRed ? '#ff4742' : props.theme.color.blue)};
   display: flex;
