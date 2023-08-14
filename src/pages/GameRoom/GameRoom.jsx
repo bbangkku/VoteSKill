@@ -34,6 +34,10 @@ function GameRoom({ sessionId, openvidu, myRole }) {
     setDay();
     setCurrentTime(myRole.timer);
     openjobAssign();
+    // setTimeout(() => {
+    //   setIsVoteTime(false);
+    //   setIsSkillTime(true);
+    // }, currentTime);
   }, [myRole]);
 
   useEffect(() => {
@@ -63,7 +67,9 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   return (
     <S.ScreenWrapper>
       <Timer />
-      {openvidu.session && <CamScreen publisher={openvidu.publisher} subscribers={openvidu.subscribers} />}
+      {openvidu.session && (
+        <CamScreen publisher={openvidu.publisher} subscribers={openvidu.subscribers} myRole={myRole} />
+      )}
       <>
         <Modal id="JobAssign">
           <JobAssign data={myRole.role} />
