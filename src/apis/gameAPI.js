@@ -20,13 +20,8 @@ const gameAPI = {
 
   startGame: (roomId) => axiosInstance.post(`/rooms/${roomId}/start`),
 
-  voteGame: (roomId, userId) =>
-    axiosInstance.post(`/rooms/${roomId}/vote`, {
-      params: {
-        target: userId,
-      },
-    }),
+  voteGame: (roomId, targetId) => axiosInstance.post(`/rooms/${roomId}/vote/${targetId}`),
 
-  useSkill: (roomId, userId) => axiosInstance.post(`/rooms/${roomId}/skill/${userId}`),
+  useSkill: (roomId, targetId) => axiosInstance.post(`/rooms/${roomId}/skill/${targetId}`),
 };
 export default gameAPI;

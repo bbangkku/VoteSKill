@@ -12,7 +12,7 @@ function Modal({ children, id }) {
         <S.ModalBackground>
           <S.ModalBody>
             <S.ModalExitButton>
-              <FiXCircle size={30} color="#970000" onClick={closeModal} cursor={'pointer'} />
+              <FiXCircle size={30} color="#d9d9d9" onClick={closeModal} cursor={'pointer'} />
             </S.ModalExitButton>
             {children}
           </S.ModalBody>
