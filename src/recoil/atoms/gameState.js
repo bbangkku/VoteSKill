@@ -14,3 +14,8 @@ export const isSkillTimeState = atom({
   key: 'isSkillTimeState',
   default: false,
 });
+
+export const deadPlayerState = atom({
+  key: 'deadPlayerState',
+  default: [],
+});
