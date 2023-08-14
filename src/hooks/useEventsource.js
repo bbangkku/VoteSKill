@@ -21,7 +21,7 @@ const useEventSource = (sessionId, nickname) => {
       setroomData(parsedData);
     };
     const voteHandler = (e) => {
-      console.log(e.data);
+      console.log(e.data, '투표시간입니다');
       const parsedData = JSON.parse(e.data);
       setVoteData(parsedData);
     };

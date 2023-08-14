@@ -13,7 +13,7 @@ const SlideRight = keyframes`
 `;
 
 export const JobIntroduceBackground = styled.div`
-  width: 700px;
+  width: 800px;
   height: 400px;
   /* position: absolute; */
   /* 다른 스타일들을 여기에 작성하세요 */
@@ -28,10 +28,13 @@ export const JobIntroduceBackground = styled.div`
   //background-color: ${(props) => (props.isRed ? '#ff4742' : props.theme.color.blue)};
   display: flex;
   /* flex-direction: column; */
+<<<<<<< Updated upstream
   color: white;
+=======
+>>>>>>> Stashed changes
 `;
 export const Job = styled.div`
-  width: 700px;
+  width: 600px;
   height: 400px;
   display: flex;
   justify-content: center;
@@ -69,6 +72,7 @@ export const JobDescription = styled.div`
   margin-top: 60px;
 `;
 export const ButtonArea = styled.div`
+<<<<<<< Updated upstream
   //margin-top:px;
   //position: absolute;
   width: 100px;
@@ -77,6 +81,10 @@ export const ButtonArea = styled.div`
   //display: flex;
   //text-align: center;
 
+=======
+  margin-top: 300px;
+  display: flex;
+>>>>>>> Stashed changes
   /* justify-content: center; */
 `;
 export const ScrollButtonLeft = styled.button`
