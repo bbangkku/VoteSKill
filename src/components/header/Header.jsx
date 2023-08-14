@@ -19,11 +19,11 @@ function Header() {
     <S.HeaderWrapper>
       <S.Logo src={process.env.PUBLIC_URL + '/image/logo.svg'} />
       <S.HeaderButtonList>
-        <HiQuestionMarkCircle size={'70%'} color="#828282" onClick={openJobIntroduceModal} />
-        <HiOutlineUserCircle size={'70%'} color="#828282" onClick={openUserInfo} />
-        <Modal id="UserInfo">
+        <HiQuestionMarkCircle size={'70%'} color="#828282" onClick={openJobIntroduceModal} cursor={'pointer'} />
+        {/* <HiOutlineUserCircle size={'70%'} color="#828282" onClick={openUserInfo} /> */}
+        {/* <Modal id="UserInfo">
           <UserInfo nickname={nickname} />
-        </Modal>
+        </Modal> */}
         <Modal id="JobIntroduce">
           <JobIntroduce />
         </Modal>

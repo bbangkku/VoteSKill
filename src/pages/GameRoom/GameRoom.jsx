@@ -9,7 +9,7 @@ import Timer from 'components/timer/Timer';
 import JobAssign from 'components/jobassign/JobAssign';
 import { currentTimeState, deadPlayerState, isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
 import { useRecoilState } from 'recoil';
-import Swal from 'sweetalert2';
+import showSwal from 'utils/showSwal';
 
 function GameRoom({ sessionId, openvidu, myRole }) {
   const { setDay, setMafia, setCitizen } = useLayoutChange();
@@ -52,11 +52,8 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   useEffect(() => {
     // 투표 시간 알리미
     if (voteData) {
-      Swal.fire({
-        title: '마피아라고 생각되는 사람을 클릭하세요',
-        showCancelButton: false,
-        confirmButtonText: '닫기',
-      });
+      showSwal('마피아라고 생각되는 사람을 클릭하세요', '닫기');
+
       console.log('voteData', voteData);
       setIsVoteTime(true);
       setCurrentTime(voteData.timer);
@@ -69,22 +66,14 @@ function GameRoom({ sessionId, openvidu, myRole }) {
       if (roomData.type === 'vote') {
         setVoteResult(roomData.messages);
         setMafia();
-        Swal.fire({
-          title: `{${roomData.messages}}`,
-          showCancelButton: false,
-          confirmButtonText: '확인',
-        });
+        showSwal(`{${roomData.messages}}`, '확인');
         setIsVoteTime(false);
         setIsSkillTime(true);
       }
       if (roomData.type === 'skill') {
         setSkillResult(roomData.messages);
         setDay();
-        Swal.fire({
-          title: `{${roomData.message}}`,
-          showCancelButton: false,
-          confirmButtonText: '확인',
-        });
+        showSwal(`{${roomData.message}}`, '확인');
         setIsSkillTime(false);
       }
       if (checkDeath(roomData.death, nickname)) {
@@ -100,7 +89,12 @@ function GameRoom({ sessionId, openvidu, myRole }) {
     <S.ScreenWrapper>
       <Timer />
       {openvidu.session && (
-        <CamScreen publisher={openvidu.publisher} subscribers={openvidu.subscribers} myRole={myRole['role']} />
+        <CamScreen
+          publisher={openvidu.publisher}
+          subscribers={openvidu.subscribers}
+          myRole={myRole['role']}
+          roomId={sessionId}
+        />
       )}
       <Modal id="JobAssign">
         <JobAssign data={myRole.role} />
