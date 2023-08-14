@@ -8,7 +8,7 @@ import useEventSource from 'hooks/useEventsource';
 import Timer from 'components/timer/Timer';
 import JobAssign from 'components/jobassign/JobAssign';
 import { currentTimeState, deadPlayerState, isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import showSwal from 'utils/showSwal';
 
 function GameRoom({ sessionId, openvidu, myRole }) {
@@ -18,13 +18,12 @@ function GameRoom({ sessionId, openvidu, myRole }) {
 
   const { voteData, roomData } = useEventSource(sessionId, nickname);
 
-  const [currentTime, setCurrentTime] = useRecoilState(currentTimeState);
-
   const [voteResult, setVoteResult] = useState([]);
   const [skillResult, setSkillResult] = useState([]);
 
-  const [isVoteTime, setIsVoteTime] = useRecoilState(isVoteTimeState);
-  const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
+  const setCurrentTime = useSetRecoilState(currentTimeState);
+  const setIsVoteTime = useSetRecoilState(isVoteTimeState);
+  const setIsSkillTime = useSetRecoilState(isSkillTimeState);
   const [deadPlayers, setDeadPlayers] = useRecoilState(deadPlayerState);
 
   const checkDeath = (deathArray, nickname) => {

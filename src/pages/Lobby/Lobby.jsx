@@ -5,7 +5,6 @@ import MakeRoom from './MakeRoom/MakeRoom';
 import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
 import { roomListState } from 'recoil/atoms/lobbyState';
-import SearchRoom from './SearchRoom/SearchRoom';
 import RoomList from './RoomList/RoomList';
 import gameAPI from 'apis/gameAPI';
 import useLayoutChange from 'hooks/useLayoutChange';
@@ -28,7 +27,6 @@ function Lobby() {
       <Header />
       <S.Container>
         <S.Center>
-          {/* <SearchRoom /> */}
           <RoomList />
         </S.Center>
         <MakeRoom />
