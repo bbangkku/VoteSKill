@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './CamScreen.Style';
 import { useRecoilState } from 'recoil';
-import { isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
+import { isSkillTimeState, isVoteTimeState, roomName } from 'recoil/atoms/gameState';
+import axios from 'axios';
+import gameAPI from 'apis/gameAPI';
+import { axiosInstance } from 'apis';
+import Swal from 'sweetalert2';
 
 function CamScreen({ publisher, subscribers }) {
   const [imageOn, setImageOn] = useState('');
@@ -29,6 +33,18 @@ function UserVideoComponent(props) {
   const handleClickKillVote = (sub) => {
     if (isVoteTime || isSkillTime) {
       props.setImageOn(getNicknameTag(sub));
+      const nickname = getNicknameTag(sub);
+      console.log(props);
+      Swal.fire({
+        title: `${nickname}을 투표하셨습니다.`,
+        // showCancelButton: false,
+        // confirmButtonText: '닫기',
+      });
+      const roomId = props.streamManager.stream.session.sessionId
+        ? props.streamManager.stream.session.sessionId
+        : props.streamManager.session.sessionId;
+      const URL = process.env.REACT_APP_SERVER_URL + `/rooms/${roomId}/vote/${nickname}`;
+      axiosInstance.post(URL);
     } else {
       return;
     }

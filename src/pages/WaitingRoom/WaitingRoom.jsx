@@ -4,7 +4,7 @@ import Chatting from './Chatting/Chatting';
 import PlayerList from './PlayerList/PlayerList';
 import useEventSource from 'hooks/useEventsource';
 import axios from 'axios';
-
+import { useRecoilState } from 'recoil';
 function WaitingRoom({ sessionId, openvidu, password, setInGame, setMyRole }) {
   const nickname = sessionStorage.getItem('nickname');
   const { roleData } = useEventSource(sessionId, nickname);
