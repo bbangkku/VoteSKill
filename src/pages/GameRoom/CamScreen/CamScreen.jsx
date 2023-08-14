@@ -7,17 +7,23 @@ import gameAPI from 'apis/gameAPI';
 import { axiosInstance } from 'apis';
 import Swal from 'sweetalert2';
 
-function CamScreen({ publisher, subscribers }) {
+function CamScreen({ publisher, subscribers, myRole }) {
   const [imageOn, setImageOn] = useState('');
 
   return (
     <S.VideoWrapper>
       {publisher !== undefined ? (
-        <UserVideoComponent streamManager={publisher} setImageOn={setImageOn} imageOn={imageOn} />
+        <UserVideoComponent streamManager={publisher} setImageOn={setImageOn} imageOn={imageOn} myRole={myRole} />
       ) : null}
       {subscribers.length > 0 &&
         subscribers.map((sub) => (
-          <UserVideoComponent key={sub.stream.streamId} streamManager={sub} setImageOn={setImageOn} imageOn={imageOn} />
+          <UserVideoComponent
+            key={sub.stream.streamId}
+            streamManager={sub}
+            setImageOn={setImageOn}
+            imageOn={imageOn}
+            myRole={myRole}
+          />
         ))}
     </S.VideoWrapper>
   );
@@ -27,23 +33,102 @@ function UserVideoComponent(props) {
   const [isVoteTime, setIsVoteTime] = useRecoilState(isVoteTimeState);
   const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
   const videoRef = useRef();
-
+  const roleName = props.myRole;
   const getNicknameTag = (sub) => JSON.parse(sub.stream.connection.data).clientData;
 
+  // useEffect(() => {
+  //   handleClickKillVote();
+  // }, []);
   const handleClickKillVote = (sub) => {
-    if (isVoteTime || isSkillTime) {
-      props.setImageOn(getNicknameTag(sub));
-      const nickname = getNicknameTag(sub);
-      console.log(props);
+    console.log(roleName, '롤네임');
+    props.setImageOn(getNicknameTag(sub));
+    const nickname = getNicknameTag(sub);
+    const roomId = props.streamManager.stream.session.sessionId
+      ? props.streamManager.stream.session.sessionId
+      : props.streamManager.session.sessionId;
+
+    if (isVoteTime) {
+      console.log('보트시간');
+      const URL = process.env.REACT_APP_SERVER_URL + `/rooms/${roomId}/vote/${nickname}`;
       Swal.fire({
         title: `${nickname}을 투표하셨습니다.`,
-        // showCancelButton: false,
-        // confirmButtonText: '닫기',
+        showCancelButton: false,
+        confirmButtonText: '닫기',
       });
-      const roomId = props.streamManager.stream.session.sessionId
-        ? props.streamManager.stream.session.sessionId
-        : props.streamManager.session.sessionId;
-      const URL = process.env.REACT_APP_SERVER_URL + `/rooms/${roomId}/vote/${nickname}`;
+      axiosInstance.post(URL);
+      setIsVoteTime(false);
+      console.log(isVoteTime);
+      setIsSkillTime(true);
+    } else if (isSkillTime) {
+      console.log('스킬시간');
+
+      const URL = process.env.REACT_APP_SERVER_URL + `/rooms/${roomId}/skill/${nickname}`;
+      console.log(nickname);
+      if (roleName === 'MAFIA') {
+        Swal.fire({
+          title: `${nickname}을 선택했습니다.`,
+          showCancelButton: false,
+          confirmButtonText: '닫기',
+        });
+        axiosInstance.post(URL);
+      } else if (roleName === 'POLICE') {
+        gameAPI.useSkill(roomId, nickname).then((response) => {
+          console.log(response.data.message);
+          Swal.fire({
+            title: `${response.data.message}`,
+            showCancelButton: false,
+            confirmButtonText: '닫기',
+          });
+        });
+      }
+    } else if (roleName === 'DOCTOR') {
+      Swal.fire({
+        title: `${nickname}을 투표하셨습니다.`,
+        showCancelButton: false,
+        confirmButtonText: '닫기',
+      });
+      axiosInstance.post(URL);
+    } else if (roleName === 'SOLDIER') {
+      Swal.fire({
+        title: `${nickname}을 투표하셨습니다.`,
+        showCancelButton: false,
+        confirmButtonText: '닫기',
+      });
+      axiosInstance.post(URL);
+    } else if (roleName === 'POLITICIAN') {
+      Swal.fire({
+        title: `${nickname}을 투표하셨습니다.`,
+        showCancelButton: false,
+        confirmButtonText: '닫기',
+      });
+      axiosInstance.post(URL);
+    } else if (roleName === 'DEVELOPER') {
+      Swal.fire({
+        title: `${nickname}을 투표하셨습니다.`,
+        showCancelButton: false,
+        confirmButtonText: '닫기',
+      });
+      axiosInstance.post(URL);
+    } else if (roleName === 'REPORTER') {
+      Swal.fire({
+        title: `${nickname}을 투표하셨습니다.`,
+        showCancelButton: false,
+        confirmButtonText: '닫기',
+      });
+      axiosInstance.post(URL);
+    } else if (roleName === 'PRIEST') {
+      Swal.fire({
+        title: `${nickname}을 투표하셨습니다.`,
+        showCancelButton: false,
+        confirmButtonText: '닫기',
+      });
+      axiosInstance.post(URL);
+    } else if (roleName === 'GANGSTER') {
+      Swal.fire({
+        title: `${nickname}을 투표하셨습니다.`,
+        showCancelButton: false,
+        confirmButtonText: '닫기',
+      });
       axiosInstance.post(URL);
     } else {
       return;

@@ -63,8 +63,12 @@ function GameRoom({ sessionId, openvidu, myRole }) {
           showCancelButton: false,
           confirmButtonText: '확인',
         });
+        setIsVoteTime(false);
+        setIsSkillTime(true);
+        console.log(isVoteTime, 'false로바꿔줬고');
       } else if (roomData.type === 'skill') {
         setSkillResult(roomData.messages);
+
         setDay();
         Swal.fire({
           title: `{${roomData.message}}`,
@@ -72,6 +76,8 @@ function GameRoom({ sessionId, openvidu, myRole }) {
           showCancelButton: false,
           confirmButtonText: '확인',
         });
+        setIsSkillTime(false);
+        console.log(isSkillTime, 'false로바꿔줬고');
       }
       setCurrentTime(roomData.timer);
       // + 카메라 처리
@@ -81,7 +87,9 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   return (
     <S.ScreenWrapper>
       <Timer />
-      {openvidu.session && <CamScreen publisher={openvidu.publisher} subscribers={openvidu.subscribers} />}
+      {openvidu.session && (
+        <CamScreen publisher={openvidu.publisher} subscribers={openvidu.subscribers} myRole={myRole['role']} />
+      )}
       <>
         <Modal id="JobAssign">
           <JobAssign data={myRole.role} />
