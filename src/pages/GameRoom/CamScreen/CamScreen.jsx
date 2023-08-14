@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './CamScreen.Style';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
 import gameAPI from 'apis/gameAPI';
 import showSwal from 'utils/showSwal';
@@ -31,41 +31,6 @@ function CamScreen({ publisher, subscribers, myRole, roomId }) {
           />
         ))}
     </S.VideoWrapper>
-  );
-}
-
-function VoteAndSkill(props) {
-  const checkVote = (sub) => props.imageOn === props.getNicknameTag(sub);
-
-  const resetVote = () => props.setImageOn('');
-
-  return (
-    <>
-      {checkVote(props.streamManager) && props.isVoteTime && (
-        <S.KillVote
-          src={process.env.PUBLIC_URL + '/image/game/killvote.png'}
-          onClick={() => resetVote(props.streamManager)}
-        />
-      )}
-      {checkVote(props.streamManager) &&
-        props.isSkillTime &&
-        // 직업에따라 능력사용
-        props.myRole === 'MAFIA' && (
-          <S.SkillImage
-            src={process.env.PUBLIC_URL + '/image/game/skill_mafia.png'}
-            onClick={() => resetVote(props.streamManager)}
-          />
-        )}
-      {checkVote(props.streamManager) &&
-        props.isSkillTime &&
-        // 직업에따라 능력사용
-        props.myRole === 'POLICE' && (
-          <S.SkillImage
-            src={process.env.PUBLIC_URL + '/image/game/skill_police.png'}
-            onClick={() => resetVote(props.streamManager)}
-          />
-        )}
-    </>
   );
 }
 
@@ -131,6 +96,41 @@ function UserVideoComponent(props) {
           <span>{getNicknameTag(props.streamManager)}</span>
         </S.UserInfoWrapper>
       ) : null}
+    </>
+  );
+}
+
+function VoteAndSkill(props) {
+  const checkVote = (sub) => props.imageOn === props.getNicknameTag(sub);
+
+  const resetVote = () => props.setImageOn('');
+
+  return (
+    <>
+      {checkVote(props.streamManager) && props.isVoteTime && (
+        <S.KillVote
+          src={process.env.PUBLIC_URL + '/image/game/killvote.png'}
+          onClick={() => resetVote(props.streamManager)}
+        />
+      )}
+      {checkVote(props.streamManager) &&
+        props.isSkillTime &&
+        // 직업에따라 능력사용
+        props.myRole === 'MAFIA' && (
+          <S.SkillImage
+            src={process.env.PUBLIC_URL + '/image/game/skill_mafia.png'}
+            onClick={() => resetVote(props.streamManager)}
+          />
+        )}
+      {checkVote(props.streamManager) &&
+        props.isSkillTime &&
+        // 직업에따라 능력사용
+        props.myRole === 'POLICE' && (
+          <S.SkillImage
+            src={process.env.PUBLIC_URL + '/image/game/skill_police.png'}
+            onClick={() => resetVote(props.streamManager)}
+          />
+        )}
     </>
   );
 }
