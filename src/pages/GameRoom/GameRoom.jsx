@@ -11,7 +11,7 @@ import VoteResult from 'components/voteresult/VoteResult';
 import AbilityResult from 'components/abilityresult/AbilityResult';
 import { currentTimeState, isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
 import { useRecoilState } from 'recoil';
-
+import Swal from 'sweetalert2';
 function GameRoom({ sessionId, openvidu, myRole }) {
   const { setDay, setMafia, setCitizen } = useLayoutChange();
   const nickname = sessionStorage.getItem('nickname');
@@ -32,17 +32,19 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   useEffect(() => {
     // 최초 입장 시 직업 배정 알리미
     setDay();
+    console.log(myRole['role']);
     setCurrentTime(myRole.timer);
-    openjobAssign();
-    // setTimeout(() => {
-    //   setIsVoteTime(false);
-    //   setIsSkillTime(true);
-    // }, currentTime);
+    openjobAssign(myRole['role']);
   }, [myRole]);
 
   useEffect(() => {
     // 투표 시간 알리미
     if (voteData) {
+      Swal.fire({
+        title: '마피아라고 생각되는 사람을 클릭하세요',
+        showCancelButton: false,
+        confirmButtonText: '닫기',
+      });
       console.log('voteData', voteData);
       setIsVoteTime(true);
       setCurrentTime(voteData.timer);
@@ -53,11 +55,29 @@ function GameRoom({ sessionId, openvidu, myRole }) {
     // 능력/투표 결과 알리미
     if (roomData) {
       if (roomData.type === 'vote') {
-        setVoteResult(roomData.message);
+        setVoteResult(roomData.messages);
         setMafia();
+        Swal.fire({
+          title: `{${roomData.messages}}`,
+          // html:
+          showCancelButton: false,
+          confirmButtonText: '확인',
+        });
+        setIsVoteTime(false);
+        setIsSkillTime(true);
+        console.log(isVoteTime, 'false로바꿔줬고');
       } else if (roomData.type === 'skill') {
-        setSkillResult(roomData.message);
+        setSkillResult(roomData.messages);
+
         setDay();
+        Swal.fire({
+          title: `{${roomData.message}}`,
+          // html:
+          showCancelButton: false,
+          confirmButtonText: '확인',
+        });
+        setIsSkillTime(false);
+        console.log(isSkillTime, 'false로바꿔줬고');
       }
       setCurrentTime(roomData.timer);
       // + 카메라 처리
@@ -68,7 +88,7 @@ function GameRoom({ sessionId, openvidu, myRole }) {
     <S.ScreenWrapper>
       <Timer />
       {openvidu.session && (
-        <CamScreen publisher={openvidu.publisher} subscribers={openvidu.subscribers} myRole={myRole} />
+        <CamScreen publisher={openvidu.publisher} subscribers={openvidu.subscribers} myRole={myRole['role']} />
       )}
       <>
         <Modal id="JobAssign">
