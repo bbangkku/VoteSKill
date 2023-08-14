@@ -34,6 +34,7 @@ function GameRoom({ sessionId, openvidu, myRole }) {
     setDay();
     console.log(myRole['role']);
     setCurrentTime(myRole.timer);
+
     openjobAssign(myRole['role']);
   }, [myRole]);
 
