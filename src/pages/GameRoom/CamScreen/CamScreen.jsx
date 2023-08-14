@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as S from './CamScreen.Style';
 import { useRecoilState } from 'recoil';
 import { isSkillTimeState, isVoteTimeState, roomName } from 'recoil/atoms/gameState';
-import axios from 'axios';
 import gameAPI from 'apis/gameAPI';
 import { axiosInstance } from 'apis';
 import Swal from 'sweetalert2';
@@ -152,13 +151,6 @@ function UserVideoComponent(props) {
       });
       axiosInstance.post(URL);
     } else if (roleName === 'PRIEST') {
-      Swal.fire({
-        title: `${nickname}을 투표하셨습니다.`,
-        showCancelButton: false,
-        confirmButtonText: '닫기',
-      });
-      axiosInstance.post(URL);
-    } else if (roleName === 'GANGSTER') {
       Swal.fire({
         title: `${nickname}을 투표하셨습니다.`,
         showCancelButton: false,

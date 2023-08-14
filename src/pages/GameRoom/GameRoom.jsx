@@ -7,17 +7,14 @@ import useModal from 'hooks/useModal';
 import useEventSource from 'hooks/useEventsource';
 import Timer from 'components/timer/Timer';
 import JobAssign from 'components/jobassign/JobAssign';
-import VoteResult from 'components/voteresult/VoteResult';
-import AbilityResult from 'components/abilityresult/AbilityResult';
-import { currentTimeState, isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
+import { currentTimeState, deadPlayerState, isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
 import { useRecoilState } from 'recoil';
 import Swal from 'sweetalert2';
+
 function GameRoom({ sessionId, openvidu, myRole }) {
   const { setDay, setMafia, setCitizen } = useLayoutChange();
   const nickname = sessionStorage.getItem('nickname');
   const { openModal: openjobAssign } = useModal('JobAssign');
-  const { openModal: openvoteResult } = useModal('VoteResult');
-  const { openModal: openabilityResult } = useModal('AbilityResult');
 
   const { voteData, roomData } = useEventSource(sessionId, nickname);
 
@@ -28,8 +25,9 @@ function GameRoom({ sessionId, openvidu, myRole }) {
 
   const [isVoteTime, setIsVoteTime] = useRecoilState(isVoteTimeState);
   const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
+  const [deadPlayers, setDeadPlayers] = useRecoilState(deadPlayerState);
 
-  const checkDeath = (deathArray) => {
+  const checkDeath = (deathArray, nickname) => {
     const isDeath = deathArray.find((playerNickname) => playerNickname === nickname);
     console.log('isDeath', isDeath);
     return isDeath === undefined ? false : true;
@@ -39,14 +37,16 @@ function GameRoom({ sessionId, openvidu, myRole }) {
     openvidu.publisher.publishAudio(false);
     openvidu.publisher.publishVideo(false);
   };
+  const setResurrection = () => {
+    openvidu.publisher.publishAudio(true);
+    openvidu.publisher.publishVideo(true);
+  };
 
   useEffect(() => {
     // 최초 입장 시 직업 배정 알리미
     setDay();
-    console.log(myRole['role']);
     setCurrentTime(myRole.timer);
-    openjobAssign(myRole['role']);
-    openvidu.setPublisherSetting({ ...openvidu.publisherSetting, publishAudio: true, publishVideo: true });
+    openjobAssign(myRole.role);
   }, [myRole]);
 
   useEffect(() => {
@@ -71,29 +71,28 @@ function GameRoom({ sessionId, openvidu, myRole }) {
         setMafia();
         Swal.fire({
           title: `{${roomData.messages}}`,
-          // html:
           showCancelButton: false,
           confirmButtonText: '확인',
         });
         setIsVoteTime(false);
         setIsSkillTime(true);
-        console.log(isVoteTime, 'false로바꿔줬고');
-      } else if (roomData.type === 'skill') {
+      }
+      if (roomData.type === 'skill') {
         setSkillResult(roomData.messages);
-
         setDay();
         Swal.fire({
           title: `{${roomData.message}}`,
-          // html:
           showCancelButton: false,
           confirmButtonText: '확인',
         });
         setIsSkillTime(false);
-        console.log(isSkillTime, 'false로바꿔줬고');
       }
-      if (checkDeath(roomData.death)) setDeath();
+      if (checkDeath(roomData.death, nickname)) {
+        setDeath();
+        setDeadPlayers(roomData.death);
+      }
+
       setCurrentTime(roomData.timer);
-      // + 카메라 처리
     }
   }, [roomData]);
 
@@ -103,17 +102,9 @@ function GameRoom({ sessionId, openvidu, myRole }) {
       {openvidu.session && (
         <CamScreen publisher={openvidu.publisher} subscribers={openvidu.subscribers} myRole={myRole['role']} />
       )}
-      <>
-        <Modal id="JobAssign">
-          <JobAssign data={myRole.role} />
-        </Modal>
-        <Modal id="VoteResult">
-          <VoteResult data={voteResult} />
-        </Modal>
-        <Modal id="AbilityResult">
-          <AbilityResult data={skillResult} />
-        </Modal>
-      </>
+      <Modal id="JobAssign">
+        <JobAssign data={myRole.role} />
+      </Modal>
     </S.ScreenWrapper>
   );
 }
