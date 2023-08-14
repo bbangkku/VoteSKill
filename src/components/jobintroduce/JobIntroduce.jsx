@@ -53,7 +53,7 @@ function JobIntroduce() {
   };
 
   return (
-    <div>
+    <>
       {modalToggleState && (
         <S.JobIntroduceBackground isRed={currentModalIndex === 0 || currentModalIndex === 1}>
           <S.Job>
@@ -67,14 +67,13 @@ function JobIntroduce() {
               </S.ModalContent>
             ))}
           </S.Job>
-
           <S.ButtonArea>
             <S.ScrollButtonLeft onClick={goToPreviousModal}></S.ScrollButtonLeft>
             <S.ScrollButtonRight onClick={goToNextModal}></S.ScrollButtonRight>
           </S.ButtonArea>
         </S.JobIntroduceBackground>
       )}
-    </div>
+    </>
   );
 }
 
