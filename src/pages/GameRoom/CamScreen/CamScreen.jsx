@@ -12,7 +12,6 @@ import { checkDeath } from 'utils/checkDeath';
 
 function CamScreen({ publisher, subscribers, myRole, roomId }) {
   const [imageOn, setImageOn] = useState('');
-  // 죽은사람
 
   return (
     <S.VideoWrapper>
@@ -81,16 +80,15 @@ function UserVideoComponent(props) {
     if (props.streamManager && !!videoRef.current) {
       props.streamManager.addVideoElement(videoRef.current);
     }
-    console.log('nickname : ' + getNicknameTag(props.streamManager));
-    console.log('죽은사람 리스트 : ' + deadPlayerState);
+    console.log('닉네임: ' + getNicknameTag(props.streamManager));
+    console.log('죽은사람 리스트 : ' + deadPlayers);
   }, [props.streamManager]);
 
-  // checkvote는 닉네임따라 체크 여부만
   return (
     <>
       {props.streamManager !== undefined ? (
         <S.UserInfoWrapper>
-          {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? (
+          {/* {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? (
             <GraveComponent></GraveComponent>
           ) : (
             <VoteAndSkill
@@ -102,7 +100,17 @@ function UserVideoComponent(props) {
               isSkillTime={isSkillTime}
               myRole={props.myRole}
             />
-          )}
+          )} */}
+          <GraveComponent streamManager={props.streamManager} getNicknameTag={getNicknameTag}></GraveComponent>
+          <VoteAndSkill
+            streamManager={props.streamManager}
+            getNicknameTag={getNicknameTag}
+            setImageOn={props.setImageOn}
+            imageOn={props.imageOn}
+            isVoteTime={isVoteTime}
+            isSkillTime={isSkillTime}
+            myRole={props.myRole}
+          />
           <S.VideoContainer onClick={() => handleClickKillVote(props.streamManager)}>
             <S.CustomScreen autoPlay={true} ref={videoRef} />
           </S.VideoContainer>
