@@ -17,21 +17,21 @@ function Game() {
   const [inGame, setInGame] = useState(false);
   const [myRole, setMyRole] = useState(undefined);
 
-  useEffect(() => {
-    return () => {
-      try {
-        gameAPI.enterRoom(sessionId);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     try {
+  //       gameAPI.exitRoom(sessionId);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  // }, []);
 
   return (
     <Layout isMain={false} $layout={layout}>
       <Header />
       {inGame ? (
-        <GameRoom sessionId={sessionId} openvidu={openvidu} password={password} myRole={myRole} />
+        <GameRoom sessionId={sessionId} openvidu={openvidu} password={password} myRole={myRole} setInGame={setInGame} />
       ) : (
         <WaitingRoom
           sessionId={sessionId}

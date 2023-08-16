@@ -1,4 +1,9 @@
-import { atom } from 'recoil';
+import { atom, atomFamily } from 'recoil';
+
+export const skillState = atomFamily({
+  key: 'skillState',
+  default: 1,
+});
 
 export const currentTimeState = atom({
   key: 'currentTimeState',

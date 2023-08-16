@@ -1,7 +1,6 @@
 import useModal from 'hooks/useModal';
 import * as S from './Header.Style';
 import { HiQuestionMarkCircle, HiOutlineUserCircle } from 'react-icons/hi';
-import UserInfo from 'components/userinfo/UserInfo';
 import JobIntroduce from 'components/jobintroduce/JobIntroduce';
 import Modal from 'components/modal/Modal';
 import { useEffect, useState } from 'react';

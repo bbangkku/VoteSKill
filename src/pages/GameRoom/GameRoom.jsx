@@ -1,7 +1,7 @@
 import useLayoutChange from 'hooks/useLayoutChange';
 import * as S from 'pages/GameRoom/GameRoom.Style';
 import CamScreen from './CamScreen/CamScreen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from 'components/modal/Modal';
 import useModal from 'hooks/useModal';
 import useEventSource from 'hooks/useEventsource';
@@ -13,15 +13,16 @@ import showSwal from 'utils/showSwal';
 import convertMessageToText from 'utils/convertMessageToText';
 import { checkDeath } from 'utils/checkDeath';
 
-function GameRoom({ sessionId, openvidu, myRole }) {
+function GameRoom({ sessionId, openvidu, myRole, setInGame }) {
   const { setDay, setMafia, setCitizen } = useLayoutChange();
   const nickname = sessionStorage.getItem('nickname');
   const { openModal: openjobAssign } = useModal('JobAssign');
   const { voteData, roomData } = useEventSource(sessionId, nickname);
+  const [imageOn, setImageOn] = useState('');
 
   const setCurrentTime = useSetRecoilState(currentTimeState);
-  const setIsVoteTime = useSetRecoilState(isVoteTimeState);
-  const setIsSkillTime = useSetRecoilState(isSkillTimeState);
+  const [isVoteTime, setIsVoteTime] = useRecoilState(isVoteTimeState);
+  const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
   const [deadPlayers, setDeadPlayers] = useRecoilState(deadPlayerState);
 
   const setDeath = () => {
@@ -45,8 +46,6 @@ function GameRoom({ sessionId, openvidu, myRole }) {
     // 투표 시간 알리미
     if (voteData) {
       showSwal('마피아라고 생각되는 사람을 클릭하세요', '닫기');
-
-      console.log('voteData', voteData);
       setIsVoteTime(true);
       setCurrentTime(voteData.timer);
     }
@@ -60,16 +59,20 @@ function GameRoom({ sessionId, openvidu, myRole }) {
         showSwal(convertMessageToText(roomData.messages), '확인');
         setIsVoteTime(false);
         setIsSkillTime(true);
+        setImageOn('');
       }
       if (roomData.type === 'skill') {
         setDay();
         showSwal(convertMessageToText(roomData.messages), '확인');
         setIsSkillTime(false);
+        setImageOn('');
       }
       if (roomData.type === 'gameover') {
         showSwal(convertMessageToText(roomData.messages), '확인');
         setIsSkillTime(false);
-        location.replace('/lobby');
+        setImageOn('');
+        console.log('GAME OVER');
+        setInGame(false);
       }
       if (checkDeath(roomData.death, nickname)) {
         setDeath();
@@ -89,8 +92,11 @@ function GameRoom({ sessionId, openvidu, myRole }) {
           subscribers={openvidu.subscribers}
           myRole={myRole['role']}
           roomId={sessionId}
+          imageOn={imageOn}
+          setImageOn={setImageOn}
         />
       )}
+
       <Modal id="JobAssign">
         <JobAssign data={myRole.role} />
       </Modal>
