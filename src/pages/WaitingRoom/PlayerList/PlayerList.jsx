@@ -16,7 +16,7 @@ function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId, se
 
   useEffect(() => {
     if (roleData) {
-      console.log('직업 배정', roleData);
+      console.log('내 직업', roleData);
       setInGame(true);
       setMyRole(roleData);
     }

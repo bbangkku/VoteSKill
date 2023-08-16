@@ -1,18 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './CamScreen.Style';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
+import { isSkillTimeState, isVoteTimeState, skillState } from 'recoil/atoms/gameState';
 import gameAPI from 'apis/gameAPI';
 import showSwal from 'utils/showSwal';
 import VoteAndSkill from 'pages/GameRoom/VoteAndSkill/VoteAndSkill';
-import convertMessageToText from 'utils/convertMessageToText';
 import { deadPlayerState } from 'recoil/atoms/gameState';
 import GraveComponent from 'components/gravecomponent/GraveComponent';
 import { checkDeath } from 'utils/checkDeath';
+import Swal from 'sweetalert2';
 
-function CamScreen({ publisher, subscribers, myRole, roomId }) {
-  const [imageOn, setImageOn] = useState('');
-
+function CamScreen({ publisher, subscribers, myRole, roomId, imageOn, setImageOn }) {
   return (
     <S.VideoWrapper>
       {publisher !== undefined ? (
@@ -40,24 +38,42 @@ function CamScreen({ publisher, subscribers, myRole, roomId }) {
 }
 
 function UserVideoComponent(props) {
-  const isVoteTime = useRecoilValue(isVoteTimeState);
-  const isSkillTime = useRecoilValue(isSkillTimeState);
+  const [isVoteTime, setIsVoteTime] = useRecoilState(isVoteTimeState);
+  const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
   const videoRef = useRef();
   const roleName = props.myRole;
   const roomId = props.roomId;
-  const SKILL_ROLE = ['DOCTOR', 'SOLDIER', 'POLITICIAN', 'DEVELOPER', 'REPORTER', 'PRIEST', 'MAFIA'];
-  const [deadPlayers] = useRecoilState(deadPlayerState);
+  const deadPlayers = useRecoilValue(deadPlayerState);
+  const NORMAL_SKILL_ROLE = ['DOCTOR', 'MAFIA'];
+  const NONE_SKILL_ROLE = ['SOLDIER', 'POLITICIAN'];
+  const ONECE_SKILL_ROLE = ['PRIEST', 'REPORTER'];
 
   const getNicknameTag = (sub) => JSON.parse(sub.stream.connection.data).clientData;
+  const [skill, setSkill] = useRecoilState(skillState(roleName));
 
   const useSkillAndPost = async (roleName, nickname) => {
     if (roleName === 'POLICE') {
       const { data } = await gameAPI.useSkill(roomId, nickname);
-      showSwal(convertMessageToText(data.message), '닫기');
+      showSwal(data.message, '닫기');
+      return;
     }
-    if (SKILL_ROLE.includes(roleName)) {
+    if (NONE_SKILL_ROLE.includes(roleName)) {
+      showSwal(`현재 직업은 사용할 스킬이 없습니다.`, '닫기');
+      return;
+    }
+    if (NORMAL_SKILL_ROLE.includes(roleName)) {
       showSwal(`${nickname}을 선택하셨습니다.`, '닫기');
       await gameAPI.useSkill(roomId, nickname);
+      return;
+    }
+    if (ONECE_SKILL_ROLE.includes(roleName)) {
+      if (skill < 1) {
+        showSwal(`스킬 사용 횟수가 소진되었습니다.`, '닫기');
+        return;
+      }
+      showSwal(`${nickname}을 선택하셨습니다.`, '닫기');
+      await gameAPI.useSkill(roomId, nickname);
+      setSkill((skill) => skill - 1);
     }
   };
 
@@ -69,19 +85,33 @@ function UserVideoComponent(props) {
   const handleClickKillVote = (sub) => {
     if (!isVoteTime && !isSkillTime) return;
 
-    const nickname = getNicknameTag(sub);
-    props.setImageOn(nickname);
-
-    if (isVoteTime) useVoteAndPost(nickname);
-    if (isSkillTime) useSkillAndPost(roleName, nickname);
+    Swal.fire({
+      title: `${getNicknameTag(sub)}님을 선택하겠습니까?`,
+      text: '다시 되돌릴 수 없습니다. 신중하세요.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#6367CE',
+      cancelButtonColor: '#970000',
+      confirmButtonText: '승인',
+      cancelButtonText: '취소',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const nickname = getNicknameTag(sub);
+        props.setImageOn(nickname);
+        if (isVoteTime) useVoteAndPost(nickname);
+        if (isSkillTime) useSkillAndPost(roleName, nickname);
+        // setIsVoteTime(false);
+        // setIsSkillTime(false);
+        // props.setImageOn('');
+      }
+    });
   };
 
   useEffect(() => {
     if (props.streamManager && !!videoRef.current) {
       props.streamManager.addVideoElement(videoRef.current);
     }
-    console.log('닉네임: ' + getNicknameTag(props.streamManager));
-    console.log('죽은사람 리스트 : ' + deadPlayers);
   }, [props.streamManager]);
 
   return (
@@ -107,8 +137,6 @@ function UserVideoComponent(props) {
             getNicknameTag={getNicknameTag}
             setImageOn={props.setImageOn}
             imageOn={props.imageOn}
-            isVoteTime={isVoteTime}
-            isSkillTime={isSkillTime}
             myRole={props.myRole}
           />
           {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? null : (
