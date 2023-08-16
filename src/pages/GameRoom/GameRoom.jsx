@@ -1,7 +1,7 @@
 import useLayoutChange from 'hooks/useLayoutChange';
 import * as S from 'pages/GameRoom/GameRoom.Style';
 import CamScreen from './CamScreen/CamScreen';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Modal from 'components/modal/Modal';
 import useModal from 'hooks/useModal';
 import useEventSource from 'hooks/useEventsource';
@@ -17,11 +17,7 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   const { setDay, setMafia, setCitizen } = useLayoutChange();
   const nickname = sessionStorage.getItem('nickname');
   const { openModal: openjobAssign } = useModal('JobAssign');
-
   const { voteData, roomData } = useEventSource(sessionId, nickname);
-
-  const [voteResult, setVoteResult] = useState([]);
-  const [skillResult, setSkillResult] = useState([]);
 
   const setCurrentTime = useSetRecoilState(currentTimeState);
   const setIsVoteTime = useSetRecoilState(isVoteTimeState);
@@ -60,14 +56,12 @@ function GameRoom({ sessionId, openvidu, myRole }) {
     // 능력/투표 결과 알리미
     if (roomData) {
       if (roomData.type === 'vote') {
-        setVoteResult(roomData.messages);
         setMafia();
         showSwal(convertMessageToText(roomData.messages), '확인');
         setIsVoteTime(false);
         setIsSkillTime(true);
       }
       if (roomData.type === 'skill') {
-        setSkillResult(roomData.messages);
         setDay();
         showSwal(convertMessageToText(roomData.messages), '확인');
         setIsSkillTime(false);
