@@ -4,6 +4,7 @@ import useModal from 'hooks/useModal';
 import { useRecoilState } from 'recoil';
 import { hostState } from 'recoil/atoms/hostState';
 import gameAPI from 'apis/gameAPI';
+import { Link } from 'react-router-dom';
 
 function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId, setMyRole }) {
   const [userList, setUserList] = useState([]);
@@ -33,6 +34,11 @@ function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId, se
 
   const checkHost = () => sessionStorage.getItem('nickname') === host;
 
+  const outButtonstyle = {
+    'text-decoration': 'none',
+    color: 'black',
+  };
+
   return (
     <S.PlayerListWrapper>
       <S.Square>
@@ -46,7 +52,11 @@ function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId, se
         ))}
       </S.Square>
       <S.ButtonSquare>
-        <S.OutButton>EXIT</S.OutButton>
+        <S.OutButton>
+          <Link to="/lobby" style={outButtonstyle}>
+            EXIT
+          </Link>
+        </S.OutButton>
         {checkHost() && <S.StartButton onClick={gameStart}>START</S.StartButton>}
       </S.ButtonSquare>
     </S.PlayerListWrapper>
