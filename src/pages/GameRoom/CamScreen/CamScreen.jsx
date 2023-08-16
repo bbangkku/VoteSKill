@@ -5,7 +5,6 @@ import { isSkillTimeState, isVoteTimeState, skillState } from 'recoil/atoms/game
 import gameAPI from 'apis/gameAPI';
 import showSwal from 'utils/showSwal';
 import VoteAndSkill from 'pages/GameRoom/VoteAndSkill/VoteAndSkill';
-import convertMessageToText from 'utils/convertMessageToText';
 import { deadPlayerState } from 'recoil/atoms/gameState';
 import GraveComponent from 'components/gravecomponent/GraveComponent';
 import { checkDeath } from 'utils/checkDeath';
@@ -119,7 +118,7 @@ function UserVideoComponent(props) {
     <>
       {props.streamManager !== undefined ? (
         <S.UserInfoWrapper>
-          {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? (
+          {/* {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? (
             <GraveComponent></GraveComponent>
           ) : (
             <VoteAndSkill
@@ -131,10 +130,20 @@ function UserVideoComponent(props) {
               isSkillTime={isSkillTime}
               myRole={props.myRole}
             />
+          )} */}
+          <GraveComponent streamManager={props.streamManager} getNicknameTag={getNicknameTag}></GraveComponent>
+          <VoteAndSkill
+            streamManager={props.streamManager}
+            getNicknameTag={getNicknameTag}
+            setImageOn={props.setImageOn}
+            imageOn={props.imageOn}
+            myRole={props.myRole}
+          />
+          {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? null : (
+            <S.VideoContainer onClick={() => handleClickKillVote(props.streamManager)}>
+              <S.CustomScreen autoPlay={true} ref={videoRef} />
+            </S.VideoContainer>
           )}
-          <S.VideoContainer onClick={() => handleClickKillVote(props.streamManager)}>
-            <S.CustomScreen autoPlay={true} ref={videoRef} />
-          </S.VideoContainer>
           <span>{getNicknameTag(props.streamManager)}</span>
         </S.UserInfoWrapper>
       ) : null}

@@ -4,9 +4,10 @@ import { HiQuestionMarkCircle, HiOutlineUserCircle } from 'react-icons/hi';
 import JobIntroduce from 'components/jobintroduce/JobIntroduce';
 import Modal from 'components/modal/Modal';
 import { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router';
 function Header() {
   const [nickname, setNickname] = useState('');
+  const navigate = useNavigate();
   const { openModal: openUserInfo } = useModal('UserInfo');
   const { openModal: openJobIntroduceModal } = useModal('JobIntroduce');
 
@@ -14,9 +15,13 @@ function Header() {
     setNickname(sessionStorage.getItem('nickname'));
   }, [nickname]);
 
+  const gotoLobby = () => {
+    navigate(`/lobby`, {});
+  };
+
   return (
     <S.HeaderWrapper>
-      <S.Logo src={process.env.PUBLIC_URL + '/image/logo.svg'} />
+      <S.Logo src={process.env.PUBLIC_URL + '/image/logo.svg'} onClick={gotoLobby} />
       <S.HeaderButtonList>
         <HiQuestionMarkCircle size={'70%'} color="#828282" onClick={openJobIntroduceModal} cursor={'pointer'} />
         {/* <HiOutlineUserCircle size={'70%'} color="#828282" onClick={openUserInfo} /> */}

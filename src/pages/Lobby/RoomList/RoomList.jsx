@@ -10,13 +10,13 @@ import { useNavigate } from 'react-router';
 function RoomList() {
   const roomList = useRecoilValue(roomListState);
   const navigate = useNavigate();
-
   const { openModal } = useModal('PasswordModal');
   const [item, setItem] = useState('');
 
   const handleItemClick = (item) => {
     const roomPassword = item.password;
     const sessionId = item.name;
+
     setItem(item);
     if (roomPassword === '') {
       enterWaitingRoom(sessionId);
@@ -48,7 +48,8 @@ function RoomList() {
             >
               {item.name}
               <S.People style={{ textAlign: 'center' }}>
-                {item.admitNumber}/6 {item.password && <S.Logo src={process.env.PUBLIC_URL + '/lock_logo.png'} />}
+                {new Set(item.people).size}/6{' '}
+                {item.password && <S.Logo src={process.env.PUBLIC_URL + '/lock_logo.png'} />}
               </S.People>
             </S.RoomContainer>
           ))}
