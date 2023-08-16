@@ -111,9 +111,11 @@ function UserVideoComponent(props) {
             isSkillTime={isSkillTime}
             myRole={props.myRole}
           />
-          <S.VideoContainer onClick={() => handleClickKillVote(props.streamManager)}>
-            <S.CustomScreen autoPlay={true} ref={videoRef} />
-          </S.VideoContainer>
+          {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? null : (
+            <S.VideoContainer onClick={() => handleClickKillVote(props.streamManager)}>
+              <S.CustomScreen autoPlay={true} ref={videoRef} />
+            </S.VideoContainer>
+          )}
           <span>{getNicknameTag(props.streamManager)}</span>
         </S.UserInfoWrapper>
       ) : null}
