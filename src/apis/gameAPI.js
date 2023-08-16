@@ -14,7 +14,7 @@ const gameAPI = {
       },
     }),
 
-  exitRoom: (roomId) => axiosInstance.delete(`/rooms/${roomId}`),
+  exitRoom: (roomId) => axiosInstance.delete(`/api/sessions/${roomId}`),
 
   dropUser: (roomId, userId) => axiosInstance.delete(`/rooms/${roomId}/${userId}`),
 

@@ -23,7 +23,7 @@ function WaitingRoom({ sessionId, openvidu, password, setInGame, setMyRole }) {
     openvidu.setRoomId(sessionId);
     openvidu.setUserName(nickname);
     openvidu.setPassword(password);
-    openvidu.setPublisherSetting({ ...openvidu.publisherSetting, publishAudio: true, publishVideo: true });
+    openvidu.setPublisherSetting({ ...openvidu.publisherSetting, publishAudio: false, publishVideo: false });
     openvidu.joinSession();
   }, [sessionId]);
 

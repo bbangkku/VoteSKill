@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+#tsetpage
+/src/pages/TestPage.jsx
+
 #env
 .env
 
