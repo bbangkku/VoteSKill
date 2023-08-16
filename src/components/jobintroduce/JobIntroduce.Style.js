@@ -11,7 +11,7 @@ const SlideRight = keyframes`
 `;
 
 export const JobIntroduceBackground = styled.div`
-  width: 800px;
+  width: 700px;
   height: 400px;
   background: linear-gradient(
     to top,
@@ -53,7 +53,7 @@ export const JobImg = styled.img`
 export const JobIntroduceDiv = styled.div`
   font-size: 10px;
   margin-top: 60px;
-  margin-right: 70px;
+  /* margin-right: 70px; */
 `;
 export const JobName = styled.div`
   font-size: 30px;

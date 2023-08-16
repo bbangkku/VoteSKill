@@ -16,7 +16,7 @@ function PasswordInput({ item }) {
   const navigate = useNavigate();
   // 방 비번 입력
   const enterRoom = (sessionId) => {
-    navigate(`/waitingroom/${sessionId}`, {
+    navigate(`/play/${sessionId}`, {
       state: {
         password,
       },
@@ -29,7 +29,6 @@ function PasswordInput({ item }) {
 
   const checkPassword = () => {
     if (item.password === password) {
-      console.log('비번맞아요');
       enterRoom(item.name);
     } else {
       alert('비밀번호가 틀렸습니다.');

@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './CamScreen.Style';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
 import gameAPI from 'apis/gameAPI';
 import showSwal from 'utils/showSwal';
 import VoteAndSkill from 'pages/GameRoom/VoteAndSkill/VoteAndSkill';
 import convertMessageToText from 'utils/convertMessageToText';
+import { deadPlayerState } from 'recoil/atoms/gameState';
+import GraveComponent from 'components/gravecomponent/GraveComponent';
+import { checkDeath } from 'utils/checkDeath';
 
 function CamScreen({ publisher, subscribers, myRole, roomId }) {
   const [imageOn, setImageOn] = useState('');
+  // 죽은사람
 
   return (
     <S.VideoWrapper>
@@ -43,6 +47,7 @@ function UserVideoComponent(props) {
   const roleName = props.myRole;
   const roomId = props.roomId;
   const SKILL_ROLE = ['DOCTOR', 'SOLDIER', 'POLITICIAN', 'DEVELOPER', 'REPORTER', 'PRIEST', 'MAFIA'];
+  const [deadPlayers] = useRecoilState(deadPlayerState);
 
   const getNicknameTag = (sub) => JSON.parse(sub.stream.connection.data).clientData;
 
@@ -76,6 +81,8 @@ function UserVideoComponent(props) {
     if (props.streamManager && !!videoRef.current) {
       props.streamManager.addVideoElement(videoRef.current);
     }
+    console.log('nickname : ' + getNicknameTag(props.streamManager));
+    console.log('죽은사람 리스트 : ' + deadPlayerState);
   }, [props.streamManager]);
 
   // checkvote는 닉네임따라 체크 여부만
@@ -83,15 +90,19 @@ function UserVideoComponent(props) {
     <>
       {props.streamManager !== undefined ? (
         <S.UserInfoWrapper>
-          <VoteAndSkill
-            streamManager={props.streamManager}
-            getNicknameTag={getNicknameTag}
-            setImageOn={props.setImageOn}
-            imageOn={props.imageOn}
-            isVoteTime={isVoteTime}
-            isSkillTime={isSkillTime}
-            myRole={props.myRole}
-          />
+          {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? (
+            <GraveComponent></GraveComponent>
+          ) : (
+            <VoteAndSkill
+              streamManager={props.streamManager}
+              getNicknameTag={getNicknameTag}
+              setImageOn={props.setImageOn}
+              imageOn={props.imageOn}
+              isVoteTime={isVoteTime}
+              isSkillTime={isSkillTime}
+              myRole={props.myRole}
+            />
+          )}
           <S.VideoContainer onClick={() => handleClickKillVote(props.streamManager)}>
             <S.CustomScreen autoPlay={true} ref={videoRef} />
           </S.VideoContainer>

@@ -11,6 +11,7 @@ import { currentTimeState, deadPlayerState, isSkillTimeState, isVoteTimeState } 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import showSwal from 'utils/showSwal';
 import convertMessageToText from 'utils/convertMessageToText';
+import { checkDeath } from 'utils/checkDeath';
 
 function GameRoom({ sessionId, openvidu, myRole }) {
   const { setDay, setMafia, setCitizen } = useLayoutChange();
@@ -26,12 +27,6 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   const setIsVoteTime = useSetRecoilState(isVoteTimeState);
   const setIsSkillTime = useSetRecoilState(isSkillTimeState);
   const [deadPlayers, setDeadPlayers] = useRecoilState(deadPlayerState);
-
-  const checkDeath = (deathArray, nickname) => {
-    const isDeath = deathArray.find((playerNickname) => playerNickname === nickname);
-    console.log('isDeath', isDeath);
-    return isDeath === undefined ? false : true;
-  };
 
   const setDeath = () => {
     openvidu.publisher.publishAudio(false);
