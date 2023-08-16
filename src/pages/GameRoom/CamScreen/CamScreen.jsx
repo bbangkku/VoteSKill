@@ -5,6 +5,7 @@ import { isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
 import gameAPI from 'apis/gameAPI';
 import showSwal from 'utils/showSwal';
 import VoteAndSkill from 'pages/GameRoom/VoteAndSkill/VoteAndSkill';
+import convertMessageToText from 'utils/convertMessageToText';
 
 function CamScreen({ publisher, subscribers, myRole, roomId }) {
   const [imageOn, setImageOn] = useState('');
@@ -48,7 +49,7 @@ function UserVideoComponent(props) {
   const useSkillAndPost = async (roleName, nickname) => {
     if (roleName === 'POLICE') {
       const { data } = await gameAPI.useSkill(roomId, nickname);
-      showSwal(`${data.message}`, '닫기');
+      showSwal(convertMessageToText(data.message), '닫기');
     }
     if (SKILL_ROLE.includes(roleName)) {
       showSwal(`${nickname}을 선택하셨습니다.`, '닫기');

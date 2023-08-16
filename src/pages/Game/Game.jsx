@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useOpenVidu from 'hooks/useOpenVidu';
 import Header from 'components/header/Header';
 import Layout from 'components/layout/Layout';
@@ -6,6 +6,7 @@ import GameRoom from 'pages/GameRoom/GameRoom';
 import WaitingRoom from 'pages/WaitingRoom/WaitingRoom';
 import { useLocation, useParams } from 'react-router-dom';
 import useLayoutChange from 'hooks/useLayoutChange';
+import gameAPI from 'apis/gameAPI';
 
 function Game() {
   const location = useLocation();
@@ -15,6 +16,16 @@ function Game() {
   const openvidu = useOpenVidu();
   const [inGame, setInGame] = useState(false);
   const [myRole, setMyRole] = useState(undefined);
+
+  useEffect(() => {
+    return () => {
+      try {
+        gameAPI.enterRoom(sessionId);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  }, []);
 
   return (
     <Layout isMain={false} $layout={layout}>

@@ -10,6 +10,7 @@ import JobAssign from 'components/jobassign/JobAssign';
 import { currentTimeState, deadPlayerState, isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import showSwal from 'utils/showSwal';
+import convertMessageToText from 'utils/convertMessageToText';
 
 function GameRoom({ sessionId, openvidu, myRole }) {
   const { setDay, setMafia, setCitizen } = useLayoutChange();
@@ -66,14 +67,14 @@ function GameRoom({ sessionId, openvidu, myRole }) {
       if (roomData.type === 'vote') {
         setVoteResult(roomData.messages);
         setMafia();
-        showSwal(`{${roomData.messages}}`, '확인');
+        showSwal(convertMessageToText(roomData.messages), '확인');
         setIsVoteTime(false);
         setIsSkillTime(true);
       }
       if (roomData.type === 'skill') {
         setSkillResult(roomData.messages);
         setDay();
-        showSwal(`{${roomData.message}}`, '확인');
+        showSwal(`{${convertMessageToText(roomData.messages)}}`, '확인');
         setIsSkillTime(false);
       }
       if (checkDeath(roomData.death, nickname)) {
