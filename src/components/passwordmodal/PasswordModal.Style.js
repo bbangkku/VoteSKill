@@ -15,7 +15,7 @@ export const RoomMakeBackground = styled.div`
   width: 700px;
   min-height: 300px;
   overflow: hidden;
-  position: relative;
+  /* position: relative; */
   z-index: 100;
 `;
 
