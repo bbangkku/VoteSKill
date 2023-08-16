@@ -43,6 +43,7 @@ function GameRoom({ sessionId, openvidu, myRole }) {
 
   useEffect(() => {
     // 최초 입장 시 직업 배정 알리미
+    setResurrection();
     setDay();
     setCurrentTime(myRole.timer);
     openjobAssign(myRole.role);
