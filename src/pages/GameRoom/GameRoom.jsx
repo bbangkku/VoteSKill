@@ -69,7 +69,7 @@ function GameRoom({ sessionId, openvidu, myRole }) {
       if (roomData.type === 'skill') {
         setSkillResult(roomData.messages);
         setDay();
-        showSwal(`{${convertMessageToText(roomData.messages)}}`, '확인');
+        showSwal(convertMessageToText(roomData.messages), '확인');
         setIsSkillTime(false);
       }
       if (checkDeath(roomData.death, nickname)) {
