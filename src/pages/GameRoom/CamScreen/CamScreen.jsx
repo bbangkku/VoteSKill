@@ -49,6 +49,8 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
   const [useNickname, setUserNickname] = useState('');
   const myDeath = useRecoilValue(checkDeathSelector);
 
+  console.log(useNickname, checkDeath(deadPlayers, useNickname));
+
   useEffect(() => {
     const getNicknameTag = (sub) => JSON.parse(sub.stream.connection.data).clientData;
     setUserNickname(getNicknameTag(streamManager));
@@ -91,7 +93,7 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
       showSwal('사망자는 게임에 참여할 수 없습니다.', '확인');
       return;
     }
-    if (myRole === 'PRIEST' && isSkillTime && !checkDeath(deadPlayers, useNickname)) {
+    if (myRole === 'PRIEST' && isSkillTime && !checkDeath(deadPlayers, imageOn)) {
       showSwal(`사망한 사람만 살릴 수 있습니다.`, '닫기');
       return;
     }
@@ -124,13 +126,10 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
       {streamManager !== undefined ? (
         <S.UserInfoWrapper>
           <VoteAndSkill useNickname={useNickname} imageOn={imageOn} myRole={myRole} />
-          {checkDeath(deadPlayers, useNickname) ? (
-            <GraveComponent useNickname={useNickname} />
-          ) : (
-            <S.VideoContainer onClick={handleClickKillVote}>
-              <S.CustomScreen autoPlay={true} ref={videoRef} />
-            </S.VideoContainer>
-          )}
+          <GraveComponent useNickname={useNickname} deadPlayers={deadPlayers} />
+          <S.VideoContainer onClick={handleClickKillVote}>
+            <S.CustomScreen autoPlay={true} ref={videoRef} />
+          </S.VideoContainer>
           <span>{useNickname}</span>
         </S.UserInfoWrapper>
       ) : null}
