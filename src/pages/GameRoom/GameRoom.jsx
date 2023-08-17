@@ -37,7 +37,7 @@ function GameRoom({ sessionId, openvidu, myRole, setInGame }) {
   useEffect(() => {
     // 최초 입장 시 직업 배정 알리미
     setResurrection();
-    setCitizen();
+    setDay();
     setCurrentTime(myRole.timer);
     openjobAssign(myRole.role);
   }, [myRole]);
@@ -69,21 +69,24 @@ function GameRoom({ sessionId, openvidu, myRole, setInGame }) {
         setImageOn('');
       }
       if (roomData.type === 'skill') {
-        setCitizen();
+        setDay();
         showSwal(convertMessageToText(roomData.messages), '확인');
         setIsSkillTime(false);
         setImageOn('');
-        if (deadPlayers.length > roomData.death.length && !checkDeath(roomData.death, nickname)) {
+        if (!checkDeath(roomData.death, nickname)) {
           setResurrection();
           setDeadPlayers(roomData.death);
         }
       }
       if (roomData.type === 'gameover') {
         window.removeEventListener('beforeunload', () => {});
-        showSwal(convertMessageToText(roomData.messages), '확인');
-        setIsSkillTime(false);
-        setImageOn('');
-        window.location.replace('/lobby');
+        showSwal(convertMessageToText(roomData.messages), '확인').then((result) => {
+          if (result.isConfirmed) {
+            setIsSkillTime(false);
+            setImageOn('');
+            window.location.replace('/lobby');
+          }
+        });
       }
 
       if (checkDeath(roomData.death, nickname)) {
