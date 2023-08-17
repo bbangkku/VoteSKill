@@ -97,7 +97,7 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
 
     Swal.fire({
       title: `${useNickname}님을 선택하겠습니까?`,
-      text: '다시 되돌릴 수 없습니다. 신중히 선택세요.',
+      text: '다시 되돌릴 수 없습니다. 신중히 선택하세요.',
       showCancelButton: true,
       confirmButtonColor: '#6367CE',
       cancelButtonColor: '#970000',
