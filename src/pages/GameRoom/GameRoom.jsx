@@ -106,6 +106,7 @@ function GameRoom({ sessionId, openvidu, myRole, setInGame }) {
           roomId={sessionId}
           imageOn={imageOn}
           setImageOn={setImageOn}
+          deadPlayers={deadPlayers}
         />
       )}
       <Modal id="JobAssign">
