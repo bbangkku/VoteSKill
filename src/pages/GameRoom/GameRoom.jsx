@@ -72,6 +72,7 @@ function GameRoom({ sessionId, openvidu, myRole, setInGame }) {
         }
       }
       if (roomData.type === 'gameover') {
+        window.removeEventListener('beforeunload', () => {});
         showSwal(convertMessageToText(roomData.messages), '확인');
         setIsSkillTime(false);
         setImageOn('');

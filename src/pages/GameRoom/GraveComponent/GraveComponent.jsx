@@ -6,13 +6,7 @@ import { checkDeath } from 'utils/checkDeath';
 function GraveComponent({ useNickname }) {
   const deadPlayers = useRecoilValue(deadPlayerState);
 
-  return (
-    <>
-      {checkDeath(deadPlayers, useNickname) ? (
-        <S.GraveImage src={process.env.PUBLIC_URL + '/image/game/grave_image.svg'} />
-      ) : null}
-    </>
-  );
+  return <S.GraveImage src={process.env.PUBLIC_URL + '/image/game/grave_image.svg'} />;
 }
 
 export default GraveComponent;

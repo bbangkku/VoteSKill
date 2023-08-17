@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 function CamScreen({ publisher, subscribers, myRole, roomId, imageOn, setImageOn }) {
   return (
     <S.VideoWrapper>
-      {publisher !== undefined ? (
+      {publisher && (
         <UserVideoComponent
           streamManager={publisher}
           setImageOn={setImageOn}
@@ -21,7 +21,7 @@ function CamScreen({ publisher, subscribers, myRole, roomId, imageOn, setImageOn
           myRole={myRole}
           roomId={roomId}
         />
-      ) : null}
+      )}
       {subscribers.length > 0 &&
         subscribers.map((sub) => (
           <UserVideoComponent
@@ -87,12 +87,14 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
 
   const handleClickKillVote = () => {
     if ((!isVoteTime && !isSkillTime) || imageOn !== '') return;
-    if (myRole === 'PRIEST' && !checkDeath(deadPlayers, useNickname)) return;
     if (myDeath) {
       showSwal('사망자는 게임에 참여할 수 없습니다.', '확인');
       return;
     }
-
+    if (myRole === 'PRIEST' && isSkillTime && !checkDeath(deadPlayers, useNickname)) {
+      showSwal(`사망한 사람만 살릴 수 있습니다.`, '닫기');
+      return;
+    }
     Swal.fire({
       title: `${useNickname}님을 선택하겠습니까?`,
       text: '다시 되돌릴 수 없습니다. 신중히 선택세요.',
@@ -121,9 +123,10 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
     <>
       {streamManager !== undefined ? (
         <S.UserInfoWrapper>
-          <GraveComponent useNickname={useNickname} />
           <VoteAndSkill useNickname={useNickname} imageOn={imageOn} myRole={myRole} />
-          {checkDeath(deadPlayers, useNickname) ? null : (
+          {checkDeath(deadPlayers, useNickname) ? (
+            <GraveComponent useNickname={useNickname} />
+          ) : (
             <S.VideoContainer onClick={handleClickKillVote}>
               <S.CustomScreen autoPlay={true} ref={videoRef} />
             </S.VideoContainer>
