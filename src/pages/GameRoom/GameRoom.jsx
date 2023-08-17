@@ -56,7 +56,14 @@ function GameRoom({ sessionId, openvidu, myRole, setInGame }) {
     if (roomData) {
       if (roomData.type === 'vote') {
         setMafia();
-        showSwal(convertMessageToText(roomData.messages), '확인');
+        showSwal(
+          convertMessageToText(roomData.messages) +
+            '\n' +
+            '투표 시간이 끝났습니다.' +
+            '\n' +
+            ' 이제 부여된 직업의 스킬을 사용하세요',
+          '확인',
+        );
         setIsVoteTime(false);
         setIsSkillTime(true);
         setImageOn('');
